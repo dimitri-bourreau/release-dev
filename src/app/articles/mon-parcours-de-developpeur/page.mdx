@@ -1,0 +1,34 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import planeUnderRain from './avion-sous-pluie.jpg'
+
+export const article = {
+  author: 'Dimitri Bourreau',
+  date: '2024-06-15',
+  title: 'Mon parcours de développeur',
+  description:
+    "J'essaie d'être un bon développeur avec d'excellentes habitudes. Mon parcours témoigne qui je suis par qui j'étais.",
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+- Placé en foyer @ < 18
+- À la rue, sans bac @ 18
+- Temps partiel McDo @ 19
+- Études commerce @ 21
+- Élève pilote de ligne @ 22
+- Devenu inapte au vol @ 26
+- Formation Openclassrooms financée @ 27
+- Développeur indépendant en micro entreprise @ 28
+- 1ère fois stable financièrement @ 29
+- Création de mon EURL @ 32
+
+J'ai eu plusieurs vies en une, j'ai eu la chance de voler dans des nuages où tout disparaît.
+
+<Image src={planeUnderRain} alt="" />
+
+J'ai la chance aujourd'hui de faire un métier que j'aime. J'ai le projet de partager le bon et le confort que je me suis créé, et je suis fier de mon parcours !
