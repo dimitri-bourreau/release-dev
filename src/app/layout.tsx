@@ -7,17 +7,12 @@ import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Spencer Sharp',
+    template: '%s - RELEASE',
     default:
-      'Spencer Sharp - Software designer, founder, and amateur astronaut',
+      'Dimitri Bourreau - Développeur, bagarreur et ancien pilote',
   },
   description:
-    'I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms.',
-  alternates: {
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
-  },
+    'Je m\'appelle Dimitri, je suis un développeur freelance basé à Angoulême, entre Bordeaux et Paris. J\'aide les logiciels à grandir, j\'améliore leurs racines et je conseille les équipes.',
 }
 
 export default function RootLayout({
@@ -26,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex h-full bg-zinc-50 dark:bg-black">
         <Providers>
           <div className="flex w-full">
