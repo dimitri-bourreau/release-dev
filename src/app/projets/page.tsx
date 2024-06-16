@@ -3,47 +3,23 @@ import Image from 'next/image'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
+import logo2n from '@/images/logos/2n-logo.png';
+import logoValidcq from '@/images/logos/npm-logo.png'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: '2n',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria,
+      'Jeu de mémoire',
+    link: { href: 'https://2n.dimitribourreau.me/', label: '2n.dimitribourreau.me' },
+    logo: logo2n,
   },
   {
-    name: 'Animaginary',
+    name: 'validcq',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary,
-  },
-  {
-    name: 'HelioStream',
-    description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
-  },
-  {
-    name: 'cosmOS',
-    description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
+      'Petit paquet NPM permettant de vérifier un numéro de sécurité sociale',
+    link: { href: 'https://www.npmjs.com/package/validcq', label: 'npmjs' },
+    logo: logoValidcq,
   },
 ]
 
@@ -66,8 +42,8 @@ export const metadata: Metadata = {
 export default function Projects() {
   return (
     <SimpleLayout
-      title="Things I’ve made trying to put my dent in the universe."
-      intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+      title="Quelques projets que j'ai réalisé par simple plaisir"
+      intro="J'ai réalisé beaucoup de petits projets, mais peu ont survécu ! Je fais partie de ces développeurs qui achètent trop facilement des noms de domaine... Je présente ici les quelques projets tenaces, qui ont résisté au temps. Leur code est ouvert, si vous voulez y jeter un oeil ou proposer des améliorations !"
     >
       <ul
         role="list"
