@@ -22,7 +22,7 @@ export function LinkedInIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export function MaltIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg width="23" height="23" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg"
-         className="-mt-[1px]">
+         className="-mt-[1px]" {...props}>
       <path
         d="M32.1993 10.5357C29.3591 7.69551 26.3252 9.53378 24.4265 11.4325L6.49014 29.3694C4.59144 31.2679 2.60411 34.1526 5.59336 37.1414C8.58262 40.1313 11.4673 38.1436 13.3656 36.2449L31.3023 18.3084C33.201 16.4095 35.0393 13.3755 32.1993 10.5357Z"
         fill="#FC5656"/>
