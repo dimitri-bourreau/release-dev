@@ -7,13 +7,14 @@ import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import {
   GitHubIcon,
-  LinkedInIcon,
+  LinkedInIcon, MaltIcon,
 } from '@/components/SocialIcons'
 import logoArtelia from '@/images/logos/artelia.png'
 import logoCIDJ from '@/images/logos/cidj.png'
 import logoEU4UA from '@/images/logos/eu4ua.png'
 import logoEXA from '@/images/logos/exa.png'
 import logoSigilium from '@/images/logos/sigilium.png'
+import logoMalt from '@/images/logos/malt-logo.png'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
@@ -219,14 +220,19 @@ export default async function Home() {
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
-              href="https://github.com/dimitri-bourreau"
-              aria-label="GitHub"
-              icon={GitHubIcon}
+              href="https://www.malt.fr/profile/dimitribourreau"
+              aria-label="Malt"
+              icon={MaltIcon}
             />
             <SocialLink
               href="https://www.linkedin.com/in/dimitri-bourreau/"
               aria-label="LinkedIn"
               icon={LinkedInIcon}
+            />
+            <SocialLink
+              href="https://github.com/dimitri-bourreau"
+              aria-label="GitHub"
+              icon={GitHubIcon}
             />
           </div>
         </div>
