@@ -68,7 +68,7 @@ function Article({ article }: { article: ArticleWithSlug }) {
         {formatDate(article.date)}
       </Card.Eyebrow>
       <Card.Description>{article.description}</Card.Description>
-      <Card.Cta>Lire l'article</Card.Cta>
+      <Card.Cta>Lire l&apos;article</Card.Cta>
     </Card>
   )
 }
@@ -214,8 +214,8 @@ export default async function Home() {
             Développeur, bagarreur et ancien pilote.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Je m'appelle Dimitri, je suis un développeur freelance basé à Angoulême, entre Bordeaux et Paris.
-            J'aide les logiciels à grandir, j'améliore leurs racines et je conseille les équipes.
+            Je m&apos;appelle Dimitri, je suis un développeur freelance basé à Angoulême, entre Bordeaux et Paris.
+            J&apos;aide les logiciels à grandir, j&apos;améliore leurs racines et je conseille les équipes.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink

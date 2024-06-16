@@ -48,7 +48,7 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export const metadata: Metadata = {
   title: 'Présentation',
   description:
-    'Je m\'appelle Dimitri Bourreau, bourreau des codes, ceux qu\'on améliore !',
+    'Je m&apos;appelle Dimitri Bourreau, bourreau des codes, ceux qu&apos;on améliore !',
 }
 
 export default function About() {
@@ -67,28 +67,28 @@ export default function About() {
         </div>
         <div className="lg:order-first lg:row-span-2">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Je m'appelle Dimitri Bourreau, bourreau des codes, ceux qu'on améliore !
+            Je m&apos;appelle Dimitri Bourreau, bourreau des codes, ceux qu&apos;on améliore !
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              Aussi loin que je me souvienne j'ai toujours aimé les nouvelles technologies.
-              J'ai cassé mon premier Windows 98 à 10 ans, et j'ai fait mes premiers sites moches au CDI du collège, avec
-              l'aide du site du zéro.
+              Aussi loin que je me souvienne j&apos;ai toujours aimé les nouvelles technologies.
+              J&apos;ai cassé mon premier Windows 98 à 10 ans, et j&apos;ai fait mes premiers sites moches au CDI du collège, avec
+              l&apos;aide du site du zéro.
             </p>
             <p>
-              J'ai fait un détour par les avions, en me formant au métier de pilote de ligne.
+              J&apos;ai fait un détour par les avions, en me formant au métier de pilote de ligne.
               Mais avant de pouvoir en faire mon métier, je suis devenu inapte au vol.
-              Des rêves réalisés et des nuages caressés, j'ai atterri vers ma première passion : le code.
+              Des rêves réalisés et des nuages caressés, j&apos;ai atterri vers ma première passion : le code.
             </p>
             <p>
-              J'ai suivi une formation d'un an avec Openclassrooms, puis j'ai passé quelques mois en auto-formation à temps plein.
-              5 ans plus tard, j'ai aidé une dizaine d'entreprises à améliorer leurs applications, je cumule sur Malt 40 missions
+              J&apos;ai suivi une formation d&apos;un an avec Openclassrooms, puis j&apos;ai passé quelques mois en auto-formation à temps plein.
+              5 ans plus tard, j&apos;ai aidé une dizaine d&apos;entreprises à améliorer leurs applications, je cumule sur Malt 40 missions
               avec une note de 5/5 pour 31 avis.
             </p>
             <p>
-              J'ai créé ma société RELEASE en référence au groupe de musique Starrysky et leur musique RE:LEASE.
+              J&apos;ai créé ma société RELEASE en référence au groupe de musique Starrysky et leur musique RE:LEASE.
               Cette musique dure 20 minutes, elle frappe par sa qualité et son originalité.
-              Ce groupe Starrysky existe depuis des années, ils ont une passion brûlante pour le bien-faire et l'originalité.
+              Ce groupe Starrysky existe depuis des années, ils ont une passion brûlante pour le bien-faire et l&apos;originalité.
               Je veux inspirer la même passion et ténacité !
             </p>
           </div>
