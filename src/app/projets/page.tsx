@@ -3,17 +3,9 @@ import Image from 'next/image'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logo2n from '@/images/logos/2n-logo.png';
 import logoValidcq from '@/images/logos/npm-logo.png'
 
 const projects = [
-  {
-    name: '2n',
-    description:
-      'Jeu de mémoire',
-    link: { href: 'https://2n.dimitribourreau.me/', label: '2n.dimitribourreau.me' },
-    logo: logo2n,
-  },
   {
     name: 'validcq',
     description:
@@ -35,7 +27,7 @@ function LinkIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 export const metadata: Metadata = {
-  title: 'Projects',
+  title: 'Projets',
   description: 'Things I’ve made trying to put my dent in the universe.',
 }
 
@@ -43,7 +35,7 @@ export default function Projects() {
   return (
     <SimpleLayout
       title="Quelques projets que j'ai réalisé par simple plaisir"
-      intro="J'ai réalisé beaucoup de petits projets, mais peu ont survécu ! Je fais partie de ces développeurs qui achètent trop facilement des noms de domaine... Je présente ici les quelques projets tenaces, qui ont résisté au temps. Leur code est ouvert, si vous voulez y jeter un oeil ou proposer des améliorations !"
+      intro="J'ai réalisé beaucoup de petits projets, mais peu ont survécu ! Je fais partie de ces développeurs qui achètent trop facilement des noms de domaine... Je présente ici les quelques projets tenaces, qui ont résisté au temps. Il n'y en a qu'un aujourd'hui. 🎉"
     >
       <ul
         role="list"
