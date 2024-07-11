@@ -4,12 +4,20 @@ import Image from 'next/image'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoValidcq from '@/images/logos/npm-logo.png'
+import logoStarrysky from '@/images/logos/starrysky.png'
+import clsx from "clsx";
 
 const projects = [
   {
+    name: "Starrymusic",
+    description: "Fansite pour le groupe Starrysky répertoriant leurs paroles",
+    link: { href: "https://starrymusic.fr", label: "starrymusic.fr"},
+    logo: logoStarrysky
+  },
+  {
     name: 'validcq',
     description:
-      'Petit paquet NPM permettant de vérifier un numéro de sécurité sociale',
+      'Paquet NPM permettant de vérifier un numéro de sécurité sociale',
     link: { href: 'https://www.npmjs.com/package/validcq', label: 'npmjs' },
     logo: logoValidcq,
   },
@@ -35,7 +43,7 @@ export default function Projects() {
   return (
     <SimpleLayout
       title="Quelques projets que j'ai réalisé par simple plaisir"
-      intro="J'ai réalisé beaucoup de petits projets, mais peu ont survécu ! Je fais partie de ces développeurs qui achètent trop facilement des noms de domaine... Je présente ici les quelques projets tenaces, qui ont résisté au temps. Il n'y en a qu'un aujourd'hui. 🎉"
+      intro="J'ai réalisé beaucoup de petits projets, mais peu ont survécu ! Je fais partie de ces développeurs qui achètent trop facilement des noms de domaine... Je présente ici les quelques projets tenaces, qui ont résisté au temps. 🎉"
     >
       <ul
         role="list"
@@ -43,7 +51,10 @@ export default function Projects() {
       >
         {projects.map((project) => (
           <Card as="li" key={project.name}>
-            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+            <div className={clsx("relative z-10 flex h-12 w-12 items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0", {
+              "bg-black dark:bg-black": project.name === "Starrymusic",
+              "bg-white dark:bg-zinc-800": project.name !== "Starrymusic"
+            })}>
               <Image
                 src={project.logo}
                 alt=""
