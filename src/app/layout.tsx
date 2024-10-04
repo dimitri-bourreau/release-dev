@@ -12,7 +12,7 @@ export const metadata: Metadata = {
       'Dimitri Bourreau - Développeur, bagarreur et ancien pilote',
   },
   description:
-    'Je m\'appelle Dimitri, je suis un développeur freelance basé à Angoulême, entre Bordeaux et Paris. J\'aide les logiciels à grandir, j\'améliore leurs racines et je conseille les équipes.',
+    'Je m\'appelle Dimitri, je suis un développeur freelance basé à Grenoble. J\'aide les logiciels à grandir, j\'améliore leurs racines et je conseille les équipes.',
 }
 
 export default function RootLayout({
