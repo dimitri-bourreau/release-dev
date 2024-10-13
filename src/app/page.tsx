@@ -211,10 +211,10 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Développeur, bagarreur et ancien pilote.
+            Développeur dévoué au simple et l&apos;efficace
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Je m&apos;appelle Dimitri, je suis un développeur freelance basé à Grenoble.
+            Je m&apos;appelle Dimitri, je suis un développeur basé à Grenoble. <br />
             J&apos;aide les logiciels à grandir, j&apos;améliore leurs racines et je conseille les équipes.
           </p>
           <div className="mt-6 flex gap-6">
