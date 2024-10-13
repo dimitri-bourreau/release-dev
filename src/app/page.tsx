@@ -13,6 +13,7 @@ import logoArtelia from '@/images/logos/artelia.png'
 import logoCIDJ from '@/images/logos/cidj.png'
 import logoEU4UA from '@/images/logos/eu4ua.png'
 import logoEXA from '@/images/logos/exa.png'
+import logoTudigo from "@/images/logos/tudigo.jpg"
 import logoSigilium from '@/images/logos/sigilium.png'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
@@ -125,6 +126,12 @@ function Role({ role }: { role: Role }) {
 
 function Resume() {
   let resume: Array<Role> = [
+    {
+      company: 'Tudigo',
+      title: 'Développement front-end',
+      logo: logoTudigo,
+      end: '2024',
+    },
     {
       company: 'Artelia',
       title: 'Développement front-end & architecture',
