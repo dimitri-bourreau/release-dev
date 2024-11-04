@@ -5,6 +5,7 @@ import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoValidcq from '@/images/logos/npm-logo.png'
 import logoStarrysky from '@/images/logos/starrysky.png'
+import logoCosySongs from '@/images/logos/cosy-songs.png'
 import clsx from "clsx";
 
 const projects = [
@@ -20,6 +21,13 @@ const projects = [
       'Paquet NPM permettant de vérifier un numéro de sécurité sociale',
     link: { href: 'https://www.npmjs.com/package/validcq', label: 'npmjs' },
     logo: logoValidcq,
+  },
+  {
+    name: 'Cosy Songs',
+    description:
+      'Récupération des musiques utilisées dans le podcast Cosy Corner en parsant leur flux RSS',
+    link: { href: 'https://cosysongs.fr', label: 'cosysongs.fr' },
+    logo: logoCosySongs,
   },
 ]
 
@@ -53,6 +61,7 @@ export default function Projects() {
           <Card as="li" key={project.name}>
             <div className={clsx("relative z-10 flex h-12 w-12 items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0", {
               "bg-black dark:bg-black": project.name === "Starrymusic",
+              "bg-[#ff170f] dark:bg-[#ff170f]": project.name === "Cosy Songs",
               "bg-white dark:bg-zinc-800": project.name !== "Starrymusic"
             })}>
               <Image
