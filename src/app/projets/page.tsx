@@ -60,9 +60,9 @@ export default function Projects() {
         {projects.map((project) => (
           <Card as="li" key={project.name}>
             <div className={clsx("relative z-10 flex h-12 w-12 items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0", {
+              "bg-white dark:bg-zinc-800": project.name !== "Starrymusic" && project.name !== "Cosy Songs",
               "bg-black dark:bg-black": project.name === "Starrymusic",
-              "bg-[#ff170f] dark:bg-[#ff170f]": project.name === "Cosy Songs",
-              "bg-white dark:bg-zinc-800": project.name !== "Starrymusic"
+              "bg-[#ff170f] dark:bg-[#ff170f]": project.name === "Cosy Songs"
             })}>
               <Image
                 src={project.logo}
