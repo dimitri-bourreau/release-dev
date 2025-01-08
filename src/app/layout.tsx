@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
     default:
-      'Dimitri Bourreau - Développeur dévoué au simple et l\'efficace\n',
+      'Dimitri Bourreau - Développeur VISEO',
   },
   description:
-    'Je m\'appelle Dimitri, je suis un développeur basé à Grenoble. J\'aide les logiciels à grandir, j\'améliore leurs racines et je conseille les équipes.',
+    'Je m\'appelle Dimitri, je suis un développeur fièrement VISEO !',
 }
 
 export default function RootLayout({

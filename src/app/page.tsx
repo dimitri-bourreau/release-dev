@@ -14,6 +14,7 @@ import logoCIDJ from '@/images/logos/cidj.png'
 import logoEU4UA from '@/images/logos/eu4ua.png'
 import logoEXA from '@/images/logos/exa.png'
 import logoTudigo from "@/images/logos/tudigo.jpg"
+import logoViseo from "@/images/logos/viseo.jpg"
 import logoSigilium from '@/images/logos/sigilium.png'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
@@ -127,6 +128,12 @@ function Role({ role }: { role: Role }) {
 function Resume() {
   let resume: Array<Role> = [
     {
+      company: 'VISEO',
+      title: 'Ingénieur logiciel',
+      logo: logoViseo,
+      end: '2025',
+    },
+    {
       company: 'Tudigo',
       title: 'Développement front-end',
       logo: logoTudigo,
@@ -175,10 +182,6 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="/cv-dimitri-bourreau.pdf" variant="secondary" className="group mt-6 w-full" download>
-        Télécharger le CV
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
-      </Button>
     </div>
   )
 }
@@ -221,15 +224,9 @@ export default async function Home() {
             Développeur dévoué au simple et l&apos;efficace
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Je m&apos;appelle Dimitri, je suis un développeur basé à Grenoble. <br />
-            J&apos;aide les logiciels à grandir, j&apos;améliore leurs racines et je conseille les équipes.
+            Je m&apos;appelle Dimitri, je suis un développeur fièrement VISEO !
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink
-              href="https://www.malt.fr/profile/dimitribourreau"
-              aria-label="Malt"
-              icon={MaltIcon}
-            />
             <SocialLink
               href="https://www.linkedin.com/in/dimitri-bourreau/"
               aria-label="LinkedIn"

@@ -48,7 +48,7 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export const metadata: Metadata = {
   title: 'Présentation',
   description:
-    'Dimitri Bourreau, développeur Grenoblois',
+    'Dimitri Bourreau, développeur VISEO',
 }
 
 export default function About() {
@@ -67,7 +67,7 @@ export default function About() {
         </div>
         <div className="lg:order-first lg:row-span-2">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Dimitri Bourreau, développeur Grenoblois
+            Dimitri Bourreau, développeur VISEO
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
@@ -90,6 +90,9 @@ export default function About() {
               Cette musique dure 20 minutes, elle frappe par sa qualité et son originalité.
               Ce groupe Starrysky existe depuis des années, ils ont une passion brûlante pour le bien-faire et l&apos;originalité.
               Je veux inspirer la même passion et ténacité !
+            </p>
+            <p>
+              Aujourd&apos;hui j&apos;ai intégré les équipes de VISEO, j&apos;en suis ravi et fier. C&apos;est une entreprise dévouée à la qualité, la connaissance et le partage.
             </p>
           </div>
         </div>
