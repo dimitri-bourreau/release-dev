@@ -224,7 +224,7 @@ export default async function Home() {
             Développeur dévoué au simple et l&apos;efficace
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Je m&apos;appelle Dimitri, je suis un développeur fièrement VISEO !
+            Je m&apos;appelle Dimitri, je suis développeur front-end !
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
