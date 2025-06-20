@@ -182,6 +182,15 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
+      <Button
+        href="/cv-dimitri-bourreau.pdf"
+        variant="secondary"
+        className="group mt-6 w-full"
+        download
+      >
+        Télécharger le CV
+        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+      </Button>
     </div>
   )
 }
@@ -227,6 +236,11 @@ export default async function Home() {
             Je m&apos;appelle Dimitri, je suis développeur front-end !
           </p>
           <div className="mt-6 flex gap-6">
+            <SocialLink
+              href="https://www.malt.fr/profile/dimitribourreau"
+              aria-label="Malt"
+              icon={MaltIcon}
+            />
             <SocialLink
               href="https://www.linkedin.com/in/dimitri-bourreau/"
               aria-label="LinkedIn"

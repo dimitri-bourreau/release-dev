@@ -8,11 +8,9 @@ import '@/styles/tailwind.css'
 export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
-    default:
-      'Dimitri Bourreau - Développeur VISEO',
+    default: 'Dimitri Bourreau - Développeur front-end',
   },
-  description:
-    'Je m\'appelle Dimitri, je suis un développeur fièrement VISEO !',
+  description: "Je m'appelle Dimitri, je suis développeur front-end !",
 }
 
 export default function RootLayout({
