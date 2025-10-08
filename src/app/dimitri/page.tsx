@@ -56,7 +56,7 @@ export default function About() {
     <Container className="mt-16 sm:mt-32">
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
         <div className="lg:pl-20">
-          <div className="max-w-xs px-2.5 lg:max-w-none">
+          <div className="mx-auto max-w-xs lg:max-w-none lg:px-2.5">
             <Image
               src={portraitImage}
               alt=""
@@ -85,9 +85,9 @@ export default function About() {
             <p>
               J&apos;ai suivi une formation d&apos;un an avec Openclassrooms,
               puis j&apos;ai passé quelques mois en auto-formation à temps
-              plein. 5 ans plus tard, j&apos;ai aidé une dizaine
-              d&apos;entreprises à améliorer leurs applications, je cumule sur
-              Malt 40 missions avec une note de 5/5 pour 31 avis.
+              plein. 6 ans plus tard, j&apos;ai aidé une dizaine
+              d&apos;entreprises, je cumule sur Malt 42 missions avec une note
+              de 5/5 pour 32 avis.
             </p>
             <p>
               J&apos;ai créé ma société RELEASE en référence au groupe de
