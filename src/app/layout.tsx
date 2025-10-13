@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="font-julius h-full" suppressHydrationWarning>
-      <body className="bg-light-sable dark:bg-light-sable flex h-full">
+      <body className="bg-light-sable dark:bg-light-sable flex h-full text-black">
         <Providers>
           <div className="flex w-full">{children}</div>
         </Providers>
@@ -26,3 +26,4 @@ export default function RootLayout({
     </html>
   )
 }
+
