@@ -1,16 +1,14 @@
 import { type Metadata } from 'next'
-
 import { Providers } from '@/app/providers'
-import { Layout } from '@/components/Layout'
-
 import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
-    default: 'Dimitri Bourreau - Développeur front-end',
+    default: 'RELEASE - State of the art React',
   },
-  description: "Je m'appelle Dimitri, je suis développeur front-end !",
+  description:
+    'State of the art React, Next, Tailwind and CSS for your project',
 }
 
 export default function RootLayout({
@@ -19,12 +17,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
-      <body className="flex h-full bg-zinc-50 dark:bg-black">
+    <html lang="en" className="font-julius h-full" suppressHydrationWarning>
+      <body className="bg-light-sable dark:bg-light-sable flex h-full">
         <Providers>
-          <div className="flex w-full">
-            <Layout>{children}</Layout>
-          </div>
+          <div className="flex w-full">{children}</div>
         </Providers>
       </body>
     </html>

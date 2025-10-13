@@ -1,4 +1,14 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import './prism.css';
-@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+@import 'tailwindcss';
+@import './prism.css' layer(components);
+
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-light-sable: #ffe9ce;
+  --color-sable: #feddb6;
+  --color-dark-sable: #503009;
+  --font-julius: "Julius Sans One", sans-serif; 
+}
