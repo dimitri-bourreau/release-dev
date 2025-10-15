@@ -12,6 +12,9 @@ export default async function Home() {
             <ReactIcon />
           </span>
         </h1>
+        <h2 className="ml-30 uppercase">
+          State of the art React, Next, Tailwind and CSS for your project
+        </h2>
       </header>
     </div>
   )
