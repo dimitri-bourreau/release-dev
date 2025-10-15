@@ -5,7 +5,7 @@ import '@/styles/header.css'
 export default async function Home() {
   return (
     <div className="flex w-full items-center justify-center">
-      <header>
+      <header className="-mt-40 -ml-30">
         <h1 id="header" className="relative text-8xl">
           RELEASE
           <span className="animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
