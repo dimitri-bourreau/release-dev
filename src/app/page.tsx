@@ -1,13 +1,17 @@
 import '@/styles/header.css'
 
+//motion-safe:animate-spin
+
 export default async function Home() {
   return (
     <div className="flex w-full items-center justify-center">
       <header>
         <h1 id="header" className="relative text-8xl">
           RELEASE
+          <span className="animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
+            <ReactIcon />
+          </span>
         </h1>
-        <ReactIcon />
       </header>
     </div>
   )
@@ -16,8 +20,8 @@ export default async function Home() {
 const ReactIcon = () => {
   return (
     <svg
-      width="288"
-      height="259"
+      width="228"
+      height="199"
       viewBox="0 0 288 259"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -10,5 +10,14 @@
   --color-light-sable: #ffe9ce;
   --color-sable: #feddb6;
   --color-dark-sable: #503009;
-  --font-julius: "Julius Sans One", sans-serif; 
+  --font-julius: 'Julius Sans One', sans-serif;
+}
+
+@theme {
+  --animate-slow-spin: slow-spin 50s linear infinite;
+  @keyframes slow-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
