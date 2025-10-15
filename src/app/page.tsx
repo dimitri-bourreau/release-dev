@@ -1,21 +1,41 @@
 import '@/styles/header.css'
+import Link from 'next/link'
 
 //motion-safe:animate-spin
 
 export default async function Home() {
   return (
-    <div className="flex w-full items-center justify-center">
-      <header className="-mt-40 -ml-30">
-        <h1 id="header" className="relative text-8xl">
-          RELEASE
-          <span className="animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
-            <ReactIcon />
-          </span>
-        </h1>
-        <h2 className="ml-30 uppercase">
-          State of the art React, Next, Tailwind and CSS for your project
-        </h2>
-      </header>
+    <div className="flex w-full flex-col items-start justify-start p-10">
+      <section className="flex h-full w-full items-center justify-center">
+        <header className="-ml-30">
+          <h1 id="header" className="relative text-8xl">
+            RELEASE
+            <span className="motion-safe:animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
+              <ReactIcon />
+            </span>
+          </h1>
+          <h2 className="ml-30 uppercase">
+            State of the art React, Next, Tailwind and CSS for your project
+          </h2>
+        </header>
+      </section>
+
+      <nav className="left-0">
+        <ul className="text-dark-sable flex flex-col gap-2 uppercase underline underline-offset-2">
+          <li>
+            <Link href="/blog">Blog</Link>
+          </li>
+          <li>
+            <Link href="/projects">Projects</Link>
+          </li>
+          <li>
+            <Link href="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link href="/about-working-with-me">About working with me</Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   )
 }
