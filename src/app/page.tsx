@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <div className="flex w-full flex-col items-start justify-start p-10">
       <section className="flex h-full w-full items-center justify-center">
-        <header className="-ml-30">
+        <header className="-ml-1/3">
           <h1 id="header" className="relative text-8xl">
             RELEASE
             <span className="motion-safe:animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
