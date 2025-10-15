@@ -1,8 +1,6 @@
 import '@/styles/header.css'
 import Link from 'next/link'
 
-//motion-safe:animate-spin
-
 export default async function Home() {
   return (
     <div className="flex w-full flex-col items-start justify-start p-10">
