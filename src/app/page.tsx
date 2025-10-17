@@ -3,17 +3,25 @@ import Link from 'next/link'
 
 export default async function Home() {
   return (
-    <div className="flex w-full flex-col items-start justify-start p-10">
-      <section className="flex h-full w-full items-center justify-center">
-        <header className="-ml-1/3">
+    <div className="items-between flex w-full flex-col justify-start p-10">
+      <section className="items-between flex h-full w-full justify-center md:items-center">
+        <header className="md:-ml-1/3 flex h-3/5 flex-col justify-between md:justify-start">
           <h1 id="header" className="relative text-8xl">
             RELEASE
             <span className="motion-safe:animate-slow-spin absolute -top-17 -left-21 -z-10 duration-700">
               <ReactIcon />
             </span>
           </h1>
-          <h2 className="ml-30 uppercase">
-            State of the art React, Next, Tailwind and CSS for your project
+          <h2 className="ml-30 hidden uppercase md:block">
+            Frontend d’excellence : React, Next et Tailwind au service de votre
+            projet
+          </h2>
+          <h2 className="text-center text-2xl md:hidden">
+            Frontend d’excellence :
+            <br />
+            React, Next et Tailwind
+            <br />
+            au service de votre projet
           </h2>
         </header>
       </section>
