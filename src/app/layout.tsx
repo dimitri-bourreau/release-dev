@@ -1,6 +1,7 @@
 import { type Metadata } from 'next'
 import { Providers } from '@/app/providers'
 import '@/styles/tailwind.css'
+import { BackgroundLines } from '@/components/background-lines.component'
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en" className="font-julius h-full" suppressHydrationWarning>
       <body className="bg-light-sable dark:bg-light-sable flex h-full text-black">
         <Providers>
-          <div className="flex w-full">{children}</div>
+          <div className="flex w-full">
+            <BackgroundLines />
+            {children}
+          </div>
         </Providers>
       </body>
     </html>
