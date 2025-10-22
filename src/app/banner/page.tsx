@@ -56,11 +56,9 @@ export default function Banner() {
   return (
     <div className="mt-42 flex h-[349px] w-[1400px] flex-col justify-between border">
       <section className="flex">
-        <div className="text-dark-sable mt-4 flex w-1/4 justify-center p-6 text-2xl">
-          <h1>RELEASE-DEV.COM</h1>
-        </div>
+        <div className="text-dark-sable mt-20 flex w-1/4 justify-center p-6 text-2xl"></div>
 
-        <div className="w-3/4 p-10">
+        <div className="w-3/4 flex-col p-10 pt-20">
           <h2 className="text-dark-sable text-4xl uppercase">
             Sobri&eacute;t&eacute; du geste,
             <br />
@@ -72,11 +70,16 @@ export default function Banner() {
         </div>
       </section>
 
-      <section className="flex h-22 w-full items-start justify-end bg-white/10 p-2 px-4">
+      <section className="flex h-22 w-full items-center justify-end gap-10 bg-white/10 p-2 px-4">
         <p>Ils m'ont fait confiance</p>
-        <div className="flex gap-4">
+        <div className="flex gap-10 pr-10">
           {resume.map((img) => (
-            <Image src={img.logo} alt="" className="h-7 w-7" unoptimized />
+            <Image
+              src={img.logo}
+              alt=""
+              className="h-10 w-10 rounded mix-blend-multiply"
+              unoptimized
+            />
           ))}
         </div>
       </section>
