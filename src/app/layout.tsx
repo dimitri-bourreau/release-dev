@@ -1,5 +1,4 @@
 import { type Metadata } from 'next'
-import { Providers } from '@/app/providers'
 import '@/styles/tailwind.css'
 import { BackgroundLines } from '@/components/background-lines.component'
 
@@ -20,13 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="font-julius h-full" suppressHydrationWarning>
-      <body className="bg-light-sable dark:bg-light-sable flex h-full text-black">
-        <Providers>
-          <div className="flex w-full">
-            <BackgroundLines />
-            {children}
-          </div>
-        </Providers>
+      <body className="bg-light-sable flex h-full text-black">
+        <div className="flex w-full">
+          <BackgroundLines />
+          {children}
+        </div>
       </body>
     </html>
   )
