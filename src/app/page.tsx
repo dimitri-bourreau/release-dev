@@ -1,5 +1,5 @@
+import { Nav } from '@/components/nav.component'
 import '@/styles/header.css'
-import Link from 'next/link'
 
 export default async function Home() {
   return (
@@ -10,35 +10,18 @@ export default async function Home() {
             RELEASE
           </h1>
           <h2 className="ml-30 hidden uppercase md:block">
-            Frontend d’excellence : React, Next et Tailwind au service de votre
-            projet
+            Sobriété du geste, excellence du résultat — développement frontend
+            React freelance
           </h2>
           <h2 className="text-center text-2xl md:hidden">
-            Frontend d’excellence :
+            Sobriété du geste, excellence du résultat
             <br />
-            React, Next et Tailwind
-            <br />
-            au service de votre projet
+            développement frontend React freelance
           </h2>
         </header>
       </section>
 
-      <nav className="left-0">
-        <ul className="text-dark-sable flex flex-col gap-2 uppercase underline underline-offset-2">
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li>
-          <li>
-            <Link href="/projects">Projects</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link href="/about-working-with-me">About working with me</Link>
-          </li>
-        </ul>
-      </nav>
+      <Nav />
     </div>
   )
 }
