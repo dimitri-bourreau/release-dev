@@ -6,10 +6,10 @@ import { BackgroundLines } from '@/components/background-lines.component'
 export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
-    default: 'RELEASE - State of the art React',
+    default: 'RELEASE - Sobriété du geste, excellence du résultat',
   },
   description:
-    'State of the art React, Next, Tailwind and CSS for your project',
+    'Sobriété du geste, excellence du résultat — développement frontend React freelance',
 }
 
 export default function RootLayout({
