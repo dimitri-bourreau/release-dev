@@ -1,4 +1,49 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import './prism.css';
-@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-light-sable: #ffe9ce;
+  --color-sable: #feddb6;
+  --color-dark-sable: #503009;
+  --font-julius: 'Julius Sans One', sans-serif;
+}
+
+@theme {
+  --animate-slow-spin: slow-spin 50s linear infinite;
+  @keyframes slow-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@layer {
+  @keyframes drift {
+    0% {
+      transform: translateX(0) scaleY(1);
+    }
+    50% {
+      transform: translateX(-55px) scaleY(1.5);
+    }
+    100% {
+      transform: translateX(0) scaleY(1);
+    }
+  }
+
+  .animate-waves use {
+    animation: drift 10s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .animate-waves use:nth-child(odd) {
+    animation-delay: -5s;
+    animation-duration: 14s;
+  }
+
+  .animate-waves use:nth-child(even) {
+    animation-delay: -2s;
+    animation-duration: 12s;
+  }
+}

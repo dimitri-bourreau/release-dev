@@ -1,16 +1,14 @@
 import { type Metadata } from 'next'
-
-import { Providers } from '@/app/providers'
-import { Layout } from '@/components/Layout'
-
 import '@/styles/tailwind.css'
+import { BackgroundLines } from '@/components/background-lines.component'
 
 export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
-    default: 'Dimitri Bourreau - Développeur front-end',
+    default: 'RELEASE - Sobriété du geste, excellence du résultat',
   },
-  description: "Je m'appelle Dimitri, je suis développeur front-end !",
+  description:
+    'Sobriété du geste, excellence du résultat — développement frontend React freelance',
 }
 
 export default function RootLayout({
@@ -19,13 +17,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
-      <body className="flex h-full bg-zinc-50 dark:bg-black">
-        <Providers>
-          <div className="flex w-full">
-            <Layout>{children}</Layout>
-          </div>
-        </Providers>
+    <html lang="en" className="font-julius h-full" suppressHydrationWarning>
+      <body className="bg-light-sable flex h-full text-black">
+        <div className="flex w-full">
+          <BackgroundLines />
+          {children}
+        </div>
       </body>
     </html>
   )
