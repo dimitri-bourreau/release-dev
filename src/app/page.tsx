@@ -10,15 +10,15 @@ export default async function Home() {
             RELEASE
           </h1>
           <h2 className="ml-30 hidden uppercase md:block">
-            Sobriété du geste, excellence du résultat — développement frontend
-            React freelance
+            Sobri&eacute;t&eacute; du geste, excellence du r&eacute;sultat —
+            d&eacute;veloppement frontend React freelance
           </h2>
           <h2 className="text-center text-xl md:hidden">
-            Sobriété du geste,
+            Sobri&eacute;t&eacute; du geste,
             <br />
-            excellence du résultat,
+            excellence du r&eacute;sultat,
             <br />
-            développement frontend React freelance
+            d&eacute;veloppement frontend React freelance
           </h2>
         </header>
       </section>
