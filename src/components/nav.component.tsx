@@ -14,8 +14,8 @@ export const Nav = () => {
           <Link href="https://github.com/dimitri-bourreau">GitHub</Link>
         </NavListLi>
         <NavListLi>
-          <Link href="https://www.linkedin.com/in/dimitri-bourreau/recent-activity/articles/">
-            <p className="text-center">Ma conception d'un frontend excellent</p>
+          <Link href="https://www.linkedin.com/pulse/quel-d%C3%A9veloppeur-je-suis-liste-de-mes-pr%C3%A9f%C3%A9rences-et-travail-dimitri-8v4ke">
+            <p className="text-center">Quel développeur je suis</p>
           </Link>
         </NavListLi>
         <NavListLi>
