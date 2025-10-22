@@ -1,11 +1,9 @@
-#header {
-  &::after {
-    content: 'RELEASE';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    font-size: 6rem;
-    color: #feddb6;
-    z-index: -1;
-  }
+#header::after {
+  content: 'RELEASE';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  font-size: 6rem;
+  color: #d6c0a7;
+  z-index: -1;
 }

@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 export const Nav = () => {
   return (
     <nav className="navigation left-0">
-      <ul className="text-dark-sable flex flex-col gap-2 uppercase">
+      <ul className="text-dark-sable flex flex-col items-center gap-2 uppercase md:items-start">
         <NavListLi>
           <Link href="https://www.linkedin.com/in/dimitri-bourreau/">
             LinkedIn
@@ -15,7 +15,7 @@ export const Nav = () => {
         </NavListLi>
         <NavListLi>
           <Link href="https://www.linkedin.com/in/dimitri-bourreau/recent-activity/articles/">
-            Ma conception d'un frontend excellent
+            <p className="text-center">Ma conception d'un frontend excellent</p>
           </Link>
         </NavListLi>
         <NavListLi>

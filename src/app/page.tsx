@@ -13,8 +13,10 @@ export default async function Home() {
             Sobriété du geste, excellence du résultat — développement frontend
             React freelance
           </h2>
-          <h2 className="text-center text-2xl md:hidden">
-            Sobriété du geste, excellence du résultat
+          <h2 className="text-center text-xl md:hidden">
+            Sobriété du geste,
+            <br />
+            excellence du résultat,
             <br />
             développement frontend React freelance
           </h2>
