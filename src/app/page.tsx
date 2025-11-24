@@ -5,20 +5,20 @@ export default async function Home() {
   return (
     <div className="items-between flex w-full flex-col justify-start p-10">
       <section className="items-between flex h-full w-full justify-center md:items-center">
-        <header className="md:-ml-1/3 flex h-3/5 flex-col justify-between md:justify-start">
+        <header className="md:-ml-1/3 flex h-3/5 flex-col justify-between md:justify-start items-center md:items-start">
           <h1 id="header" className="relative text-8xl">
             RELEASE
           </h1>
-          <h2 className="ml-30 hidden uppercase md:block">
-            Sobri&eacute;t&eacute; du geste, excellence du r&eacute;sultat —
-            d&eacute;veloppement frontend React freelance
+          <h2 className="text-xl ml-30 hidden uppercase md:block">
+            Refactoring et archi hexa : je vous aide à respecter vos délais et améliorer le confort de vos devs 🧘 <br />
+            <span className="text-sm">D&eacute;veloppement frontend React freelance</span>
           </h2>
-          <h2 className="text-center text-xl md:hidden">
-            Sobri&eacute;t&eacute; du geste,
+          <h2 className="text-center text-2xl md:hidden">
+            Refactoring et archi hexa :
             <br />
-            excellence du r&eacute;sultat,
+             je vous aide à respecter vos délais et améliorer le confort de vos devs 🧘
             <br />
-            d&eacute;veloppement frontend React freelance
+            <span className="text-sm">D&eacute;veloppement frontend React freelance</span>
           </h2>
         </header>
       </section>
