@@ -6,8 +6,18 @@ export const Nav = () => {
     <nav className="navigation left-0">
       <ul className="text-dark-sable flex flex-col items-center gap-2 uppercase md:items-start">
         <NavListLi>
+          <Link href="https://calendly.com/release-dimitri">
+            Calendly 🗓️
+          </Link>
+        </NavListLi>
+        <NavListLi>
           <Link href="https://www.linkedin.com/in/dimitri-bourreau/">
             LinkedIn
+          </Link>
+        </NavListLi>
+        <NavListLi>
+          <Link href="https://www.malt.fr/profile/dimitribourreau">
+            Malt
           </Link>
         </NavListLi>
         <NavListLi>
