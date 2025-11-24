@@ -60,9 +60,7 @@ export default function Banner() {
 
         <div className="w-3/4 flex-col p-10 pt-20">
           <h2 className="text-dark-sable text-4xl uppercase">
-            Sobri&eacute;t&eacute; du geste,
-            <br />
-            excellence du r&eacute;sultat
+            Je vous aide à respecter vos délais et améliorer le confort de vos devs 🧘
           </h2>
           <h2 className="text-dark-sable mt-6 text-2xl uppercase">
             d&eacute;veloppement frontend React freelance
@@ -70,7 +68,7 @@ export default function Banner() {
         </div>
       </section>
 
-      <section className="flex h-22 w-full items-center justify-end gap-10 bg-white/10 p-2 px-4">
+      <section className="flex h-22 w-full items-center justify-end gap-10 bg-white/30 p-2 px-4">
         <p>Ils m'ont fait confiance</p>
         <div className="flex gap-10 pr-10">
           {resume.map((img) => (
