@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import '@/styles/tailwind.css'
-import { BackgroundLines } from '@/components/background-lines.component'
+import { BackgroundDots } from '@/components/background-dots.component'
 
 export const metadata: Metadata = {
   title: {
@@ -17,12 +17,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="font-julius h-full" suppressHydrationWarning>
-      <body className="bg-light-sable flex h-full text-black">
-        <div className="flex w-full">
-          <BackgroundLines />
-          {children}
-        </div>
+    <html lang="fr" className="font-julius h-full" suppressHydrationWarning>
+      <body className="bg-light-sable text-dark-sable min-h-screen">
+        <BackgroundDots />
+        {children}
       </body>
     </html>
   )
