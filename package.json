@@ -15,7 +15,7 @@
     "@next/mdx": "16.0.7",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.18",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "@types/webpack-env": "^1.18.8",
