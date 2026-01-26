@@ -19,7 +19,7 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "@types/webpack-env": "^1.18.8",
-    "cheerio": "^1.1.2",
+    "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
     "fast-glob": "^3.3.3",
     "feed": "^5.2.0",
