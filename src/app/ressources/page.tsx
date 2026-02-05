@@ -26,6 +26,36 @@ const videos = [
     url: 'https://www.youtube.com/@t3dotgg',
     desc: 'Veille technique de qualité.',
   },
+  {
+    title: 'BastiUi',
+    url: 'https://www.youtube.com/@BastiUi',
+    desc: 'UI et veille.',
+  },
+  {
+    title: 'CodeAesthetic',
+    url: 'https://www.youtube.com/@CodeAesthetic',
+    desc: 'Vulgarisation excellente et graphique.',
+  },
+  {
+    title: 'cultrepo',
+    url: 'https://www.youtube.com/@cultrepo',
+    desc: 'Documentaires sur des projets open source.',
+  },
+  {
+    title: 'Deus Ex Silicium',
+    url: 'https://www.youtube.com/@dexsilicium',
+    desc: 'Vulgarisation hardware excellente.',
+  },
+  {
+    title: 'NetflixEngineering',
+    url: 'https://www.youtube.com/@NetflixEngineering',
+    desc: "Talks d'ingénieurs chez Netflix.",
+  },
+  {
+    title: 'yrougy',
+    url: 'https://www.youtube.com/@yrougy',
+    desc: "Veille autour de l'infra.",
+  },
 ]
 
 const books = [
