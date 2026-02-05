@@ -7,7 +7,7 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-border flex flex-wrap items-center border-t">
+    <footer className="border-border flex flex-wrap items-center border-y">
       {footerLinks.map((link) => (
         <a
           key={link.label}

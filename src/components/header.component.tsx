@@ -4,12 +4,13 @@ const navLinks = [
   { label: 'Accueil', href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Recommandations', href: '/recommandations' },
   { label: 'Contact', href: '/contact' },
 ]
 
 export function Header() {
   return (
-    <header className="border-border flex items-center border-b">
+    <header className="border-border flex items-center border-y">
       <Link
         href="/"
         className="border-border border-r px-6 py-4 text-sm font-bold tracking-widest uppercase"
