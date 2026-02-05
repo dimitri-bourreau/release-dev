@@ -7,6 +7,10 @@ const stack = [
   'Tailwind CSS',
   'Jest',
   'Playwright',
+  'TDD',
+  'Storybook',
+  'Claude Code',
+  'Firebase',
 ]
 
 export function StackPreview() {
@@ -17,10 +21,7 @@ export function StackPreview() {
       </h2>
       <div className="flex flex-wrap gap-1">
         {stack.map((tech) => (
-          <span
-            key={tech}
-            className="border-border border px-2 py-0.5 text-xs"
-          >
+          <span key={tech} className="border-border border px-2 py-0.5 text-xs">
             {tech}
           </span>
         ))}
