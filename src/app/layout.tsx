@@ -1,14 +1,19 @@
 import { type Metadata } from 'next'
+import { JetBrains_Mono } from 'next/font/google'
 import '@/styles/tailwind.css'
-import { BackgroundDots } from '@/components/background-dots.component'
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+})
 
 export const metadata: Metadata = {
   title: {
     template: '%s - RELEASE',
-    default: 'RELEASE - Sobriété du geste, excellence du résultat',
+    default: 'RELEASE',
   },
   description:
-    'Sobriété du geste, excellence du résultat — développement frontend React freelance',
+    'Développement frontend React freelance',
 }
 
 export default function RootLayout({
@@ -17,9 +22,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className="font-julius h-full" suppressHydrationWarning>
-      <body className="bg-light-sable text-dark-sable min-h-screen">
-        <BackgroundDots />
+    <html lang="fr" className={`${jetbrains.variable} h-full`} suppressHydrationWarning>
+      <body className="bg-bg text-fg font-mono min-h-screen">
         {children}
       </body>
     </html>

@@ -1,171 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 @import 'tailwindcss';
 
 @plugin '@tailwindcss/typography';
 
 @theme {
-  --color-light-sable: #faf5ed;
-  --color-sable: #feddb6;
-  --color-dark-sable: #503009;
-  --font-julius: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-bg: #f5f0e8;
+  --color-fg: #0a0a0a;
+  --color-border: rgba(10, 10, 10, 0.2);
+  --color-muted: rgba(10, 10, 10, 0.5);
+  --font-mono: var(--font-jetbrains);
 }
 
 @layer base {
   * {
     @apply antialiased;
   }
-  
+
   html {
     @apply h-full;
   }
-  
+
   body {
     @apply h-full;
-  }
-}
-
-@layer utilities {
-  @keyframes gradient-shift {
-    0%, 100% {
-      opacity: 1;
-      filter: brightness(1) hue-rotate(0deg);
-    }
-    25% {
-      opacity: 0.92;
-      filter: brightness(1.08) hue-rotate(3deg);
-    }
-    50% {
-      opacity: 0.95;
-      filter: brightness(1.05) hue-rotate(-2deg);
-    }
-    75% {
-      opacity: 0.93;
-      filter: brightness(1.07) hue-rotate(2deg);
-    }
-  }
-  
-  @keyframes grid-drift {
-    0% {
-      transform: translate(0, 0);
-      opacity: 1;
-    }
-    25% {
-      transform: translate(8px, 6px);
-      opacity: 0.9;
-    }
-    50% {
-      transform: translate(-6px, 8px);
-      opacity: 0.92;
-    }
-    75% {
-      transform: translate(6px, -6px);
-      opacity: 0.91;
-    }
-    100% {
-      transform: translate(0, 0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes float-1 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    25% {
-      transform: translate(8%, 6%) scale(1.06) rotate(1deg);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(-6%, -4%) scale(0.94) rotate(-0.6deg);
-      opacity: 0.85;
-    }
-    75% {
-      transform: translate(4%, -6%) scale(1.04) rotate(0.4deg);
-      opacity: 0.82;
-    }
-  }
-  
-  @keyframes float-2 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    33% {
-      transform: translate(-8%, 6%) scale(1.08) rotate(-0.8deg);
-      opacity: 0.75;
-    }
-    66% {
-      transform: translate(6%, -4%) scale(0.92) rotate(0.6deg);
-      opacity: 0.8;
-    }
-  }
-  
-  .animate-gradient-shift {
-    animation: gradient-shift 8s ease-in-out infinite;
-  }
-  
-  @keyframes wave-drift {
-    0% {
-      transform: translateX(0) scaleY(1);
-    }
-    50% {
-      transform: translateX(-30px) scaleY(1.2);
-    }
-    100% {
-      transform: translateX(0) scaleY(1);
-    }
-  }
-  
-  .animate-waves {
-    animation: wave-drift 15s ease-in-out infinite;
-  }
-  
-  .animate-wave-1 {
-    animation: wave-drift 12s ease-in-out infinite;
-  }
-  
-  .animate-wave-2 {
-    animation: wave-drift 14s ease-in-out infinite;
-    animation-delay: -2s;
-  }
-  
-  .animate-wave-3 {
-    animation: wave-drift 16s ease-in-out infinite;
-    animation-delay: -4s;
-  }
-  
-  .animate-wave-4 {
-    animation: wave-drift 13s ease-in-out infinite;
-    animation-delay: -1s;
-  }
-  
-  .animate-wave-5 {
-    animation: wave-drift 15s ease-in-out infinite;
-    animation-delay: -3s;
-  }
-  
-  .animate-wave-6 {
-    animation: wave-drift 18s ease-in-out infinite;
-    animation-delay: -5s;
-  }
-  
-  .animate-wave-7 {
-    animation: wave-drift 17s ease-in-out infinite;
-    animation-delay: -6s;
-  }
-  
-  .animate-wave-8 {
-    animation: wave-drift 19s ease-in-out infinite;
-    animation-delay: -7s;
-  }
-  
-  .animate-float-1 {
-    animation: float-1 10s ease-in-out infinite;
-  }
-  
-  .animate-float-2 {
-    animation: float-2 14s ease-in-out infinite;
-    animation-delay: -3s;
   }
 }
