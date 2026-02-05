@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: 'Contact' }
 
 export default function ContactPage() {
   return (
-    <div className="grid md:grid-cols-[1fr_1fr]">
+    <div className="border-border grid border-b md:grid-cols-[1fr_1fr]">
       <section className="border-border border-r p-8 md:p-12">
         <h1 className="mb-4 text-2xl font-bold tracking-tight uppercase md:text-4xl">
           Discutons de votre projet
