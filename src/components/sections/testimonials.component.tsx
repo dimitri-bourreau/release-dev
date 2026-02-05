@@ -1,7 +1,7 @@
 const testimonials = [
   {
-    author: 'Déromba Bissari',
-    role: 'Ingénieur Logiciels',
+    author: 'Déromba',
+    role: 'Développeur backend',
     quote:
       "Son ouverture à l'apprentissage et à la discussion est remarquable. Sa curiosité intellectuelle et son désir constant de s'améliorer font de lui un atout précieux pour toute équipe.",
   },
@@ -19,7 +19,7 @@ const testimonials = [
   },
   {
     author: 'Baptiste',
-    role: 'Développeur Front-End',
+    role: 'Développeur frontend',
     quote:
       "Grâce à lui, le nivelage des connaissances au sein d'une équipe se fait naturellement. Ses compétences vont bien au-delà du minimum fonctionnel. Je recommande Dimitri les yeux fermés.",
   },
