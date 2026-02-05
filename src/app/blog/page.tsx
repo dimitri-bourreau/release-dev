@@ -27,7 +27,7 @@ const posts = [
 export default function BlogPage() {
   return (
     <>
-      <h1 className="border-border border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
+      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
         Blog
       </h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3">

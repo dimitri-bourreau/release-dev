@@ -28,7 +28,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <>
-      <h1 className="border-border border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
+      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
         Services
       </h1>
       <div className="grid md:grid-cols-2">

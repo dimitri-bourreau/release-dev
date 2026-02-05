@@ -40,7 +40,7 @@ const testimonials = [
 export function TestimonialsSection() {
   return (
     <section className="border-border border-b">
-      <h2 className="border-border border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
+      <h2 className="border-border bg-fg/5 border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
         Témoignages
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3">
