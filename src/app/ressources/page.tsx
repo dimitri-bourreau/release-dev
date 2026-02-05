@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Recommandations' }
+export const metadata: Metadata = { title: 'Ressources' }
 
 const courses = [
   {
@@ -86,7 +86,7 @@ function Section({ title, items }: { title: string; items: Item[] }) {
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:bg-fg hover:text-bg group block cursor-pointer border-b border-r p-8 transition-colors"
+            className="border-border hover:bg-fg hover:text-bg group block cursor-pointer border-r border-b p-8 transition-colors"
           >
             <h3 className="mb-2 text-sm font-bold uppercase">{item.title}</h3>
             <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
@@ -99,11 +99,11 @@ function Section({ title, items }: { title: string; items: Item[] }) {
   )
 }
 
-export default function RecommandationsPage() {
+export default function RessourcesPage() {
   return (
     <>
       <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Recommandations
+        Ressources
       </h1>
       <Section title="Cours en ligne" items={courses} />
       <Section title="Vidéos" items={videos} />
