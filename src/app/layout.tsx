@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${jetbrains.variable} h-full`} suppressHydrationWarning>
-      <body className="bg-bg text-fg font-mono min-h-screen">
+      <body className="bg-bg text-fg font-mono grid min-h-screen grid-rows-[auto_1fr_auto]">
         <Header />
         <main>{children}</main>
         <Footer />
