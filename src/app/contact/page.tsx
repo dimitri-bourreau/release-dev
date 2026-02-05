@@ -15,17 +15,6 @@ export default function ContactPage() {
 
       <section className="flex flex-col">
         <a
-          href="https://calendly.com/release-dimitri"
-          className="border-border hover:bg-fg hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
-        >
-          <h2 className="mb-2 text-sm font-bold uppercase">
-            Réserver un appel
-          </h2>
-          <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
-            Prenez un créneau de 30 min pour discuter de votre projet.
-          </p>
-        </a>
-        <a
           href="mailto:dimitri@release-dev.com"
           className="border-border hover:bg-fg hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
         >
