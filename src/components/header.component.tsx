@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { MobileNav } from './mobile-nav.component'
 
 const navLinks = [
   { label: 'Accueil', href: '/' },
@@ -11,14 +12,15 @@ const navLinks = [
 
 export function Header() {
   return (
-    <header className="border-border flex items-center border-y">
+    <header className="border-border relative flex items-center border-y">
       <Link
         href="/"
         className="border-border border-r px-6 py-4 text-sm font-bold tracking-widest uppercase"
       >
         RELEASE
       </Link>
-      <nav className="flex">
+      <MobileNav />
+      <nav className="hidden md:flex">
         {navLinks.map((item) => (
           <Link
             key={item.href}
