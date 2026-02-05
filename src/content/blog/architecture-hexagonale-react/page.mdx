@@ -1,0 +1,102 @@
+> Cet article est théorique et se destine aux devs connaissant déjà les bases de React. Nous parlerons de rendu, d’hydratation et des Fibers.
+
+On parlait de Virtual DOM il y a longtemps, mais est-ce toujours actuel ? Si un composant est « rendu » que se passe-t-il en mémoire et visuellement dans le DOM ? Quelles sont les bonnes pratiques pour améliorer les performances liées aux rendus ? Est-ce que je pense que useMemo est à éviter ?
+
+Après 6 ans à utiliser React activement, j’ai décidé de m’engager fermement à en devenir expert. Autant vous en faire profiter !
+
+## Le DOM virtuel, c’est encore un truc aujourd’hui ?
+
+Oui, et c’est toujours le coeur de React !
+
+Seulement aujourd’hui nous ne comparons plus des noeuds du DOM entre eux pour identifier les différences à y appliquer.
+
+C’est un peu différent maintenant grâce aux Fibers de React, des objets regroupant les données d’un composant dont une référence vers le noeud DOM, son input et son output !
+
+- **Avant React 16, en 2017** React comparait les noeuds du DOM avec ceux d’un DOM virtuel, pour ensuite modifier les noeuds qui le nécessitaient. C’est bien, mais ça monopolisait le main thread, et certaines fonctionnalités étaient compliquées à implémenter avec cette structure.
+- **Avec React 16, en 2017** React compare dorénavant des Fibers. Il n’y avait pas d’avantage significatif en performances à passer aux Fibers, mais la conception de nouvelles fonctionnalités était simplifiée avec cette infrastructure. Avec React 16 sont apparu les Fragment et les Portal par exemple. Surtout, les Fibers ouvraient la porte à ce que les équipes de React considéraient être le futur : une hydratation asynchrone !
+- **Avec React 18, en 2022** L’hydratation est devenue asynchrone, il est devenu possible de prioriser, mettre en pause ou reprendre une hydratation ! Par exemple, si l’utilisateur complète un input pendant le rendu d’un formulaire, le rendu du formulaire sera mis en pause ou arrêté et le rendu de l’input prendra la priorité. J’y vois deux avantages principaux : une interface plus réactive aux actions de l’utilisateur, et une hydratation plus flexible, capable de libérer le main thread.
+
+> Je vous recommande la lecture de [cet article du blog des ingénieurs de Facebook](https://engineering.fb.com/2017/09/26/web/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/) à propos de la réécriture du coeur de React pour implémenter les Fibers !
+
+## Peut-on nous-même manipuler cette hydratation et la prioriser ou la mettre en pause ?
+
+L’arrivée des Fibers se voulait transparente pour les devs.
+
+On ne peut pas manuellement mettre en pause une hydratation, mais on peut indiquer ce qui n’est pas urgent à hydrater, ce qui peut attendre la priorité d’un autre travail.
+
+Concrètement, l’action passée en callback à startTransition est considérée comme non-urgente. Pendant l’exécution de ce callback les autres changements d’état seront prioritaires. Si l’utilisateur complète un input pendant l’exécution d’une action, le rendu de l’input sera mis en marche sans attendre la fin de l’action.
+
+Mon point de vue : comme useMemo, cette fonctionnalité n’est à utiliser que pour répondre à un problème. Et la majorité du temps, ce n’est ni nécessaire ni utile.
+
+## Quand est-ce que le rendu d’un composant intervient ?
+
+Le rendu d’un composant est planifié :
+
+- Lors de son affichage initial.
+- Lorsqu’un de ses états (state) est modifié. Le rendu est annulé si sa nouvelle valeur correspond à la précédente
+- Lorsqu’un de ses props est modifié. Le rendu est annulé si sa nouvelle valeur correspond à la précédente
+
+Je dis « planifié » parce que s’ensuit une étude de la nécessité du rendu. Si ce nouveau rendu s’avère inutile, aucune modification n’est initialisée, le contenu du DOM reste tel quel.
+
+## Si un composant est re-rendu, ces enfants le sont forcément eux aussi ?
+
+Non ! Et même que depuis peu, React a optimisé ce sujet avec son compilateur qui automatiquement améliore la mémoïsation de l’application.
+
+Gardons le sujet du compilateur pour plus tard. Dans un premier temps, comment manuellement s’assurer que l’enfant d’un composant re-rendu ne l’est pas lui-même ?
+
+- Contenir l’enfant dans un React.memo et conserver les mêmes props (shallow equality).
+- Contenir l’enfant dans un React.memo et confier à ce memo en deuxième argument un callback retournant true. React.memo prend en deuxième argument un callback retournant un booléen. Ce booléen indique si les props précédentes sont identiques aux nouvelles. En d’autres termes, retourner true ici empêche le nouveau rendu du composant !
+
+Attention : si un Context est mis à jour et que sa valeur change, l’enfant sera rendu de nouveau !
+
+## L’automatisation du récent React Compiler
+
+Ce compilateur, optionnel, optimise l’application React au moment du build et s’attaque à automatiser l’intégration de la mémoïsation. En d’autres termes, il rend inutile l’intégration manuelle de React.memo, useCallback et useMemo.
+
+Donc, si on utilise ce compilateur, les rendus sont automatiquement optimisés !
+
+## useMemo, oubliez !
+
+Si j’ai déjà fait une revue de votre code, c’est probable que vous ayez eu droit au commentaire suivant :
+
+> useMemo ou useCallback, je recommande vraiment de les utiliser en dernier recours. Il sont utiles lorsqu'il y a une anomalie de performance, lorsque des calculs lourds sont réalisés. Sinon, c'est une source de bug assez fréquente, une complexité sans valeur ajoutée. [Même la documentation officielle le dit !](https://react.dev/reference/react/useMemo)
+
+Maintenant avec le compilateur de React, plus d’excuses !
+
+## Et pour finir, Next !
+
+Next.js a une utilisation intéressante de React du point de vue du rendu.
+
+Sans parler des composants rendus côté serveur, de SSR ou de SSG, j’aimerais m’arrêter sur un sujet précis : le streaming.
+
+On a vu que les Fibers permettaient d’identifier précisément des noeuds de l’interface pour y trouver les différences à appliquer.
+
+Tout ça se passe côté client normalement : l’hydratation ne se passe jamais côté serveur. Autrement dit, tout se passe via du JavaScript côté client.
+
+Next, par défaut, envoie un HTML sans le JS nécessaire pour l’hydrater, travaille côté serveur cette l’hydratation, puis envoie côté client les différences à appliquer. Résultat : l’utilisateur voit l’interface plus vite et a le sentiment que le site est plus rapide et fluide.
+
+> Note : ce n’est pas l’idéal pour tous les cas de figure, il y a des régions du monde seulement couvertes par de la 2G ou nous préfèrerons d’autres approches en optimisant le nombre de requêtes et la taille des bundles.
+
+## Conclusion
+
+React est un outil mature qui s’améliore continuellement.
+
+Comme JavaScript, React permet beaucoup de choses. Pour les devs consciencieux, c’est un outil formidable facilitant le travail pour tomber juste par rapport aux besoins parfois très fins et complexes de certains projets.
+
+C’est un plaisir de découvrir cette techno jusqu’aux tréfonds de son code source, parce que le code est élégant, lisible, parce que la documentation est exceptionnellement agréable et riche et enfin parce que la communauté de devs est imposante et active.
+
+## Sources
+
+- [React Compiler](https://react.dev/learn/react-compiler)
+- [React Fiber Architecture](https://github.com/acdlite/react-fiber-architecture)
+- [React v16.0](https://legacy.reactjs.org/blog/2017/09/26/react-v16.0.html)
+- [React v18](https://react.dev/blog/2022/03/29/react-v18)
+- [startTransition](https://react.dev/reference/react/startTransition)
+
+## Petite note avancée : les bitmasks des Fibers, quelle bonne idée !
+
+En étudiant le fonctionnement interne de React, j’ai découvert que React analysait si un objet Fiber nécessitait un nouveau rendu via des bitmasks. Et j’ai trouvé l’approche très intéressante !
+
+[ReactFiberLane.js](https://github.com/facebook/react/blob/8d7b5e490320732f40d9c3aa4590b5b0ae5116f5/packages/react-reconciler/src/ReactFiberLane.js#L41)
+
+Cette utilisation des bitmasks permet à moindre coût de précisément définir quelles tâches restent à faire, puis de les réaliser par ordre de priorité. Tout ça avec une seule variable, magique !

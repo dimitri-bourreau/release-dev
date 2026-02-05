@@ -1,30 +1,12 @@
 import { type Metadata } from 'next'
 import Link from 'next/link'
+import { getBlogPosts } from '@/data/blog'
 
 export const metadata: Metadata = { title: 'Blog' }
 
-const posts = [
-  {
-    slug: 'quel-developpeur-je-suis',
-    title: 'Quel développeur je suis',
-    date: '2024-06-15',
-    excerpt: "Ce document explore quel développeur je suis, comment je collabore avec les équipes, en détaillant notamment mes préférences de travail.",
-  },
-  {
-    slug: 'refactoring-guide-pratique',
-    title: 'Refactoring : guide pratique',
-    date: '2024-03-10',
-    excerpt: "Comment aborder un refactoring sereinement : par où commencer, quoi mesurer, quand s'arrêter.",
-  },
-  {
-    slug: 'tests-frontend-strategie',
-    title: 'Stratégie de tests frontend',
-    date: '2024-01-22',
-    excerpt: "Jest pour la logique, Playwright pour les parcours critiques. Ma stratégie de tests en détail.",
-  },
-]
+export default async function BlogPage() {
+  const posts = await getBlogPosts()
 
-export default function BlogPage() {
   return (
     <>
       <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
