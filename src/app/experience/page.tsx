@@ -212,9 +212,9 @@ export default function ExperiencePage() {
               {exp.blogSlug && exp.blogTitle && (
                 <Link
                   href={`/blog/${exp.blogSlug}`}
-                  className="border-border hover:bg-fg hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:flex"
+                  className="border-border hover:bg-fg hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:block"
                 >
-                  <span>[+]</span>
+                  <span>[+] </span>
                   <span className="max-w-48">{exp.blogTitle}</span>
                 </Link>
               )}
