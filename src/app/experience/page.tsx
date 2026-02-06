@@ -16,7 +16,7 @@ type Experience = {
 
 const experiences: Experience[] = [
   {
-    role: 'Ingénieur logiciel',
+    role: 'Développeur fullstack',
     company: 'VISEO',
     location: 'Grenoble · Sur site',
     period: 'janv. 2025 – juil. 2025',
