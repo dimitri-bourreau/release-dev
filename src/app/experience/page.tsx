@@ -202,7 +202,7 @@ export default function ExperiencePage() {
                 {exp.blogSlug && exp.blogTitle && (
                   <Link
                     href={`/blog/${exp.blogSlug}`}
-                    className="border-border text-muted hover:text-fg hover:border-fg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
+                    className="border-border hover:bg-fg hover:text-bg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
                   >
                     <span>[+]</span>
                     <span>{exp.blogTitle}</span>
@@ -212,7 +212,7 @@ export default function ExperiencePage() {
               {exp.blogSlug && exp.blogTitle && (
                 <Link
                   href={`/blog/${exp.blogSlug}`}
-                  className="border-border text-muted hover:text-fg hover:border-fg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:flex"
+                  className="border-border hover:bg-fg hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:flex"
                 >
                   <span>[+]</span>
                   <span className="max-w-48">{exp.blogTitle}</span>

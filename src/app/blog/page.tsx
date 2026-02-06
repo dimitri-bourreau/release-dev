@@ -14,7 +14,7 @@ export default async function BlogPage() {
         <a
           href="/feed.xml"
           rel="noopener noreferrer"
-          className="border-border text-muted hover:border-fg hover:text-fg border px-3 py-1.5 text-xs transition-colors"
+          className="border-border hover:bg-fg hover:text-bg border px-3 py-1.5 text-xs transition-colors"
           title="RSS Feed"
         >
           [RSS]
