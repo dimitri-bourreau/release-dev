@@ -1,0 +1,89 @@
+Quand je suis arrivé chez Artelia en juillet 2022, l'application Next.js de gestion documentaire souffrait. Certaines pages mettaient plus de dix secondes à charger. 14 mois plus tard, on était passé sous la seconde sur ces écrans critiques. Mais le vrai apprentissage de cette mission n'était pas technique — il était humain.
+
+## L'état des lieux
+
+L'application avait grandi sans structure claire. Redux gérait un state global devenu tentaculaire. Pas de tests. Pas de Storybook. Chaque modification était un pari. Les développeurs passaient plus de temps à craindre les régressions qu'à construire.
+
+Les temps de chargement oscillaient entre 4 et 12 secondes selon les pages, avec des pics au-delà de 10 secondes sur les écrans les plus lourds — notamment ceux qui embarquaient des rapports PowerBI en iframe.
+
+## Le chantier technique
+
+### Repenser la gestion d'état
+
+J'ai retiré Redux. Complètement. Pour le remplacer par React Query.
+
+Ce choix a simplifié drastiquement le code. Plus de reducers, plus d'actions, plus de state global à synchroniser manuellement. React Query gère le cache, les refetch, les états de chargement. Le code est devenu déclaratif et prévisible.
+
+### Traquer les problèmes de performance
+
+Le travail de performance a été méthodique : identifier les rerenders inutiles, optimiser les appels API vers notre backend, et surtout gérer les iframes PowerBI qui plombaient l'expérience.
+
+Sur les pages les plus critiques, on est passé de plus de 10 secondes à moins d'une seconde. Sur l'ensemble de l'application, les temps de chargement sont passés de 4-12 secondes à 1-3 secondes. Moins spectaculaire qu'un "×10" marketing, mais un gain réel et perceptible pour les utilisateurs.
+
+### Architecture hexagonale
+
+J'ai restructuré le code en séparant le domaine métier de l'infrastructure. Les composants React ne connaissent plus les détails d'implémentation des APIs. Le code est devenu testable, les changements isolés, et l'équipe pouvait avancer en parallèle sans se marcher dessus.
+
+### Construire une vraie stratégie de tests
+
+Il n'y avait rien. J'ai mis en place trois niveaux de tests :
+
+**Tests unitaires** pour la logique métier pure — les règles de gestion, les transformations de données, tout ce qui ne dépend pas de React.
+
+**Storybook** pour visualiser et documenter les composants de manière isolée.
+
+**Tests end-to-end** avec une particularité importante : j'ai fait en sorte qu'on puisse tester le frontend sans aucun serveur backend. C'était essentiel. Tester front et back ensemble, oui, pour valider l'intégration. Mais pouvoir tester le front indépendamment permettait des cycles de feedback rapides et une vraie confiance dans nos déploiements.
+
+## Les personnes qui m'ont marqué
+
+### Thomas — l'ami
+
+Thomas était développeur junior quand je suis arrivé. Extrêmement motivé, prêt à s'investir. On a passé des heures à parler craft, à lire ensemble, à débattre de conférences. Je l'ai accompagné dans sa montée en compétences, et il s'est lancé en freelance depuis.
+
+Mais surtout, on est devenus amis proches. Cette mission m'a rappelé que le travail peut créer des liens qui dépassent le cadre professionnel.
+
+### Aurélien — le diplomate
+
+Aurélien était freelance côté backend. Excellent développeur, mais c'est son attitude qui m'a le plus appris.
+
+Il mettait naturellement de l'eau dans son vin. Parfois, son manque de positionnement clair sur des problématiques simples m'agaçait intérieurement. Pourquoi ne pas trancher ? Pourquoi rester dans le flou ?
+
+Avec le recul, je me suis beaucoup inspiré de lui. Son éloquence, son charisme, sa capacité à naviguer les situations tendues. Il m'a appris que la complaisance n'est pas forcément de la manipulation. Que cette attitude peut être rassurante, voire stabilisatrice pour une équipe. Tout le monde n'a pas besoin qu'on tranche dans le vif à chaque décision.
+
+### Yvon — le protecteur
+
+Yvon était CTO. Il m'a aussi agacé parfois — son manque apparent de prise de décision me frustrait.
+
+Mais il était profondément humain. Et j'ai compris plus tard qu'il portait énormément de pression sur ses épaules pour préserver l'équipe. Il absorbait les tensions venues d'en haut pour qu'on puisse travailler sereinement. Ce n'est pas du leadership visible, mais c'est du leadership réel.
+
+### Olivier — le leader
+
+Olivier était Product Owner. Excellente éloquence, charisme naturel, toujours à l'écoute des problèmes techniques — mais toujours prêt à les challenger pour trouver le juste milieu entre idéal technique et réalité produit.
+
+Il était inépuisable. Je l'admirais pour ça. Il incarnait ce que j'aimerais devenir côté soft skills : quelqu'un qui embarque les gens sans les écraser.
+
+## Ce que j'ai appris sur moi-même
+
+### Mes code reviews étaient trop rigides
+
+Au début, je voulais que chaque PR respecte mes standards. Chaque écart me frustrait. J'ai réalisé que je créais de la friction inutile.
+
+Aujourd'hui, je distingue l'essentiel du préférentiel. Un bug potentiel ? Non négociable. Un nommage que j'aurais fait différemment ? Je laisse passer, ou je suggère sans insister.
+
+Le code parfait n'existe pas. Le code qui fonctionne et que l'équipe comprend, oui.
+
+### Je m'attachais trop au projet
+
+J'ai mis beaucoup de moi dans cette refonte. Trop, peut-être. Quand on investit autant, on finit par s'identifier au code qu'on écrit.
+
+J'ai appris à lâcher prise. Le projet continue sans moi. D'autres feront des choix différents. C'est normal, c'est sain.
+
+Livrer un système maintenable et une équipe autonome vaut mieux que d'être indispensable.
+
+## Ce que j'en retiens
+
+L'excellence technique ne suffit pas. Savoir refactorer une app, c'est bien. Savoir embarquer une équipe, accepter l'imperfection, apprendre des autres, et construire pour ceux qui viendront après, c'est mieux.
+
+Chez Artelia, j'ai significativement amélioré les performances d'une application. Mais j'ai surtout rencontré des personnes qui m'ont fait évoluer. Thomas m'a rappelé pourquoi j'aime transmettre. Aurélien m'a appris la diplomatie. Yvon m'a montré ce qu'est protéger une équipe. Olivier m'a donné un modèle de leadership.
+
+14 mois. Une app transformée. Et moi avec.

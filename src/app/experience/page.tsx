@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = { title: 'Expérience' }
 
@@ -9,6 +10,8 @@ type Experience = {
   period: string
   bullets: string[]
   tags: string[]
+  blogSlug?: string
+  blogTitle?: string
 }
 
 const experiences: Experience[] = [
@@ -22,7 +25,13 @@ const experiences: Experience[] = [
       "Rédaction d'une documentation technique exhaustive, adoptée comme référence interne, facilitant la transition et la collaboration entre équipes.",
       "Amélioration de la dynamique d'équipe et de la collaboration grâce à une approche technique fédératrice.",
     ],
-    tags: ['React.js', 'TypeScript', 'GitLab', 'Jest', 'Architecture hexagonale'],
+    tags: [
+      'React.js',
+      'TypeScript',
+      'GitLab',
+      'Jest',
+      'Architecture hexagonale',
+    ],
   },
   {
     role: 'Développeur front-end freelance',
@@ -46,6 +55,9 @@ const experiences: Experience[] = [
       'Collaboration avec les équipes pour intégrer des améliorations backend après le succès du refactoring front.',
     ],
     tags: ['React.js', 'TypeScript', 'Storybook', 'Jest', 'React Query'],
+    blogSlug: '14-mois-chez-artelia',
+    blogTitle:
+      "Ce que 14 mois chez Artelia m'ont appris sur le craft... et sur moi-même",
   },
   {
     role: 'Développeur front-end freelance',
@@ -56,7 +68,13 @@ const experiences: Experience[] = [
       "Développement d'un POC en React et Tailwind pour un chat décentralisé, validant la faisabilité technique avec le protocole Matrix.",
       "Collaboration avec la communauté open source pour intégrer un SDK Matrix, renforçant l'innovation dans un environnement startup.",
     ],
-    tags: ['React.js', 'TailwindCSS', 'Matrix', 'TypeScript', 'Architecture hexagonale'],
+    tags: [
+      'React.js',
+      'TailwindCSS',
+      'Matrix',
+      'TypeScript',
+      'Architecture hexagonale',
+    ],
   },
   {
     role: 'Développeur front-end freelance',
@@ -65,7 +83,7 @@ const experiences: Experience[] = [
     period: 'mars 2022 – avr. 2022',
     bullets: [
       "Contribution bénévole à la conception technique d'une application React pour un projet humanitaire, posant des bases solides pour un développement autonome.",
-      "Leadership technique dans un contexte urgent, structurant le projet pour une application évolutive et maintenable.",
+      'Leadership technique dans un contexte urgent, structurant le projet pour une application évolutive et maintenable.',
     ],
     tags: ['React.js', 'TypeScript', 'HTML5', 'CSS3', 'Figma'],
   },
@@ -152,28 +170,54 @@ export default function ExperiencePage() {
         </h2>
         <div>
           {experiences.map((exp) => (
-            <div key={`${exp.company}-${exp.period}`} className="border-border border-b p-8">
-              <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="text-sm font-bold uppercase">{exp.role}</h3>
-                <span className="text-muted text-xs">
-                  {exp.company}
-                  {exp.location ? ` · ${exp.location}` : ''}
-                  {' | '}
-                  {exp.period}
-                </span>
-              </div>
-              <ul className="text-muted mb-4 space-y-1 text-xs leading-relaxed">
-                {exp.bullets.map((b) => (
-                  <li key={b}>— {b}</li>
-                ))}
-              </ul>
-              <div className="flex flex-wrap gap-1">
-                {exp.tags.map((t) => (
-                  <span key={t} className="border-border border px-2 py-0.5 text-xs">
-                    {t}
+            <div
+              key={`${exp.company}-${exp.period}`}
+              className="border-border flex flex-col border-b p-8 md:flex-row md:gap-8"
+            >
+              <div className="flex-1">
+                <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 className="text-sm font-bold uppercase">{exp.role}</h3>
+                  <span className="text-muted text-xs">
+                    {exp.company}
+                    {exp.location ? ` · ${exp.location}` : ''}
+                    {' | '}
+                    {exp.period}
                   </span>
-                ))}
+                </div>
+                <ul className="text-muted mb-4 space-y-1 text-xs leading-relaxed">
+                  {exp.bullets.map((b) => (
+                    <li key={b}>— {b}</li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-1">
+                  {exp.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="border-border border px-2 py-0.5 text-xs"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                {exp.blogSlug && exp.blogTitle && (
+                  <Link
+                    href={`/blog/${exp.blogSlug}`}
+                    className="border-border text-muted hover:text-fg hover:border-fg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
+                  >
+                    <span>[+]</span>
+                    <span>{exp.blogTitle}</span>
+                  </Link>
+                )}
               </div>
+              {exp.blogSlug && exp.blogTitle && (
+                <Link
+                  href={`/blog/${exp.blogSlug}`}
+                  className="border-border text-muted hover:text-fg hover:border-fg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:flex"
+                >
+                  <span>[+]</span>
+                  <span className="max-w-48">{exp.blogTitle}</span>
+                </Link>
+              )}
             </div>
           ))}
         </div>
@@ -189,7 +233,10 @@ export default function ExperiencePage() {
               <h3 className="mb-3 text-sm font-bold uppercase">{category}</h3>
               <div className="flex flex-wrap gap-1">
                 {items.map((item) => (
-                  <span key={item} className="border-border border px-2 py-0.5 text-xs">
+                  <span
+                    key={item}
+                    className="border-border border px-2 py-0.5 text-xs"
+                  >
                     {item}
                   </span>
                 ))}
