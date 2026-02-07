@@ -56,9 +56,9 @@ const experiences: Experience[] = [
       'Collaboration avec les équipes pour intégrer des améliorations backend après le succès du refactoring front.',
     ],
     tags: ['React.js', 'TypeScript', 'Storybook', 'Jest', 'React Query'],
-    blogSlug: '14-mois-de-refactoring',
+    blogSlug: 'refonte-next-en-6-mois',
     blogTitle:
-      "14 mois de refactoring : ce que j'ai appris sur le craft... et sur moi-même",
+      "Refonte Next.js en 6 mois : archi hexa, React Query, et surtout l'humain !",
   },
   {
     role: 'Développeur front-end freelance',

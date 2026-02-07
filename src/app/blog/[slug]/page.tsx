@@ -31,9 +31,11 @@ export default async function BlogPostPage({ params }: Props) {
         <h1 className="text-lg font-bold tracking-widest uppercase">{post.title}</h1>
         <time className="text-muted mt-1 block text-xs">{post.date}</time>
       </header>
-      <article className="prose prose-sm prose-pre:text-base mx-auto max-w-prose p-8 md:p-12">
-        <Content />
-      </article>
+      <div className="blog-gradient relative flex justify-center">
+        <article className="bg-bg prose prose-sm prose-pre:text-base w-full max-w-prose p-8 md:p-12">
+          <Content />
+        </article>
+      </div>
     </>
   )
 }
