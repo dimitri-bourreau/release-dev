@@ -68,3 +68,32 @@
 .prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-weight: 900;
 }
+
+/* Flight Radar Animations */
+.radar-sweep-container {
+  animation: radar-rotate 6s linear infinite;
+}
+
+@keyframes radar-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.blip-ping {
+  animation: blip-pulse 3s ease-out infinite;
+}
+
+@keyframes blip-pulse {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
