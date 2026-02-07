@@ -1,6 +1,6 @@
 import { HeroSection } from '@/components/sections/hero.component'
 import { ServicesPreview } from '@/components/sections/services-preview.component'
-import { TopArticles } from '@/components/sections/location-preview.component'
+import { TopArticles } from '@/components/sections/top-articles.component'
 import { FlightRadar } from '@/components/flight-radar.component'
 
 export default function Home() {
