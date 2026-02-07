@@ -116,16 +116,16 @@ type Item = { title: string; url: string; desc: string }
 
 function Section({ title, items }: { title: string; items: Item[] }) {
   return (
-    <section>
+    <section className="border-border border-b">
       <SectionTitle>{title}</SectionTitle>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3">
+      <div className="-mt-px grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {items.map((item) => (
           <a
             key={item.url}
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:bg-accent hover:text-bg group block cursor-pointer border-r border-b p-8 transition-colors"
+            className="border-border hover:bg-accent hover:text-bg group -mb-px -mr-px block cursor-pointer border-r border-b p-8 transition-colors"
           >
             <h3 className="mb-2 text-sm font-bold uppercase">{item.title}</h3>
             <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
