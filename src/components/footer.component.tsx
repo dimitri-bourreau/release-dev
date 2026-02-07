@@ -19,7 +19,7 @@ export function Footer() {
         <a
           key={link.label}
           href={link.href}
-          className="border-border hover:bg-fg hover:text-bg cursor-pointer border-r px-4 py-3 text-xs tracking-wider uppercase transition-colors"
+          className="border-border hover:bg-accent hover:text-bg cursor-pointer border-r px-4 py-3 text-xs tracking-wider uppercase transition-colors"
         >
           {link.label}
         </a>
@@ -30,7 +30,7 @@ export function Footer() {
             {link.label}
           </Link>
         ))}
-        <span>© 2026 RELEASE</span>
+        <span>© 2026 Dimitri Bourreau</span>
       </span>
     </footer>
   )

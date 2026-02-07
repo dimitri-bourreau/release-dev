@@ -1,31 +1,35 @@
-const approach = [
+const differentiators = [
   {
-    title: 'Revues de code',
-    desc: 'Partager la connaissance, garantir que chaque merge améliore le projet. Commentaires bienveillants, non-bloquants explicites, zéro égo.',
+    title: 'Architecture hexagonale',
+    desc: "J'applique les principes de l'architecture hexagonale côté frontend : ports, adapters, découplage strict entre UI et logique métier.",
+    color: 'border-l-accent',
   },
   {
-    title: 'Conception',
-    desc: 'Petits commits clairs, interface séparée de la logique métier, TypeScript strict, tests auto, documentation accessible à tous.',
+    title: 'Legacy & refactoring',
+    desc: 'Je prends plaisir à moderniser des codebases vieillissantes. Migration progressive, zéro régression, résultats mesurables.',
+    color: 'border-l-secondary',
   },
   {
-    title: 'Communication',
-    desc: "Directe et factuelle. Je signale les blocages vite, je ne sais pas tout et je l'assume. La réussite de l'équipe prime.",
+    title: 'Mentorat',
+    desc: 'Accompagner les développeurs juniors et confirmés fait partie de mon quotidien. Revues de code bienveillantes, pair programming, montée en compétences.',
+    color: 'border-l-tertiary',
   },
   {
-    title: 'Planification',
-    desc: 'Suivi du temps, bilans quotidiens, concentration protégée. Chaque fin de journée : résumé + propositions pour le lendemain.',
+    title: 'Documentation',
+    desc: 'Je rédige une documentation technique claire et accessible. ADR, guides, onboarding : chaque décision est tracée et partagée.',
+    color: 'border-l-accent',
   },
 ]
 
 export function ApproachSection() {
   return (
     <section>
-      <h2 className="border-border bg-fg/5 border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
-        Comment je travaille
+      <h2 className="border-border bg-fg/5 border-b border-l-4 border-l-secondary px-8 py-4 text-xs font-bold tracking-widest uppercase">
+        Ce qui me différencie
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4">
-        {approach.map((a) => (
-          <div key={a.title} className="border-border border-r border-b p-6">
+        {differentiators.map((a) => (
+          <div key={a.title} className={`border-border border-r border-b border-l-4 ${a.color} p-6`}>
             <h3 className="mb-2 text-sm font-bold uppercase">{a.title}</h3>
             <p className="text-muted text-xs leading-relaxed">{a.desc}</p>
           </div>

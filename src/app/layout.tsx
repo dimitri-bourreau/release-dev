@@ -11,10 +11,10 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - RELEASE',
-    default: 'RELEASE',
+    template: '%s - Dimitri Bourreau',
+    default: 'Dimitri Bourreau',
   },
-  description: 'Développement fullstack React & Node.js freelance',
+  description: 'Développeur frontend React & Next.js freelance',
 }
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${jetbrains.variable} h-full`} suppressHydrationWarning>
-      <body className="bg-bg text-fg font-mono grid min-h-screen grid-rows-[auto_1fr_auto] overflow-x-hidden">
+      <body className="bg-bg text-fg font-mono grid min-h-screen max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden">
         <Header />
         <main>{children}</main>
         <Footer />

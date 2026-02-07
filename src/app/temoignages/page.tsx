@@ -1,4 +1,10 @@
-const colors = ['border-l-accent', 'border-l-secondary', 'border-l-tertiary']
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = { title: 'Témoignages' }
+
+const colors = ['border-accent', 'border-secondary', 'border-tertiary']
+const bgColors = ['bg-accent/5', 'bg-secondary/5', 'bg-tertiary/5']
+const textColors = ['text-accent', 'text-secondary', 'text-tertiary']
 
 const testimonials = [
   {
@@ -39,29 +45,37 @@ const testimonials = [
   },
 ]
 
-export function TestimonialsSection() {
+export default function TemoignagesPage() {
   return (
-    <section className="border-border border-b">
-      <h2 className="border-border bg-fg/5 border-b border-l-4 border-l-tertiary px-8 py-4 text-xs font-bold tracking-widest uppercase">
+    <>
+      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
         Témoignages
-      </h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3">
+      </h1>
+      <div className="grid gap-6 p-8 md:grid-cols-2">
         {testimonials.map((t, i) => (
           <div
             key={t.author}
-            className="border-border border-r border-b p-6 md:border-b-0"
+            className={`border-l-4 ${colors[i % 3]} ${bgColors[i % 3]} p-8`}
           >
-            <blockquote className={`border-l-2 pl-4 ${colors[i % colors.length]}`}>
-              <p className="mb-2 text-xs leading-relaxed">
-                &quot;{t.quote}&quot;
-              </p>
-              <cite className="text-muted text-xs not-italic">
-                {t.author} — {t.role}
-              </cite>
-            </blockquote>
+            <p className="mb-6 text-lg leading-relaxed italic">
+              &ldquo;{t.quote}&rdquo;
+            </p>
+            <div className="flex items-center gap-3">
+              <div
+                className={`flex h-10 w-10 items-center justify-center text-sm font-bold ${colors[i % 3]} border ${bgColors[i % 3]}`}
+              >
+                {t.author[0]}
+              </div>
+              <div>
+                <p className={`text-sm font-bold ${textColors[i % 3]}`}>
+                  {t.author}
+                </p>
+                <p className="text-muted text-xs">{t.role}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
-    </section>
+    </>
   )
 }

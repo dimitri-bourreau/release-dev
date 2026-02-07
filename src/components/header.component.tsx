@@ -6,6 +6,7 @@ const navLinks = [
   { label: 'Dimitri', href: '/dimitri' },
   { label: 'Expérience', href: '/experience' },
   { label: 'Projets', href: '/projets' },
+  { label: 'Témoignages', href: '/temoignages' },
   { label: 'Blog', href: '/blog' },
   { label: 'Ressources', href: '/ressources' },
   { label: 'Contact', href: '/contact' },
@@ -18,15 +19,15 @@ export function Header() {
         href="/"
         className="border-border border-r px-6 py-4 text-sm font-bold tracking-widest uppercase"
       >
-        RELEASE
+        DIMITRI BOURREAU
       </Link>
       <MobileNav />
-      <nav className="hidden md:flex">
+      <nav className="hidden overflow-hidden md:flex">
         {navLinks.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className="border-border hover:bg-fg hover:text-bg cursor-pointer border-r px-5 py-4 text-xs tracking-wider uppercase transition-colors"
+            className="border-border hover:bg-accent hover:text-bg cursor-pointer border-r px-3 py-4 text-xs tracking-wider uppercase transition-colors lg:px-5"
           >
             {item.label}
           </Link>

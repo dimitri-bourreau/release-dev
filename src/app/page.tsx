@@ -1,19 +1,17 @@
 import { HeroSection } from '@/components/sections/hero.component'
 import { ServicesPreview } from '@/components/sections/services-preview.component'
-import { StackPreview } from '@/components/sections/stack-preview.component'
-import { ApproachSection } from '@/components/sections/approach.component'
-import { TestimonialsSection } from '@/components/sections/testimonials.component'
+import { TopArticles } from '@/components/sections/location-preview.component'
 
 export default function Home() {
   return (
     <>
-      <div className="grid md:grid-cols-[2fr_1fr]">
-        <HeroSection />
-        <ServicesPreview />
-        <StackPreview />
+      <div className="flex h-full flex-col justify-between">
+        <div>
+          <HeroSection />
+          <ServicesPreview />
+        </div>
+        <TopArticles />
       </div>
-      <ApproachSection />
-      <TestimonialsSection />
     </>
   )
 }
