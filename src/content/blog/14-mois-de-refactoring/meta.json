@@ -1,0 +1,5 @@
+{
+  "title": "14 mois de refactoring : ce que j'ai appris sur le craft... et sur moi-même",
+  "date": "2025-09-19",
+  "excerpt": "L'application Next.js de gestion documentaire souffrait. Certaines pages mettaient plus de dix secondes à charger. 14 mois plus tard, on était passé sous la seconde sur ces écrans critiques. Mais le vrai apprentissage de cette mission n'était pas technique — il était humain."
+}

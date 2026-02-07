@@ -56,9 +56,9 @@ const experiences: Experience[] = [
       'Collaboration avec les équipes pour intégrer des améliorations backend après le succès du refactoring front.',
     ],
     tags: ['React.js', 'TypeScript', 'Storybook', 'Jest', 'React Query'],
-    blogSlug: '14-mois-chez-artelia',
+    blogSlug: '14-mois-de-refactoring',
     blogTitle:
-      "Ce que 14 mois chez Artelia m'ont appris sur le craft... et sur moi-même",
+      "14 mois de refactoring : ce que j'ai appris sur le craft... et sur moi-même",
   },
   {
     role: 'Développeur front-end freelance',
