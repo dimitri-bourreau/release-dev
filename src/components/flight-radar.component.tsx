@@ -197,10 +197,6 @@ export function FlightRadar() {
         <div>LON 5.7245°E</div>
         <div className="text-accent mt-1 font-bold">GRENOBLE</div>
       </div>
-      <div className="text-muted absolute bottom-4 left-4 font-mono text-[10px]">
-        <div>CAREER.RADAR v2.0</div>
-        <div className="text-accent">2007 → PRÉSENT</div>
-      </div>
       <div className="text-muted absolute right-4 bottom-4 text-right font-mono text-[10px]">
         <div>UTC+1</div>
       </div>
