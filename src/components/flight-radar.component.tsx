@@ -175,7 +175,9 @@ export function FlightRadar() {
               }}
             />
             {/* Label */}
-            <div className="absolute -top-1 left-4 font-mono text-xs whitespace-nowrap opacity-80 transition-opacity group-hover:opacity-100">
+            <div
+              className={`absolute -top-1 font-mono text-xs whitespace-nowrap opacity-80 transition-opacity group-hover:opacity-100 ${isNearRight ? 'right-4 text-right' : 'left-4'}`}
+            >
               <span className="text-accent font-bold">{m.id}</span>
               <span className="text-muted ml-2">{m.year}</span>
             </div>
