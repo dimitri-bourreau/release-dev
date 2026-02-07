@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const topArticles = [
   { title: 'Quel développeur je suis', slug: 'quel-developeur-je-suis' },
-  { title: '14 mois chez Artelia', slug: '14-mois-chez-artelia' },
+  { title: 'Refonte Next.js en 6 mois', slug: 'refonte-next-en-6-mois' },
   { title: 'Rendus React & Fibers', slug: 'architecture-hexagonale-react' },
 ]
 
