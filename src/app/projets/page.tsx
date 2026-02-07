@@ -15,7 +15,7 @@ const projects: Project[] = [
   {
     name: 'Accrosignes',
     description:
-      "Site vitrine d'une association grenobloise dédiée à l'enseignement de la langue des signes française et aux rencontres entre sourds et entendants.",
+      "Site d'une association grenobloise dédiée à l'enseignement de la langue des signes française et aux rencontres entre sourds et entendants.",
     url: 'https://www.accrosignes.org',
     github: 'https://github.com/dimitri-bourreau/accrosignes',
     image: '/projets/accrosignes.png',
@@ -82,7 +82,7 @@ export default function ProjetsPage() {
             key={project.name}
             className="border-border flex flex-row border-r border-b"
           >
-            <div className="flex w-2/5 items-center border-r border-border p-4">
+            <div className="border-border flex w-2/5 items-center border-r p-4">
               <Image
                 src={project.image}
                 alt={project.name}
