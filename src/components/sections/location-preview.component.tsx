@@ -8,7 +8,7 @@ const topArticles = [
 
 export function TopArticles() {
   return (
-    <section className="h-32 p-10">
+    <section className="p-10">
       <h2 className="mb-3 text-xs font-bold tracking-widest uppercase">
         Articles mis en avant
       </h2>
