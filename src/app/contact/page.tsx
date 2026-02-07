@@ -16,7 +16,7 @@ export default function ContactPage() {
       <section className="flex flex-col">
         <a
           href="mailto:dimitri@release-dev.com"
-          className="border-border hover:bg-fg hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
+          className="border-border hover:bg-accent hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
         >
           <h2 className="mb-2 text-sm font-bold uppercase">
             dimitri@release-dev.com
@@ -27,7 +27,7 @@ export default function ContactPage() {
         </a>
         <a
           href="https://www.linkedin.com/in/dimitri-bourreau/"
-          className="border-border hover:bg-fg hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
+          className="border-border hover:bg-accent hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
         >
           <h2 className="mb-2 text-sm font-bold uppercase">LinkedIn</h2>
           <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
@@ -36,7 +36,7 @@ export default function ContactPage() {
         </a>
         <a
           href="https://www.malt.fr/profile/dimitribourreau"
-          className="border-border hover:bg-fg hover:text-bg group flex-1 cursor-pointer p-8 transition-colors"
+          className="border-border hover:bg-accent hover:text-bg group flex-1 cursor-pointer p-8 transition-colors"
         >
           <h2 className="mb-2 text-sm font-bold uppercase">Malt</h2>
           <p className="text-muted group-hover:text-bg text-xs leading-relaxed">

@@ -1,3 +1,5 @@
+import { SectionTitle } from '@/components/page-title.component'
+
 const colors = ['border-l-accent', 'border-l-secondary', 'border-l-tertiary']
 
 const testimonials = [
@@ -42,9 +44,7 @@ const testimonials = [
 export function TestimonialsSection() {
   return (
     <section className="border-border border-b">
-      <h2 className="border-border bg-fg/5 border-b border-l-4 border-l-tertiary px-8 py-4 text-xs font-bold tracking-widest uppercase">
-        Témoignages
-      </h2>
+      <SectionTitle>Témoignages</SectionTitle>
       <div className="grid md:grid-cols-2 lg:grid-cols-3">
         {testimonials.map((t, i) => (
           <div

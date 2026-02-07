@@ -35,7 +35,7 @@ export function ContactForm() {
   return (
     <form action={action} className="space-y-6">
       {state.error && (
-        <p className="border-fg border bg-fg/5 px-4 py-3 text-xs">{state.error}</p>
+        <p className="border-fg border bg-accent/20 px-4 py-3 text-xs">{state.error}</p>
       )}
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -90,7 +90,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="bg-fg text-bg hover:bg-bg hover:text-fg border-fg cursor-pointer border px-8 py-3 text-xs font-bold tracking-widest uppercase transition-colors disabled:opacity-50"
+        className="bg-accent text-bg hover:bg-bg hover:text-accent border-accent cursor-pointer border px-8 py-3 text-xs font-bold tracking-widest uppercase transition-colors disabled:opacity-50"
       >
         {pending ? 'Envoi en cours...' : 'Envoyer ma demande'}
       </button>

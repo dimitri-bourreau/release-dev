@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { PageTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Mentions légales' }
 
@@ -52,9 +53,7 @@ const sections = [
 export default function MentionsLegalesPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Mentions légales
-      </h1>
+      <PageTitle>Mentions légales</PageTitle>
       <div className="space-y-6 p-8 md:p-12">
         {sections.map((s) => (
           <div key={s.title}>

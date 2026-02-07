@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import Link from 'next/link'
+import { SectionTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Expérience' }
 
@@ -160,14 +161,8 @@ const skills = {
 export default function ExperiencePage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Expérience
-      </h1>
-
       <section>
-        <h2 className="border-border bg-fg/5 border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
-          Parcours
-        </h2>
+        <SectionTitle>Parcours</SectionTitle>
         <div>
           {experiences.map((exp) => (
             <div
@@ -184,7 +179,7 @@ export default function ExperiencePage() {
                     {exp.period}
                   </span>
                 </div>
-                <ul className="text-muted mb-4 space-y-1 text-xs leading-relaxed">
+                <ul className="text-muted mb-4 max-w-prose space-y-1 text-xs leading-relaxed">
                   {exp.bullets.map((b) => (
                     <li key={b}>— {b}</li>
                   ))}
@@ -202,7 +197,7 @@ export default function ExperiencePage() {
                 {exp.blogSlug && exp.blogTitle && (
                   <Link
                     href={`/blog/${exp.blogSlug}`}
-                    className="border-border hover:bg-fg hover:text-bg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
+                    className="border-border hover:bg-accent hover:text-bg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
                   >
                     <span>[+]</span>
                     <span>{exp.blogTitle}</span>
@@ -212,7 +207,7 @@ export default function ExperiencePage() {
               {exp.blogSlug && exp.blogTitle && (
                 <Link
                   href={`/blog/${exp.blogSlug}`}
-                  className="border-border hover:bg-fg hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:block"
+                  className="border-border hover:bg-accent hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:block"
                 >
                   <span>[+] </span>
                   <span className="max-w-48">{exp.blogTitle}</span>
@@ -224,9 +219,7 @@ export default function ExperiencePage() {
       </section>
 
       <section>
-        <h2 className="border-border bg-fg/5 border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
-          Compétences
-        </h2>
+        <SectionTitle>Compétences</SectionTitle>
         <div className="grid md:grid-cols-2 lg:grid-cols-4">
           {Object.entries(skills).map(([category, items]) => (
             <div key={category} className="border-border border-r border-b p-8">

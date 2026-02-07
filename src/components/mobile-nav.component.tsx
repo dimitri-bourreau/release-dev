@@ -21,7 +21,7 @@ export function MobileNav() {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="border-border hover:bg-fg hover:text-bg border-r px-4 py-4 text-xs tracking-widest uppercase transition-colors md:hidden"
+        className="border-border hover:bg-accent hover:text-bg border-r px-4 py-4 text-xs tracking-widest uppercase transition-colors md:hidden"
       >
         {open ? 'Fermer' : 'Menu'}
       </button>
@@ -32,7 +32,7 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="border-border hover:bg-fg hover:text-bg block border-b px-6 py-4 text-xs tracking-wider uppercase transition-colors"
+              className="border-border hover:bg-accent hover:text-bg block border-b px-6 py-4 text-xs tracking-wider uppercase transition-colors"
             >
               {item.label}
             </Link>

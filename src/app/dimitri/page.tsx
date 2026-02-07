@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import Image from 'next/image'
+import { PageTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Dimitri' }
 
@@ -17,9 +18,7 @@ const paragraphs = [
 export default function AProposPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        À propos de Dimitri
-      </h1>
+      <PageTitle>À propos de Dimitri</PageTitle>
       <div className="grid md:grid-cols-[auto_1fr]">
         <div className="border-border border-r border-b p-8 md:p-12">
           <Image

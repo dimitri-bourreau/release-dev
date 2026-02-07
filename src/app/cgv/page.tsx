@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { PageTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Conditions Générales de Vente' }
 
@@ -108,9 +109,7 @@ const sections = [
 export default function CGVPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Conditions Générales de Vente
-      </h1>
+      <PageTitle>Conditions Générales de Vente</PageTitle>
       <div className="space-y-6 p-8 md:p-12">
         {sections.map((s) => (
           <div key={s.title}>

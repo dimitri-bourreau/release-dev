@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import Image from 'next/image'
+import { PageTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Projets' }
 
@@ -73,9 +74,7 @@ const projects: Project[] = [
 export default function ProjetsPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Projets personnels
-      </h1>
+      <PageTitle>Projets personnels</PageTitle>
       <div className="grid md:grid-cols-2">
         {projects.map((project) => (
           <div
@@ -102,14 +101,14 @@ export default function ProjetsPage() {
                 <a
                   href={project.url}
                   rel="noopener noreferrer"
-                  className="hover:bg-fg hover:text-bg border-border border px-4 py-2 text-xs font-medium transition-colors"
+                  className="hover:bg-accent hover:text-bg border-border border px-4 py-2 text-xs font-medium transition-colors"
                 >
                   Voir le site
                 </a>
                 <a
                   href={project.github}
                   rel="noopener noreferrer"
-                  className="hover:bg-fg hover:text-bg border-border border px-4 py-2 text-xs font-medium transition-colors"
+                  className="hover:bg-accent hover:text-bg border-border border px-4 py-2 text-xs font-medium transition-colors"
                 >
                   GitHub
                 </a>

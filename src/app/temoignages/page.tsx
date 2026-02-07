@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { PageTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Témoignages' }
 
@@ -48,9 +49,7 @@ const testimonials = [
 export default function TemoignagesPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Témoignages
-      </h1>
+      <PageTitle>Témoignages</PageTitle>
       <div className="grid gap-6 p-8 md:grid-cols-2">
         {testimonials.map((t, i) => (
           <div

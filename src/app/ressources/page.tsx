@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { PageTitle, SectionTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Ressources' }
 
@@ -106,9 +107,7 @@ type Item = { title: string; url: string; desc: string }
 function Section({ title, items }: { title: string; items: Item[] }) {
   return (
     <section>
-      <h2 className="border-border bg-fg/5 border-b px-8 py-4 text-xs font-bold tracking-widest uppercase">
-        {title}
-      </h2>
+      <SectionTitle>{title}</SectionTitle>
       <div className="grid md:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <a
@@ -116,7 +115,7 @@ function Section({ title, items }: { title: string; items: Item[] }) {
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:bg-fg hover:text-bg group block cursor-pointer border-r border-b p-8 transition-colors"
+            className="border-border hover:bg-accent hover:text-bg group block cursor-pointer border-r border-b p-8 transition-colors"
           >
             <h3 className="mb-2 text-sm font-bold uppercase">{item.title}</h3>
             <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
@@ -132,9 +131,7 @@ function Section({ title, items }: { title: string; items: Item[] }) {
 export default function RessourcesPage() {
   return (
     <>
-      <h1 className="border-border bg-fg/5 border-b px-8 py-6 text-lg font-bold tracking-widest uppercase">
-        Ressources
-      </h1>
+      <PageTitle>Ressources</PageTitle>
       <Section title="Cours en ligne" items={courses} />
       <Section title="Vidéos" items={videos} />
       <Section title="Livres" items={books} />

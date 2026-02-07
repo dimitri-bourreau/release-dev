@@ -1,3 +1,5 @@
+import { SectionTitle } from '@/components/page-title.component'
+
 const differentiators = [
   {
     title: 'Architecture hexagonale',
@@ -24,9 +26,7 @@ const differentiators = [
 export function ApproachSection() {
   return (
     <section>
-      <h2 className="border-border bg-fg/5 border-b border-l-4 border-l-secondary px-8 py-4 text-xs font-bold tracking-widest uppercase">
-        Ce qui me différencie
-      </h2>
+      <SectionTitle>Ce qui me différencie</SectionTitle>
       <div className="grid md:grid-cols-2 lg:grid-cols-4">
         {differentiators.map((a) => (
           <div key={a.title} className={`border-border border-r border-b border-l-4 ${a.color} p-6`}>
