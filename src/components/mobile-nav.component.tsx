@@ -8,7 +8,6 @@ const navLinks = [
   { label: 'Dimitri', href: '/dimitri' },
   { label: 'Expérience', href: '/experience' },
   { label: 'Projets', href: '/projets' },
-  { label: 'Témoignages', href: '/temoignages' },
   { label: 'Blog', href: '/blog' },
   { label: 'Ressources', href: '/ressources' },
   { label: 'Contact', href: '/contact' },
@@ -26,7 +25,7 @@ export function MobileNav() {
         {open ? 'Fermer' : 'Menu'}
       </button>
       {open && (
-        <nav className="border-border bg-bg absolute left-0 top-full z-50 w-full border-b md:hidden">
+        <nav className="border-border bg-bg absolute top-full left-0 z-50 w-full border-b md:hidden">
           {navLinks.map((item) => (
             <Link
               key={item.href}
