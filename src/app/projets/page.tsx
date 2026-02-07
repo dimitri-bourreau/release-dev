@@ -46,6 +46,13 @@ const projects: Project[] = [
     github: 'https://github.com/dimitri-bourreau/starrymusic',
   },
   {
+    name: 'Cosy songs',
+    description:
+      'Toutes les musiques citées dans le podcast Cosy Corner, rassemblées au même endroit.',
+    url: 'https://cosy-songs.vercel.app/',
+    github: 'https://github.com/dimitri-bourreau/cosy-songs',
+  },
+  {
     name: 'validcq',
     description:
       'Package NPM pour valider les numéros de sécurité sociale français (NIR/NIRPP).',
