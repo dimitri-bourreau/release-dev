@@ -1,5 +1,5 @@
 import { type Metadata } from 'next'
-import { PageTitle, SectionTitle } from '@/components/page-title.component'
+import { SectionTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Ressources' }
 
@@ -23,11 +23,6 @@ const courses = [
 
 const videos = [
   {
-    title: 'Theo - t3.gg',
-    url: 'https://www.youtube.com/@t3dotgg',
-    desc: 'Veille technique de qualité.',
-  },
-  {
     title: 'BastiUi',
     url: 'https://www.youtube.com/@BastiUi',
     desc: 'UI et veille.',
@@ -38,9 +33,19 @@ const videos = [
     desc: 'Vulgarisation excellente et graphique.',
   },
   {
+    title: 'CodeTV',
+    url: 'https://www.youtube.com/@codetv-dev',
+    desc: 'Podcasts & émissions pour devs',
+  },
+  {
     title: 'cultrepo',
     url: 'https://www.youtube.com/@cultrepo',
     desc: 'Documentaires sur des projets open source.',
+  },
+  {
+    title: 'Delba',
+    url: 'https://www.youtube.com/@Delba',
+    desc: 'Vulgarations autour de Next.js',
   },
   {
     title: 'Deus Ex Silicium',
@@ -53,6 +58,11 @@ const videos = [
     desc: "Talks d'ingénieurs chez Netflix.",
   },
   {
+    title: 'Theo - t3.gg',
+    url: 'https://www.youtube.com/@t3dotgg',
+    desc: 'Veille technique de qualité.',
+  },
+  {
     title: 'yrougy',
     url: 'https://www.youtube.com/@yrougy',
     desc: "Veille autour de l'infra.",
@@ -61,9 +71,14 @@ const videos = [
 
 const books = [
   {
-    title: 'The Software Craftsman',
-    url: 'https://amzn.eu/d/0ceOdvMT',
-    desc: 'Professionalism, Pragmatism, Pride.',
+    title: 'Coder proprement',
+    url: 'https://amzn.eu/d/022zSEqr',
+    desc: 'Robert C. Martin.',
+  },
+  {
+    title: 'Pourquoi nous dormons',
+    url: 'https://www.amazon.fr/dp/B07GQBSSZF',
+    desc: 'Matthew Walker.',
   },
   {
     title: 'Slack',
@@ -81,24 +96,19 @@ const books = [
     desc: 'Your Journey to Mastery.',
   },
   {
-    title: 'Pourquoi nous dormons',
-    url: 'https://www.amazon.fr/dp/B07GQBSSZF',
-    desc: 'Matthew Walker.',
-  },
-  {
-    title: 'Coder proprement',
-    url: 'https://amzn.eu/d/022zSEqr',
-    desc: 'Robert C. Martin.',
-  },
-  {
-    title: "You Don't Know JS Yet",
-    url: 'https://github.com/getify/You-Dont-Know-JS',
-    desc: '2nd edition — Kyle Simpson.',
+    title: 'The Software Craftsman',
+    url: 'https://amzn.eu/d/0ceOdvMT',
+    desc: 'Professionalism, Pragmatism, Pride.',
   },
   {
     title: "You Don't Know JS",
     url: 'https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/README.md',
     desc: '1st edition — Kyle Simpson.',
+  },
+  {
+    title: "You Don't Know JS Yet",
+    url: 'https://github.com/getify/You-Dont-Know-JS',
+    desc: '2nd edition — Kyle Simpson.',
   },
 ]
 
@@ -131,7 +141,6 @@ function Section({ title, items }: { title: string; items: Item[] }) {
 export default function RessourcesPage() {
   return (
     <>
-      <PageTitle>Ressources</PageTitle>
       <Section title="Cours en ligne" items={courses} />
       <Section title="Vidéos" items={videos} />
       <Section title="Livres" items={books} />
