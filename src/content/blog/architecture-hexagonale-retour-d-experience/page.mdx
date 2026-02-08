@@ -1,0 +1,351 @@
+L'architecture hexagonale peut rationnellement sembler propre au backend uniquement. Pourtant, j'utilise cette archi sur mes projets frontend depuis 2022 : un autre développeur freelance me l'avait présentée sur une mission client et après m'être gratté la tête pas mal de temps, j'ai vite saisi les avantages clairs à opter pour cette approche.
+
+Depuis, je l'applique systématiquement — y compris sur **Bon Vent**, mon projet personnel de suivi de prospection pour freelances.
+
+Dans cet article, je vous partage plusieurs années de retour d'expérience : pourquoi cette architecture a du sens côté frontend, comment je l'implémente concrètement, et ce que ça change au quotidien.
+
+---
+
+## Constat initial
+
+On peut imaginer beaucoup de projets React comme un bon mélange d'à peu près tout :
+
+```tsx
+// Le composant fait TOUT
+function CompanyList() {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    // Accès aux données
+    const db = await openDB('my-db');
+    const data = await db.getAll('companies');
+    // Logique métier
+    const filtered = data.filter(c => c.isFavorite);
+    const sorted = filtered.sort((a, b) => ...);
+    setCompanies(sorted);
+  }, []);
+
+  // Rendu UI
+  return <table>...</table>;
+}
+```
+
+Ça fonctionne !.. Mais ça pose plusieurs problèmes :
+
+1. **Impossible à tester** sans monter tout l'environnement React.
+2. **Couplage fort** : changer IndexedDB pour une API REST ? Il faut de l'huile de coude.
+3. **Duplication** : la même logique se retrouve dans plusieurs composants
+
+---
+
+## L'architecture hexagonale, c'est quoi ?
+
+L'idée centrale est simple : **rendre indépendants interface, logique métier et récupération de données externes**.
+
+- Le **domaine** (logique métier)
+- L'**infrastructure** (base de données, APIs)
+- L'**interface** (React, Vue, CLI)
+
+L'architecture hexagonale propose d'isoler le domaine au centre, et de communiquer avec l'extérieur via des **ports** (interfaces) et des **adapters** (implémentations).
+
+| Couche             | Rôle                      | Éléments                          |
+| ------------------ | ------------------------- | --------------------------------- |
+| **Interface**      | Affichage et interactions | Components → Hooks → Services     |
+|                    | ↓                         |                                   |
+| **Domaine**        | Logique métier            | Types, Services, Règles métier    |
+|                    | ↓                         |                                   |
+| **Infrastructure** | Accès aux données         | IndexedDB, API REST, LocalStorage |
+
+Les **ports** (interfaces) et **adapters** (implémentations) font le lien entre ces couches.
+
+---
+
+## Comment je l'ai appliqué dans Bon Vent
+
+### Structure du projet
+
+```
+features/                     # Logique métier par domaine
+├── companies/
+│   ├── api/
+│   │   ├── company.port.ts   # Interface (le contrat)
+│   │   ├── api.adapter.ts    # Implémentation IndexedDB
+│   │   └── fake.adapter.ts   # Implémentation mock (tests)
+│   ├── types/
+│   │   └── company.type.ts   # Types du domaine
+│   └── services/
+│       └── get-favorites.service.ts
+│
+hooks/                        # Interface React
+├── use-companies.hook.ts
+└── use-create-company.hook.ts
+│
+components/                   # UI pure
+├── organisms/
+│   └── CompanyList.tsx
+```
+
+### Le Port : le contrat
+
+Le port définit **ce dont le domaine a besoin**, sans savoir comment c'est implémenté.
+
+```typescript
+// features/companies/api/company.port.ts
+export interface CompanyRepository {
+  getAll(): Promise<Company[]>
+  getById(id: string): Promise<Company | undefined>
+  getFavorites(): Promise<Company[]>
+  create(dto: CreateCompanyDTO): Promise<Company>
+  update(dto: UpdateCompanyDTO): Promise<Company>
+  delete(id: string): Promise<void>
+}
+```
+
+C'est une interface TypeScript. Rien de plus. Pas de dépendance, pas d'implémentation.
+
+### L'Adapter : l'implémentation
+
+L'adapter implémente le port. Aujourd'hui, j'utilise IndexedDB :
+
+```typescript
+// features/companies/api/api.adapter.ts
+export class CompanyApiAdapter implements CompanyRepository {
+  async getAll(): Promise<Company[]> {
+    const db = await getDB()
+    return db.getAll('companies')
+  }
+
+  async getFavorites(): Promise<Company[]> {
+    const all = await this.getAll()
+    return all.filter((c) => c.isFavorite)
+  }
+
+  // ...
+}
+```
+
+Demain, si je veux passer à une API REST ? Je crée un nouvel adapter :
+
+```typescript
+// features/companies/api/rest.adapter.ts
+export class CompanyRestAdapter implements CompanyRepository {
+  async getAll(): Promise<Company[]> {
+    const res = await fetch('/api/companies')
+    return res.json()
+  }
+  // ...
+}
+```
+
+**Aucun autre fichier à modifier.** Le domaine et l'interface n'ont pas changé.
+
+C'est un énorme atout autant pour le confort de dev et la productivité : on peut travailler sur une feature en même temps que le backend sans attendre que ce backend soit développé, il suffit de faire notre adapter avec des données mockées.
+
+### Le Service : la logique métier
+
+Les services orchestrent la logique. Ils reçoivent l'adapter en paramètre (injection de dépendances).
+
+```typescript
+// features/companies/services/get-favorites.service.ts
+export function getFavorites(repository: CompanyRepository) {
+  return repository.getFavorites()
+}
+```
+
+Ici, le service est trivial (pass-through). Mais pour des cas plus complexes c'est ici que se niche la logique métier :
+
+```typescript
+// features/companies/services/find-duplicates.service.ts
+export async function findDuplicates(
+  repository: CompanyRepository,
+  name: string,
+): Promise<Company[]> {
+  const all = await repository.getAll()
+  const normalized = name.toLowerCase().trim()
+  return all.filter((c) => {
+    const cName = c.name.toLowerCase().trim()
+    return cName.includes(normalized) || normalized.includes(cName)
+  })
+}
+```
+
+La logique de détection de doublons est **dans le domaine**, pas dans un composant React.
+
+Plusieurs avantages très appréciés, notamment une facilité déconcertante pour rédiger des tests unitaires, la rédaction de code s'orientant naturellement vers des fonctions pures, et l'évidence quand on cherche où est telle ou telle logique métier.
+
+Cette logique métier, c'est elle qui fait le plus gros de la valeur du projet, c'est elle qui doit être le plus chouchoutée !
+
+### Le Hook : le pont avec React
+
+Les hooks font le lien entre React (Query, state) et le domaine.
+
+```typescript
+// hooks/use-favorites.hook.ts
+export function useFavorites() {
+  return useQuery({
+    queryKey: ['companies', 'favorites'],
+    queryFn: () => getFavorites(companyApiAdapter),
+  })
+}
+```
+
+Le hook :
+
+- Injecte l'adapter concret
+- Gère le cache (React Query)
+- Expose une API simple au composant
+
+### Le Composant : UI pure
+
+Le composant ne sait rien de la base de données. Il reçoit des données, il affiche.
+
+```typescript
+// components/organisms/CompanyList.tsx
+export function CompanyList({ companies, emptyMessage }: Props) {
+  if (companies.length === 0) {
+    return <p>{emptyMessage}</p>;
+  }
+  return (
+    <table>
+      {companies.map((c) => <CompanyRow key={c.id} company={c} />)}
+    </table>
+  );
+}
+```
+
+---
+
+## Les bénéfices concrets
+
+### 1. Testabilité
+
+Je peux tester ma logique métier **sans React**, **sans base de données** :
+
+```typescript
+// Avec un fake adapter
+const fakeAdapter: CompanyRepository = {
+  getAll: async () => [mockCompany1, mockCompany2],
+  // ...
+}
+
+test('findDuplicates detects similar names', async () => {
+  const duplicates = await findDuplicates(fakeAdapter, 'Acme')
+  expect(duplicates).toHaveLength(1)
+})
+```
+
+### 2. Maintenabilité
+
+Chaque fichier a **une seule responsabilité** :
+
+- `company.type.ts` : définit ce qu'est une Company
+- `get-favorites.service.ts` : récupère les favoris
+- `use-favorites.hook.ts` : expose les favoris à React
+
+Quand je cherche un bug sur les favoris, je sais exactement où regarder.
+
+### 3. Évolutivité
+
+Ajouter une fonctionnalité suit toujours le même chemin :
+
+1. Ajouter le type si nécessaire
+2. Ajouter la méthode au port
+3. Implémenter dans l'adapter
+4. Créer le service
+5. Créer le hook
+6. Utiliser dans le composant
+
+C'est prévisible. Pas de surprise.
+
+### 4. Onboarding
+
+Un nouveau développeur sur le projet comprend immédiatement :
+
+- `features/` = logique métier
+- `hooks/` = interface React
+- `components/` = UI
+
+La structure **documente** l'architecture.
+
+---
+
+## Les compromis
+
+Soyons honnêtes, cette approche a des coûts :
+
+### Plus de fichiers
+
+Un simple CRUD "Company" génère :
+
+- 1 port
+- 2 adapters (real + fake)
+- 5-10 types
+- 5-10 services
+- 5-10 hooks
+
+Pour un side-project, c'est peut-être overkill. Pour une app qui va vivre et évoluer, c'est un investissement.
+
+### Courbe d'apprentissage
+
+L'équipe doit comprendre les concepts. Ports, adapters, injection de dépendances... Ce n'est pas complexe, mais ça demande un temps d'adaptation.
+
+### Boilerplate
+
+Certains services sont de simples pass-through :
+
+```typescript
+export function getAllCompanies(repository: CompanyRepository) {
+  return repository.getAll()
+}
+```
+
+On pourrait appeler l'adapter directement. Mais la consistance a de la valeur : **tout passe par un service**, sans exception.
+
+---
+
+## Mes conventions
+
+Au fil du projet, j'ai établi quelques règles :
+
+1. **Un fichier = une responsabilité**
+   - `get-all-companies.service.ts`, pas `company.service.ts` avec 20 fonctions
+
+2. **Injection de dépendances explicite**
+   - Les services reçoivent leur adapter en paramètre
+   - Les hooks injectent l'adapter souhaité
+
+3. **Le domaine ne dépend de rien**
+   - Pas d'import React dans `features/`
+   - Pas d'import de librairie UI
+
+4. **Types stricts**
+   - Pas de `any`, pas de `as unknown`
+   - Si le typage est difficile, c'est que le design est à revoir
+
+Je ne l'ai pas appliqué dans mon projet Bon vent parce que ça n'y faisait pas sens, mais sinon cette règle me paraît tout aussi importante :
+
+5. **Mocks clairs et exhaustifs**
+   - Les données récupérées ainsi que celles qui transitent sont mockées
+   - Cela sert de documentation pour les développeurs
+   - Mais aussi, si mon mock d'un fetch de mon backend est le copier-coller d'un payload : étant typé ici, son type est confirmé ou une alerte est levée immédiatement
+
+---
+
+## Conclusion
+
+L'architecture hexagonale en frontend, c'est possible. Ce n'est pas la solution à tous les problèmes, mais pour une application qui doit :
+
+- Évoluer dans le temps
+- Être maintenable par une équipe
+- Avoir une logique métier non triviale
+- Potentiellement changer d'infrastructure
+
+...c'est une approche solide.
+
+Sur Bon Vent, c'est clairement overkill, mais c'était l'occasion de guider Claude dans ma conception de cette architecture pas à pas.
+
+Le [code source est disponible sur GitHub](https://github.com/dimitri-bourreau/bon-vent). N'hésitez pas à explorer la structure et à me faire vos retours.
+
+---
+
+_Vous travaillez sur un projet React avec de la logique métier complexe ? Discutons-en. Je suis disponible pour des missions freelance où ce type d'architecture fait la différence._
