@@ -77,6 +77,21 @@
   color: var(--color-tertiary) !important;
 }
 
+.prose table {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.prose th {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.prose td,
+.prose th {
+  padding: 0.5rem 1rem;
+}
+
 .blog-gradient {
   background: linear-gradient(
     to right,
@@ -87,8 +102,196 @@
   );
 }
 
-.prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose
+  :where(strong):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   font-weight: 900;
+}
+
+/* Code blocks styling */
+.prose pre {
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #f6f8fa !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose pre {
+    background: #0d1117 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .prose pre {
+    margin-left: -6rem;
+    margin-right: -6rem;
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+.prose pre code {
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.prose :not(pre) > code {
+  background: var(--color-border);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+/* Highlight.js - GitHub Light theme */
+.hljs {
+  color: #24292f;
+  background: #f6f8fa;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6e7781;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #cf222e;
+}
+
+.hljs-string,
+.hljs-attr {
+  color: #0a3069;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: #0550ae;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #953800;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #8250df;
+  font-weight: bold;
+}
+
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-built_in {
+  color: #953800;
+}
+
+.hljs-function {
+  color: #8250df;
+}
+
+.hljs-params {
+  color: #24292f;
+}
+
+.hljs-attribute {
+  color: #0550ae;
+}
+
+.hljs-selector-class {
+  color: #116329;
+}
+
+.hljs-name,
+.hljs-tag {
+  color: #116329;
+}
+
+.hljs-meta {
+  color: #0550ae;
+}
+
+.hljs-punctuation {
+  color: #24292f;
+}
+
+/* Highlight.js - GitHub Dark theme */
+@media (prefers-color-scheme: dark) {
+  .hljs {
+    color: #c9d1d9;
+    background: #0d1117;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #8b949e;
+    font-style: italic;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag {
+    color: #ff7b72;
+  }
+
+  .hljs-string,
+  .hljs-attr {
+    color: #a5d6ff;
+  }
+
+  .hljs-number,
+  .hljs-literal {
+    color: #79c0ff;
+  }
+
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #ffa657;
+  }
+
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #d2a8ff;
+    font-weight: bold;
+  }
+
+  .hljs-type,
+  .hljs-class .hljs-title,
+  .hljs-built_in {
+    color: #ffa657;
+  }
+
+  .hljs-function {
+    color: #d2a8ff;
+  }
+
+  .hljs-params {
+    color: #c9d1d9;
+  }
+
+  .hljs-attribute {
+    color: #79c0ff;
+  }
+
+  .hljs-selector-class {
+    color: #7ee787;
+  }
+
+  .hljs-name,
+  .hljs-tag {
+    color: #7ee787;
+  }
+
+  .hljs-meta {
+    color: #79c0ff;
+  }
+
+  .hljs-punctuation {
+    color: #c9d1d9;
+  }
 }
 
 /* Flight Radar Animations */

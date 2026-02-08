@@ -5,6 +5,11 @@ const nextConfig = {
   devIndicators: false,
 }
 
-const withMDX = createMDX()
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: ['remark-gfm'],
+    rehypePlugins: ['rehype-highlight'],
+  },
+})
 
 export default withMDX(nextConfig)

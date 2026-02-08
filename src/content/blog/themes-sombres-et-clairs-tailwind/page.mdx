@@ -1,0 +1,204 @@
+> Cet article est issu de mon tout premier talk, présenté lors des Human Talks Grenoble le 9 décembre 2025. J'y développe les points abordés et j'y ajoute des ressources complémentaires.
+
+![Capture de la captation de mon premier talk](/blog/themes-sombres/premier-talk.png)
+
+Le thème sombre est devenu un standard attendu par les utilisateurs. Pourtant, son implémentation est souvent bâclée, même par les géants du web. LinkedIn propose un choix restreint à l'appareil, Spotify n'offre aucune option. L'inconsistance règne.
+
+J'ai voulu comprendre pourquoi, et surtout comment faire mieux.
+
+## Le vrai objectif : le contraste, pas le thème
+
+Avant de parler d'implémentation, posons les bases. **L'important, ce n'est pas le thème, c'est le contraste.**
+
+Un thème sombre mal contrasté est pire qu'un thème clair bien contrasté. Le WCAG ([Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/fr)) recommande un ratio de contraste minimum de **4.5:1** pour un texte normal, et **3:1** pour les textes larges (18px+ ou 14px+ bold).
+
+| Ratio | Niveau          |
+| ----- | --------------- |
+| 21:1  | Excellent       |
+| 12:1  | Très bon        |
+| 7:1   | Bon (AAA)       |
+| 4.5:1 | Acceptable (AA) |
+| 3:1   | Faible          |
+| < 3:1 | Insuffisant     |
+
+Ces ratios ne sont pas arbitraires. Depuis juin 2025, [l'**European Accessibility Act (EAA)**](https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/european-accessibility-act-eaa_en) impose le respect du WCAG 2.1 niveau AA pour les services numériques en Europe. C'est désormais une obligation légale.
+
+> Le contraste se vérifie facilement dans les DevTools de Chrome : sélectionnez un élément, cliquez sur la couleur dans le panneau Styles, et le ratio s'affiche avec les badges AA/AAA.
+
+## Les mauvais exemples
+
+### LinkedIn
+
+LinkedIn propose un mode sombre avec trois options : clair, sombre, ou suivre l'appareil. C'est bien.
+
+Mais l'implémentation souffre d'**inconsistance** : par défaut le thème est toujours clair, même si l'appareil de l'utilisateur utilise un thème sombre. L'expérience utilisateur en pâtit.
+
+### Spotify
+
+Spotify va encore plus loin :
+
+1. **Aucun choix** : le thème sombre est imposé, aucun thème clair disponible
+2. **Inconsistance** : comme LinkedIn
+
+## Les pièges courants
+
+### 1. L'inconsistance
+
+Le piège le plus fréquent. Pour l'éviter, trois solutions :
+
+- **Adopter le thème de l'OS par défaut** via `prefers-color-scheme`
+- **Permettre à l'utilisateur de choisir** un thème différent
+- **Persister ce choix** (cookie, localStorage, ou base de données)
+
+### 2. Le Flash Of Unstyled Content (FOUC)
+
+C'est le flash blanc qu'on voit parfois au chargement d'un site en mode sombre. La séquence est la suivante :
+
+1. La page se charge avec le HTML (fond blanc par défaut)
+2. Le CSS est appliqué
+3. Le JavaScript s'exécute et applique la classe `dark`
+
+Entre l'étape 1 et 3, l'utilisateur voit un écran blanc. C'est désagréable, surtout dans une pièce sombre.
+
+**Pourquoi ça arrive ?**
+
+Le FOUC intervient lorsque le thème sombre dépend d'une exécution JavaScript. Par défaut, Tailwind v4 utilise `@media (prefers-color-scheme: dark)` pour la variant `dark:`. C'est purement CSS, donc pas de flash.
+
+Mais dès qu'on veut permettre un choix manuel (avec une classe `.dark` sur `<html>`), on dépend du JavaScript, et le flash apparaît.
+
+**La solution : exécuter le JS dans le `<head>`**
+
+```html
+<head>
+  <script>
+    const theme = document.cookie.match(/theme=(\w+)/)?.[1]
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    }
+  </script>
+</head>
+```
+
+Ce script bloquant s'exécute avant le rendu du body. Pas de flash.
+
+### 3. Le contraste négligé
+
+On crée un thème sombre, on inverse quelques couleurs, et on oublie de vérifier les contrastes. Résultat : du texte gris sur fond gris foncé, illisible.
+
+**Solutions :**
+
+- Utiliser les DevTools pour vérifier chaque combinaison
+- Intégrer Lighthouse dans la CI
+- Automatiser les tests d'accessibilité avec Playwright ou Cypress et [axe-core](https://github.com/dequelabs/axe-core)
+
+## Implémentation avec Next.js et Tailwind v4
+
+Voici l'approche que je recommande, disponible sur [mon repo GitHub de démo](https://github.com/dimitri-bourreau/talk-demo-light-and-dark-themes).
+
+### 1. Configurer Tailwind pour utiliser une classe
+
+Par défaut, Tailwind v4 utilise la media query. Pour permettre un toggle manuel, il faut associer la variant `dark` à une classe :
+
+```css
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+```
+
+Cette ligne indique à Tailwind que `dark:` s'applique quand l'élément ou un de ses ancêtres a la classe `.dark`.
+
+### 2. Lire le thème côté serveur (Next.js)
+
+Pour éviter le flash ET avoir un rendu serveur correct, on lit le cookie côté serveur :
+
+```tsx
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const cookieStore = await cookies()
+  const theme = cookieStore.get('theme')?.value
+
+  return (
+    <html lang="fr" className={theme === 'dark' ? 'dark' : ''}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+Le cookie est lu **avant** le rendu HTML. La classe `.dark` est présente dès le premier octet envoyé au client. Pas de flash.
+
+### 3. Le composant de toggle
+
+```tsx
+'use client'
+
+export function ThemeToggle() {
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle('dark')
+    const theme = isDark ? 'dark' : 'light'
+    document.cookie = `theme=${theme}; path=/; max-age=31536000`
+  }
+
+  return (
+    <button onClick={toggleTheme} aria-label="Changer de thème">
+      Toggle
+    </button>
+  )
+}
+```
+
+Le toggle modifie instantanément la classe ET persiste le choix dans un cookie. Au prochain chargement, le serveur lira ce cookie.
+
+### 4. Respecter la préférence OS par défaut
+
+Si aucun cookie n'existe, on peut respecter la préférence OS avec un script inline :
+
+```html
+<script>
+  if (!document.cookie.includes('theme=')) {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark')
+    }
+  }
+</script>
+```
+
+## Tester automatiquement
+
+L'accessibilité peut se tester automatiquement vec Playwright ou Cypress et axe-core. Ici un exemple avec Playwright :
+
+```typescript
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test('should not have accessibility violations', async ({ page }) => {
+  await page.goto('/')
+  const results = await new AxeBuilder({ page }).analyze()
+  expect(results.violations).toEqual([])
+})
+```
+
+Ce test échoue si le contraste est insuffisant. Intégré à la CI, il empêche les régressions.
+
+## Conclusion
+
+- **Un excellent contraste est plus important que n'importe quel thème**
+- **Testez le contraste dans les deux thèmes**, pas seulement celui que vous utilisez
+- **Évitez le FOUC** en lisant le cookie côté serveur ou en plaçant le JS dans le head
+- **Testez automatiquement** avec axe-core dans votre CI
+
+## Sources
+
+- [WebAIM : Contrast and Color Accessibility](https://webaim.org/articles/contrast/)
+- [WCAG 2.1 : 1.4.6 Contrast](https://www.w3.org/WAI/WCAG21/Understanding/contrast-enhanced.html)
+- [WebAIM : Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- [Contrast Ratio (outil)](https://contrast-ratio.com/)
+- [Playwright : Accessibility testing](https://playwright.dev/docs/accessibility-testing)
+- [TailwindCSS : Dark mode](https://tailwindcss.com/docs/dark-mode)
+- [Wikipedia : Flash of unstyled content](https://en.wikipedia.org/wiki/Flash_of_unstyled_content)
+- [European Accessibility Act](https://ec.europa.eu/social/main.jsp?catId=1202)
+- [axe-core (Deque)](https://github.com/dequelabs/axe-core)
+- [Chrome DevTools : Contrast ratio](https://developer.chrome.com/docs/devtools/accessibility/contrast/)
