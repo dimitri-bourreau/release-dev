@@ -1,7 +1,10 @@
 import Link from 'next/link'
 
 const topArticles = [
-  { title: 'Quel développeur je suis', slug: 'quel-developeur-je-suis' },
+  {
+    title: "Architecture hexagonale en frontend : retour d'expérience",
+    slug: 'architecture-hexagonale-retour-d-experience',
+  },
   { title: 'Refonte Next.js en 6 mois', slug: 'refonte-next-en-6-mois' },
   { title: 'Rendus React & Fibers', slug: 'architecture-hexagonale-react' },
 ]
