@@ -14,6 +14,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    name: 'Bon vent',
+    description:
+      "Application de suivi de prospection pour freelances et chercheurs d'emploi.",
+    url: 'https://bon-vent.vercel.app',
+    github: 'https://github.com/dimitri-bourreau/bon-vent',
+    image: '/projets/bon-vent.png',
+  },
+  {
     name: 'Accrosignes',
     description:
       "Site d'une association grenobloise dédiée à l'enseignement de la langue des signes française et aux rencontres entre sourds et entendants.",
@@ -36,14 +44,6 @@ const projects: Project[] = [
     url: 'https://animaux-abbatus-en-france.vercel.app/',
     github: 'https://github.com/dimitri-bourreau/animaux-abbatus-en-france',
     image: '/projets/animaux-abattus.png',
-  },
-  {
-    name: 'Canards',
-    description:
-      "Jeu de gestion minimaliste où l'on restaure un écosystème lacustre en se concentrant sur le bien-être animal et la biodiversité réalisé en vibe coding.",
-    url: 'https://canards.vercel.app/',
-    github: 'https://github.com/dimitri-bourreau/canards',
-    image: '/projets/canards.png',
   },
   {
     name: 'Starrymusic',
