@@ -1,6 +1,6 @@
 import { getBlogPosts } from '@/data/blog'
 
-const SITE_URL = 'https://release-dev.com'
+const SITE_URL = 'https://dimitribourreau.dev'
 
 export async function GET() {
   const posts = await getBlogPosts()

@@ -7,11 +7,11 @@ const sections = [
   {
     title: '1. Éditeur du site',
     content: `
-      Le site release-dev.com est édité par :
+      Le site dimitribourreau.dev est édité par :
         Raison sociale : RELEASE
         Forme juridique : EURL (Entreprise Unipersonnelle à Responsabilité Limitée)
         SIRET : 98278670900013
-        Email : dimitri@release-dev.com
+        Email : hello@dimitribourreau.dev
       `,
   },
   {
