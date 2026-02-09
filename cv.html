@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Dimitri Bourreau</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --color-bg: #ffffff;
+        --color-fg: #0f172a;
+        --color-border: rgba(15, 23, 42, 0.15);
+        --color-muted: rgba(15, 23, 42, 0.5);
+        --color-accent: #2563eb;
+        --color-secondary: #6366f1;
+        --color-tertiary: #0ea5e9;
+      }
+
+      body {
+        font-family:
+          'JetBrains Mono',
+          ui-monospace,
+          SFMono-Regular,
+          monospace;
+        font-size: 10px;
+        line-height: 1.5;
+        color: var(--color-fg);
+        background: var(--color-bg);
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: var(--color-bg);
+      }
+
+      @media print {
+        .page {
+          margin: 0;
+        }
+      }
+
+      /* Header */
+      .header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .header-photo-wrapper {
+        padding: 24px;
+        border-right: 1px solid var(--color-border);
+      }
+
+      .header-photo {
+        width: 100px;
+        height: 133px;
+        object-fit: cover;
+        border: 1px solid var(--color-border);
+      }
+
+      .header-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .header-available {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .header-available-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--color-accent);
+      }
+
+      .header-available-text {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .header-name {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .header-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--color-accent);
+        margin-bottom: 8px;
+      }
+
+      .header-summary {
+        font-size: 10px;
+        color: var(--color-muted);
+        max-width: 400px;
+        margin-bottom: 12px;
+      }
+
+      .header-contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 9px;
+        color: var(--color-muted);
+      }
+
+      /* Services */
+      .services {
+        display: flex;
+        gap: 16px;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .service-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 9px;
+      }
+
+      .service-dot {
+        width: 6px;
+        height: 6px;
+      }
+
+      .service-dot.secondary {
+        background: var(--color-secondary);
+      }
+
+      .service-dot.tertiary {
+        background: var(--color-tertiary);
+      }
+
+      /* Section */
+      .section-title {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        padding: 12px 24px;
+        border-bottom: 1px solid var(--color-border);
+        border-left: 4px solid var(--color-accent);
+      }
+
+      /* Experience */
+      .experience-item {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .experience-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+
+      .experience-role {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .experience-meta {
+        font-size: 9px;
+        color: var(--color-muted);
+      }
+
+      .experience-bullets {
+        list-style: none;
+        margin-bottom: 8px;
+      }
+
+      .experience-bullets li {
+        position: relative;
+        padding-left: 12px;
+        color: var(--color-muted);
+        font-size: 9px;
+        margin-bottom: 2px;
+        line-height: 1.6;
+      }
+
+      .experience-bullets li::before {
+        content: '—';
+        position: absolute;
+        left: 0;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .tag {
+        font-size: 8px;
+        padding: 2px 6px;
+        border: 1px solid var(--color-border);
+      }
+
+      /* Two columns layout */
+      .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .column:first-child {
+        border-right: 1px solid var(--color-border);
+      }
+
+      .column .section-title {
+        border-top: none;
+        border-left: none;
+      }
+
+      /* Skills & Languages */
+      .skills-section {
+        padding: 16px 24px;
+      }
+
+      .skills-category {
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .language-item {
+        margin-bottom: 8px;
+      }
+
+      .language-name {
+        font-size: 9px;
+        font-weight: 600;
+      }
+
+      .language-level {
+        font-size: 8px;
+        color: var(--color-muted);
+      }
+
+      /* Page break */
+      .page-break {
+        page-break-before: always;
+      }
+
+      /* Page 2 mini header */
+      .page-mini-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 24px;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 9px;
+        color: var(--color-muted);
+      }
+
+      .page-mini-header strong {
+        color: var(--color-fg);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Page 1 -->
+    <div class="page">
+      <header class="header">
+        <div class="header-photo-wrapper">
+          <img
+            src="https://dimitribourreau.dev/dimitri.png"
+            alt="Dimitri Bourreau"
+            class="header-photo"
+          />
+        </div>
+        <div class="header-content">
+          <h1 class="header-name">Dimitri Bourreau</h1>
+          <p class="header-title">Développeur frontend React & Next.js</p>
+          <p class="header-summary">
+            6 ans d&apos;expérience, +40 missions freelance, 5/5 sur Malt. Je
+            m&apos;intègre vite, je livre, je transmets.
+          </p>
+          <div class="header-contact">
+            <span>dimitri@release-dev.com</span>
+            <span>06 49 77 56 97</span>
+            <span>Télétravail · Grenoble · Lyon</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="services">
+        <div class="service-item">
+          <span class="service-dot secondary"></span>
+          <span>Refactoring & DX</span>
+        </div>
+        <div class="service-item">
+          <span class="service-dot tertiary"></span>
+          <span>Mentoring & pair programming</span>
+        </div>
+        <div class="service-item">
+          <span class="service-dot secondary"></span>
+          <span>Communication & documentation</span>
+        </div>
+        <div class="service-item">
+          <span class="service-dot tertiary"></span>
+          <span>Architecture hexagonale</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Parcours</h2>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur fullstack</span>
+          <span class="experience-meta"
+            >VISEO · Grenoble · Sur site | janv. 2025 – juil. 2025</span
+          >
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Conception d&apos;une architecture hexagonale pour une application
+            React, centralisant le suivi de documents sensibles dans un
+            environnement bancaire complexe.
+          </li>
+          <li>
+            Rédaction d&apos;une documentation technique exhaustive, adoptée
+            comme référence interne, facilitant la transition et la
+            collaboration entre équipes.
+          </li>
+          <li>
+            Amélioration de la dynamique d&apos;équipe et de la collaboration
+            grâce à une approche technique fédératrice.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">GitLab</span>
+          <span class="tag">Jest</span>
+          <span class="tag">Architecture hexagonale</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur front-end freelance</span>
+          <span class="experience-meta"
+            >Tudigo · Bordeaux · Sur site | oct. 2023 – janv. 2024</span
+          >
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Mise en place d&apos;une architecture hexagonale et d&apos;un
+            monorepo NX pour moderniser le site, améliorant la maintenabilité et
+            la performance.
+          </li>
+          <li>
+            Partage de connaissances via des sessions de pair programming et des
+            revues de code, renforçant la qualité du code et la collaboration
+            inter-équipes.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">NX</span>
+          <span class="tag">Jest</span>
+          <span class="tag">Architecture hexagonale</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role"
+            >Développeur front-end freelance, architecte logiciel</span
+          >
+          <span class="experience-meta"
+            >Artelia · Télétravail | juil. 2022 – sept. 2023</span
+          >
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Refactoring complet d&apos;une application React, multipliant les
+            performances par 10 grâce à une architecture hexagonale et des tests
+            unitaires.
+          </li>
+          <li>
+            Mentorat d&apos;un développeur junior, facilitant son évolution vers
+            le freelancing, et documentation des processus pour l&apos;équipe.
+          </li>
+          <li>
+            Collaboration avec les équipes pour intégrer des améliorations
+            backend après le succès du refactoring front.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Storybook</span>
+          <span class="tag">Jest</span>
+          <span class="tag">React Query</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur front-end freelance</span>
+          <span class="experience-meta">EXA Market | mars 2022 – juil. 2022</span>
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Développement d&apos;un POC en React et Tailwind pour un chat
+            décentralisé, validant la faisabilité technique avec le protocole
+            Matrix.
+          </li>
+          <li>
+            Collaboration avec la communauté open source pour intégrer un SDK
+            Matrix, renforçant l&apos;innovation dans un environnement startup.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TailwindCSS</span>
+          <span class="tag">Matrix</span>
+          <span class="tag">TypeScript</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur front-end freelance</span>
+          <span class="experience-meta"
+            >EU4UA.org · Bénévolat | mars 2022 – avr. 2022</span
+          >
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Contribution bénévole à la conception technique d&apos;une
+            application React pour un projet humanitaire, posant des bases
+            solides pour un développement autonome.
+          </li>
+          <li>
+            Leadership technique dans un contexte urgent, structurant le projet
+            pour une application évolutive et maintenable.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Figma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page page-break">
+      <div class="page-mini-header">
+        <span><strong>Dimitri Bourreau</strong> · CV</span>
+        <span>2/2</span>
+      </div>
+
+      <h2 class="section-title">Parcours (suite)</h2>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur front-end freelance</span>
+          <span class="experience-meta"
+            >Sigilium | oct. 2021 – févr. 2022</span
+          >
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Développement rapide d&apos;un add-in pour Microsoft Outlook,
+            intégrant des signatures HTML avec authentification SSO pour
+            améliorer la personnalisation des emails.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">TypeScript</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Microsoft Azure</span>
+          <span class="tag">React.js</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur back-end freelance</span>
+          <span class="experience-meta">Scality | nov. 2021 – janv. 2022</span>
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Mise à jour de projets Node.js de la version 10 à 16, remplaçant les
+            méthodes obsolètes pour améliorer les performances des applications.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">TDD</span>
+          <span class="tag">Refactoring</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur Full Stack freelance</span>
+          <span class="experience-meta">CIDJ | déc. 2020 – janv. 2022</span>
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Maintenance et amélioration d&apos;une application AngularJS,
+            optimisant l&apos;expérience utilisateur et assurant la stabilité
+            sur un serveur Linux.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">AngularJS</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Node.js</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur back-end freelance</span>
+          <span class="experience-meta">Algoan | nov. 2020 – oct. 2021</span>
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Développement de microservices backend et d&apos;un chatbot en
+            Nest.js pour un grand groupe bancaire, respectant des contraintes
+            réglementaires strictes.
+          </li>
+          <li>
+            Apprentissage rapide de Nest.js, livrant des solutions fiables et
+            maintenables, ce qui a conduit à une prolongation de mission.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">NestJS</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">API REST</span>
+          <span class="tag">Jest</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <span class="experience-role">Développeur front-end freelance</span>
+          <span class="experience-meta">NL Europe | oct. 2019 – mai 2020</span>
+        </div>
+        <ul class="experience-bullets">
+          <li>
+            Refonte complète du design et des interfaces d&apos;un site web
+            d&apos;influence européenne, améliorant l&apos;expérience
+            utilisateur et la fonctionnalité du système.
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Adobe XD</span>
+        </div>
+      </div>
+
+      <div class="two-columns">
+        <div class="column">
+          <h2 class="section-title">Compétences</h2>
+          <div class="skills-section">
+            <div class="skills-grid">
+              <div>
+                <p class="skills-category">Front-end</p>
+                <div class="tags">
+                  <span class="tag">React.js</span>
+                  <span class="tag">Next.js</span>
+                  <span class="tag">TailwindCSS</span>
+                  <span class="tag">React Query</span>
+                </div>
+              </div>
+              <div>
+                <p class="skills-category">Back-end</p>
+                <div class="tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">NestJS</span>
+                  <span class="tag">API REST</span>
+                </div>
+              </div>
+              <div>
+                <p class="skills-category">DevOps</p>
+                <div class="tags">
+                  <span class="tag">CI</span>
+                  <span class="tag">GitHub</span>
+                  <span class="tag">GitLab</span>
+                </div>
+              </div>
+              <div>
+                <p class="skills-category">Méthodologies</p>
+                <div class="tags">
+                  <span class="tag">TDD</span>
+                  <span class="tag">Refactoring</span>
+                  <span class="tag">Archi hexagonale</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <h2 class="section-title">Langues</h2>
+          <div class="skills-section">
+            <div class="language-item">
+              <p class="language-name">Français</p>
+              <p class="language-level">Langue natale</p>
+            </div>
+            <div class="language-item">
+              <p class="language-name">Anglais</p>
+              <p class="language-level">Capacité professionnelle complète</p>
+            </div>
+            <div class="language-item">
+              <p class="language-name">Japonais</p>
+              <p class="language-level">Notions de base</p>
+            </div>
+            <div class="language-item">
+              <p class="language-name">Langue des signes</p>
+              <p class="language-level">Notions de base</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
