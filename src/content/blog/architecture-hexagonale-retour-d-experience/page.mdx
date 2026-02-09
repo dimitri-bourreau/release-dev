@@ -325,9 +325,9 @@ Au fil du projet, j'ai établi quelques règles :
 Je ne l'ai pas appliqué dans mon projet Bon vent parce que ça n'y faisait pas sens, mais sinon cette règle me paraît tout aussi importante :
 
 5. **Mocks clairs et exhaustifs**
-   - Les données récupérées ainsi que celles qui transitent sont mockées
-   - Cela sert de documentation pour les développeurs
-   - Mais aussi, si mon mock d'un fetch de mon backend est le copier-coller d'un payload : étant typé ici, son type est confirmé ou une alerte est levée immédiatement
+   - Les données entrantes et sortantes sont mockées
+   - Ces mocks servent de documentation vivante pour les développeurs
+   - Bonus : en copiant un payload réel du backend comme mock, le typage valide immédiatement sa structure ou lève une alerte
 
 ---
 
