@@ -6,6 +6,7 @@ export type BlogPost = {
   title: string
   date: string
   excerpt: string
+  tags: string[]
 }
 
 const CONTENT_DIR = path.join(process.cwd(), 'src/content/blog')

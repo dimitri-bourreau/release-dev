@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import '@/styles/tailwind.css'
 import { Header } from '@/components/header.component'
 import { Footer } from '@/components/footer.component'
@@ -29,9 +30,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-bg text-fg grid min-h-screen max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden font-mono">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <NuqsAdapter>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   )

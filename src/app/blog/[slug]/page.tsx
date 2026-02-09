@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getBlogPosts } from '@/data/blog'
 
@@ -32,6 +33,19 @@ export default async function BlogPostPage({ params }: Props) {
           {post.title}
         </h1>
         <time className="text-muted mt-1 block text-xs">{post.date}</time>
+        {post.tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/blog?tags=${encodeURIComponent(tag)}`}
+                className="border-border hover:bg-accent hover:text-bg border px-3 py-1 text-xs transition-colors"
+              >
+                {tag}
+              </Link>
+            ))}
+          </div>
+        )}
       </header>
       <div className="blog-gradient relative flex justify-center overflow-x-hidden">
         <article className="bg-bg prose prose-sm prose-pre:text-base w-full max-w-prose p-8 md:p-12">
