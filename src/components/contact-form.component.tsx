@@ -25,7 +25,7 @@ export function ContactForm() {
   if (state.success) {
     return (
       <div className="flex items-center justify-center p-12">
-        <p className="text-sm font-bold uppercase tracking-widest">
+        <p className="text-sm font-bold tracking-widest uppercase">
           Message envoyé. Je reviens vers vous rapidement.
         </p>
       </div>
@@ -35,7 +35,9 @@ export function ContactForm() {
   return (
     <form action={action} className="space-y-6">
       {state.error && (
-        <p className="border-fg border bg-accent/20 px-4 py-3 text-xs">{state.error}</p>
+        <p className="border-fg bg-accent/20 border px-4 py-3 text-xs">
+          {state.error}
+        </p>
       )}
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -43,13 +45,25 @@ export function ContactForm() {
           <label htmlFor="name" className={labelClass}>
             Nom *
           </label>
-          <input id="name" name="name" type="text" required className={inputClass} />
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            className={inputClass}
+          />
         </div>
         <div>
           <label htmlFor="email" className={labelClass}>
             Email *
           </label>
-          <input id="email" name="email" type="email" required className={inputClass} />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            className={inputClass}
+          />
         </div>
       </div>
 
@@ -64,7 +78,11 @@ export function ContactForm() {
         <label htmlFor="situation" className={labelClass}>
           Votre situation
         </label>
-        <select id="situation" name="situation" className={`${inputClass} cursor-pointer`}>
+        <select
+          id="situation"
+          name="situation"
+          className={`${inputClass} cursor-pointer`}
+        >
           <option value="">Sélectionnez</option>
           {situations.map((s) => (
             <option key={s} value={s}>

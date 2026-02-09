@@ -29,7 +29,10 @@ export function ApproachSection() {
       <SectionTitle>Ce qui me différencie</SectionTitle>
       <div className="grid md:grid-cols-2 lg:grid-cols-4">
         {differentiators.map((a) => (
-          <div key={a.title} className={`border-border border-r border-b border-l-4 ${a.color} p-6`}>
+          <div
+            key={a.title}
+            className={`border-border border-r border-b border-l-4 ${a.color} p-6`}
+          >
             <h3 className="mb-2 text-sm font-bold uppercase">{a.title}</h3>
             <p className="text-muted text-xs leading-relaxed">{a.desc}</p>
           </div>

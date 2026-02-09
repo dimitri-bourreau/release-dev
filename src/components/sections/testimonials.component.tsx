@@ -51,7 +51,9 @@ export function TestimonialsSection() {
             key={t.author}
             className="border-border border-r border-b p-6 md:border-b-0"
           >
-            <blockquote className={`border-l-2 pl-4 ${colors[i % colors.length]}`}>
+            <blockquote
+              className={`border-l-2 pl-4 ${colors[i % colors.length]}`}
+            >
               <p className="mb-2 text-xs leading-relaxed">
                 &quot;{t.quote}&quot;
               </p>

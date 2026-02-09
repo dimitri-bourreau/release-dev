@@ -28,7 +28,9 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       <header className="text-accent border-border border-l-accent border-b border-l-4 px-8 py-6">
-        <h1 className="text-lg font-bold tracking-widest uppercase">{post.title}</h1>
+        <h1 className="text-lg font-bold tracking-widest uppercase">
+          {post.title}
+        </h1>
         <time className="text-muted mt-1 block text-xs">{post.date}</time>
       </header>
       <div className="blog-gradient relative flex justify-center">

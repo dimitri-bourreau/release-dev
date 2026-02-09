@@ -17,15 +17,15 @@ const sections = [
   {
     title: 'Article 2 : Tarifs et facturation',
     content:
-      "Deux modes de facturation : forfait (selon devis validé, toute modification nécessite un avenant) ou taux journalier (facturé mensuellement sur la base des heures réelles). Les prix sont exprimés hors taxes. Le Client rembourse les frais documentés (déplacements, repas, etc.).",
+      'Deux modes de facturation : forfait (selon devis validé, toute modification nécessite un avenant) ou taux journalier (facturé mensuellement sur la base des heures réelles). Les prix sont exprimés hors taxes. Le Client rembourse les frais documentés (déplacements, repas, etc.).',
   },
   {
     title: 'Article 3 : Modalités de paiement',
     content:
-      "Contrats au forfait : acompte de 30% à la signature, solde à la livraison. Contrats au temps passé : facturation mensuelle, paiement sous 15 jours. Mode de paiement accepté : virement bancaire.",
+      'Contrats au forfait : acompte de 30% à la signature, solde à la livraison. Contrats au temps passé : facturation mensuelle, paiement sous 15 jours. Mode de paiement accepté : virement bancaire.',
   },
   {
-    title: "Article 4 : Hébergement et outils",
+    title: 'Article 4 : Hébergement et outils',
     content:
       "Le Client peut gérer l'hébergement et les outils de manière indépendante. Alternativement, le Prestataire peut les gérer avec une facturation séparée pour l'hébergement, le domaine et les coûts d'outils.",
   },
@@ -37,12 +37,12 @@ const sections = [
   {
     title: 'Article 6 : Modifications de périmètre',
     content:
-      "Les nouveaux développements nécessitent des devis séparés. Les modifications impliquant une durée excessive, des changements de périmètre significatifs ou le traitement de fichiers sources nécessitent des devis supplémentaires.",
+      'Les nouveaux développements nécessitent des devis séparés. Les modifications impliquant une durée excessive, des changements de périmètre significatifs ou le traitement de fichiers sources nécessitent des devis supplémentaires.',
   },
   {
     title: 'Article 7 : Délais de livraison',
     content:
-      "Les contrats au forfait précisent les délais ; les modifications demandées par le Client prolongent les délais. Les projets au temps passé ont des durées convenues mutuellement, ajustables avec un préavis raisonnable.",
+      'Les contrats au forfait précisent les délais ; les modifications demandées par le Client prolongent les délais. Les projets au temps passé ont des durées convenues mutuellement, ajustables avec un préavis raisonnable.',
   },
   {
     title: 'Article 8 : Collaboration Client',
@@ -57,7 +57,7 @@ const sections = [
   {
     title: 'Article 10 : Confidentialité',
     content:
-      "Le Prestataire maintient une stricte confidentialité concernant les informations du Client pendant la durée du contrat et 2 ans après sa fin, sauf pour les informations publiquement disponibles ou les connaissances préalables.",
+      'Le Prestataire maintient une stricte confidentialité concernant les informations du Client pendant la durée du contrat et 2 ans après sa fin, sauf pour les informations publiquement disponibles ou les connaissances préalables.',
   },
   {
     title: 'Article 11 : Transfert de droits',
@@ -72,7 +72,7 @@ const sections = [
   {
     title: 'Article 13 : Résiliation pour manquement',
     content:
-      "Le non-respect des obligations déclenche une mise en demeure de 15 jours par courrier recommandé. Le non-respect entraîne la résiliation du contrat sans indemnité.",
+      'Le non-respect des obligations déclenche une mise en demeure de 15 jours par courrier recommandé. Le non-respect entraîne la résiliation du contrat sans indemnité.',
   },
   {
     title: 'Article 14 : Résiliation sans motif',
@@ -92,7 +92,7 @@ const sections = [
   {
     title: 'Article 17 : Utilisation en portfolio',
     content:
-      "Sauf indication contraire, le Prestataire peut afficher publiquement les travaux réalisés de manière indéfinie à des fins de portfolio.",
+      'Sauf indication contraire, le Prestataire peut afficher publiquement les travaux réalisés de manière indéfinie à des fins de portfolio.',
   },
   {
     title: 'Article 18 : Modification des conditions',
@@ -102,7 +102,7 @@ const sections = [
   {
     title: 'Article 19 : Règlement des litiges',
     content:
-      "Le contrat est régi par le droit français. Les parties recherchent une résolution amiable ; les litiges non résolus sont portés devant la juridiction compétente.",
+      'Le contrat est régi par le droit français. Les parties recherchent une résolution amiable ; les litiges non résolus sont portés devant la juridiction compétente.',
   },
 ]
 
@@ -117,7 +117,9 @@ export default function CGVPage() {
             <p className="text-muted text-xs leading-relaxed">{s.content}</p>
           </div>
         ))}
-        <p className="text-muted text-xs">Dernière mise à jour : janvier 2026</p>
+        <p className="text-muted text-xs">
+          Dernière mise à jour : janvier 2026
+        </p>
       </div>
     </>
   )

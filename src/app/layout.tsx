@@ -23,8 +23,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${jetbrains.variable} h-full`} suppressHydrationWarning>
-      <body className="bg-bg text-fg font-mono grid min-h-screen max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden">
+    <html
+      lang="fr"
+      className={`${jetbrains.variable} h-full`}
+      suppressHydrationWarning
+    >
+      <body className="bg-bg text-fg grid min-h-screen max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden font-mono">
         <Header />
         <main>{children}</main>
         <Footer />

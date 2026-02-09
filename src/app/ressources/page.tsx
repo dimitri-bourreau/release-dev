@@ -125,7 +125,7 @@ function Section({ title, items }: { title: string; items: Item[] }) {
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:bg-accent hover:text-bg group -mb-px -mr-px block cursor-pointer border-r border-b p-8 transition-colors"
+            className="border-border hover:bg-accent hover:text-bg group -mr-px -mb-px block cursor-pointer border-r border-b p-8 transition-colors"
           >
             <h3 className="mb-2 text-sm font-bold uppercase">{item.title}</h3>
             <p className="text-muted group-hover:text-bg text-xs leading-relaxed">

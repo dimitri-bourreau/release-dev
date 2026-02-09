@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
@@ -35,9 +37,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
+    "@next/eslint-plugin-next": "^16.1.6",
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "sharp": "0.34.5"
@@ -45,5 +52,14 @@
   "overrides": {
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md,mdx}": [
+      "prettier --write"
+    ]
   }
 }

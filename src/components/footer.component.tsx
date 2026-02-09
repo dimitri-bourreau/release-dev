@@ -26,7 +26,11 @@ export function Footer() {
       ))}
       <span className="text-muted ml-auto flex items-center gap-4 px-4 py-3 text-xs">
         {legalLinks.map((link) => (
-          <Link key={link.href} href={link.href} className="hover:text-fg transition-colors">
+          <Link
+            key={link.href}
+            href={link.href}
+            className="hover:text-fg transition-colors"
+          >
             {link.label}
           </Link>
         ))}
