@@ -5,8 +5,16 @@ const topArticles = [
     title: "Architecture hexagonale en frontend : retour d'expérience",
     slug: 'architecture-hexagonale-retour-d-experience',
   },
-  { title: 'Refonte Next.js en 6 mois', slug: 'refonte-next-en-6-mois' },
-  { title: 'Rendus React & Fibers', slug: 'architecture-hexagonale-react' },
+  {
+    title:
+      "Refonte Next.js en 6 mois : archi hexa, React Query, et surtout l'humain !",
+    slug: 'refonte-next-en-6-mois',
+  },
+  {
+    title:
+      "Comment j'ai divisé par 10 les temps de chargement d'une application Next.js",
+    slug: 'comment-j-ai-divise-par-10-les-temps-de-chargement-d-une-app-next',
+  },
 ]
 
 export function TopArticles() {
