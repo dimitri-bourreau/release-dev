@@ -4,7 +4,10 @@ const externalLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/dimitri-bourreau/' },
   { label: 'Malt', href: 'https://www.malt.fr/profile/dimitribourreau' },
   { label: 'GitHub', href: 'https://github.com/dimitri-bourreau' },
-  { label: 'dimitri@release-dev.com', href: 'mailto:dimitri@release-dev.com' },
+  {
+    label: 'hello@dimitribourreau.dev',
+    href: 'mailto:hello@dimitribourreau.dev',
+  },
 ]
 
 const legalLinks = [

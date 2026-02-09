@@ -15,11 +15,11 @@ export default function ContactPage() {
 
       <section className="flex flex-col">
         <a
-          href="mailto:dimitri@release-dev.com"
+          href="mailto:hello@dimitribourreau.dev"
           className="border-border hover:bg-accent hover:text-bg group flex-1 cursor-pointer border-b p-8 transition-colors"
         >
           <h2 className="mb-2 text-sm font-bold uppercase">
-            dimitri@release-dev.com
+            hello@dimitribourreau.dev
           </h2>
           <p className="text-muted group-hover:text-bg text-xs leading-relaxed">
             Pour les demandes écrites ou les devis.
