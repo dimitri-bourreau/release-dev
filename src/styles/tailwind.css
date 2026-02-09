@@ -80,6 +80,9 @@
 .prose table {
   font-size: inherit;
   font-family: inherit;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .prose th {
