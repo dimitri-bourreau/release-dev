@@ -33,7 +33,7 @@ export default async function BlogPostPage({ params }: Props) {
         </h1>
         <time className="text-muted mt-1 block text-xs">{post.date}</time>
       </header>
-      <div className="blog-gradient relative flex justify-center">
+      <div className="blog-gradient relative flex justify-center overflow-x-hidden">
         <article className="bg-bg prose prose-sm prose-pre:text-base w-full max-w-prose p-8 md:p-12">
           <Content />
         </article>

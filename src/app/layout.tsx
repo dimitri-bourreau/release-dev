@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${jetbrains.variable} h-full`}
+      className={`${jetbrains.variable} h-full overflow-x-hidden`}
       suppressHydrationWarning
     >
       <body className="bg-bg text-fg grid min-h-screen max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden font-mono">
