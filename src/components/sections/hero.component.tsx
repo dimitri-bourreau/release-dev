@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function HeroSection() {
   return (
     <section className="flex flex-col justify-center p-8 md:p-10">
@@ -16,6 +18,12 @@ export function HeroSection() {
         m&apos;intègre vite, je livre, je transmets.
       </p>
       <p className="text-muted mt-6 text-xs">Télétravail · Grenoble · Lyon</p>
+      <Link
+        href="/contact"
+        className="bg-accent text-bg hover:bg-fg mt-8 inline-block px-6 py-3 text-sm font-bold tracking-wider uppercase transition-colors"
+      >
+        Discutons de votre projet
+      </Link>
     </section>
   )
 }
