@@ -10,6 +10,7 @@ type Project = {
   url: string
   github: string
   image: string
+  stack: string[]
 }
 
 const projects: Project[] = [
@@ -20,6 +21,14 @@ const projects: Project[] = [
     url: 'https://bon-vent.vercel.app',
     github: 'https://github.com/dimitri-bourreau/bon-vent',
     image: '/projets/bon-vent.png',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind',
+      'TanStack Query',
+      'IndexedDB',
+    ],
   },
   {
     name: 'Accrosignes',
@@ -28,6 +37,7 @@ const projects: Project[] = [
     url: 'https://www.accrosignes.org',
     github: 'https://github.com/dimitri-bourreau/accrosignes',
     image: '/projets/accrosignes.png',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Firebase', 'TipTap'],
   },
   {
     name: 'Relix',
@@ -36,6 +46,7 @@ const projects: Project[] = [
     url: 'https://relix-inky.vercel.app',
     github: 'https://github.com/dimitri-bourreau/relix',
     image: '/projets/relix.png',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind'],
   },
   {
     name: 'Animaux abattus en France',
@@ -44,6 +55,7 @@ const projects: Project[] = [
     url: 'https://animaux-abbatus-en-france.vercel.app/',
     github: 'https://github.com/dimitri-bourreau/animaux-abbatus-en-france',
     image: '/projets/animaux-abattus.png',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind'],
   },
   {
     name: 'Starrymusic',
@@ -52,6 +64,14 @@ const projects: Project[] = [
     url: 'https://www.starrymusic.fr',
     github: 'https://github.com/dimitri-bourreau/starrymusic',
     image: '/projets/starrymusic.png',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind',
+      'Supabase',
+      'TanStack Query',
+    ],
   },
   {
     name: 'Cosy songs',
@@ -60,6 +80,7 @@ const projects: Project[] = [
     url: 'https://cosy-songs.vercel.app/',
     github: 'https://github.com/dimitri-bourreau/cosy-songs',
     image: '/projets/cosy-songs.png',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind'],
   },
   {
     name: 'validcq',
@@ -68,6 +89,7 @@ const projects: Project[] = [
     url: 'https://www.npmjs.com/package/validcq',
     github: 'https://github.com/dimitri-bourreau/validcq',
     image: '/projets/validcq.png',
+    stack: ['JavaScript', 'Mocha', 'Chai'],
   },
 ]
 
@@ -94,9 +116,19 @@ export default function ProjetsPage() {
               <h2 className="mb-2 text-sm font-bold uppercase">
                 {project.name}
               </h2>
-              <p className="text-muted mb-4 text-xs leading-relaxed">
+              <p className="text-muted mb-3 text-xs leading-relaxed">
                 {project.description}
               </p>
+              <div className="mb-4 flex flex-wrap gap-1">
+                {project.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="bg-muted/20 text-muted px-2 py-0.5 text-[10px]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
               <div className="mt-auto flex gap-4">
                 <a
                   href={project.url}
