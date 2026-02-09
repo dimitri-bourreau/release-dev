@@ -6,11 +6,11 @@ Dans cet article, je détaille le chantier technique : ce que j'ai trouvé, ce q
 
 ## Le contexte
 
-L'application était un outil Next.js de reporting destiné au suivi de chantiers de travaux publics. Elle embarquait des rapports PowerBI en iframe, des graphiques, des tableaux de données. L'équipe comptait 4 développeurs frontend, 6 backend, 2 Product Owners et un CTO.
+L'application était un outil Next.js de reporting destiné au suivi de chantiers de travaux publics. Elle embarquait des rapports PowerBI en iframe, des graphiques, des tableaux de données. L'équipe comptait 3 développeurs frontend, 4 backend, 2 Product Owners et un CTO.
 
 Le code avait été rédigé par un prestataire externe, puis repris en interne. Une tentative de refonte avait laissé des traces : des dossiers `v1` et `v2` coexistaient sans logique claire, des composants étaient dupliqués, et personne ne savait vraiment quelle version était utilisée où. Redux gérait un state global devenu tentaculaire. Il n'y avait pas de tests. Pas de Storybook. Chaque modification était un pari.
 
-Les temps de chargement oscillaient entre 4 et 12 secondes selon les pages, avec des pics au-delà de 10 secondes sur les écrans embarquant des rapports PowerBI.
+Les temps de chargement pouvaient osciller entre 4 et 12 secondes selon les pages, avec des pics au-delà de 10 secondes sur les écrans embarquant des cartes géographiques.
 
 Ma mission : refactorer l'application pendant que l'équipe continuait à livrer des features. J'ai travaillé exclusivement sur le refactoring pendant six mois, en parallèle du développement produit.
 
@@ -347,13 +347,13 @@ Au-delà des chiffres bruts :
 - Le TDD avait été adopté par un membre de l'équipe.
 - Le code était documenté — par sa structure, par ses types, et par ses fake adapters.
 
-Mais ce dont je suis le plus fier, c'est l'impact humain. La pression sur les Product Owners était énorme. Les gains de performance, combinés à la productivité largement améliorée de l'équipe, avaient produit d'excellents retours clients, et donc de la Direction. Ça les avait beaucoup soulagés personnellement. Savoir que le travail technique a eu cet effet concret sur des gens que je côtoyais au quotidien, c'est ça qui compte vraiment.
+Mais ce dont je suis le plus fier, c'est l'impact humain. La pression sur les Product Owners était énorme. Les gains de performance, combinés à la productivité largement améliorée de l'équipe, avaient produit d'excellents retours clients, et donc de la Direction. Ça les avait beaucoup soulagés personnellement.
 
 ---
 
 ## Ce que j'en retiens
 
-Cette mission m'a confirmé que les problèmes de performance en frontend sont rarement des problèmes algorithmiques. Ce sont des problèmes d'architecture, de complexité accidentelle, de code qui a grandi sans structure claire.
+Cette mission m'a confirmé que les problèmes de performance en frontend ne sont pas souvent des problèmes algorithmiques. Ce sont des problèmes d'architecture, de complexité accidentelle, de code qui a grandi sans structure claire.
 
 Les gains les plus importants n'ont pas été obtenus avec des optimisations subtiles, mais avec des décisions structurelles : supprimer Redux, introduire une architecture claire, retirer le code mort, découper le chargement.
 
