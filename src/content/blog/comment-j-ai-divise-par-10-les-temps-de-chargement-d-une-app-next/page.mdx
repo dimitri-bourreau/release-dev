@@ -1,0 +1,364 @@
+Des pages qui mettent plus de dix secondes à charger, des rerenders nombreux et curieux, des bugs absurdes... On est nombreux à connaître cette peinture. Quand je suis arrivé sur cette mission, l'application — un outil de reporting pour le suivi de travaux publics — était dans cet état. 6 mois plus tard, les pages critiques chargeaient en moins d'une seconde.
+
+Dans cet article, je détaille le chantier technique : ce que j'ai trouvé, ce que j'ai fait, comment je l'ai fait, et ce que je ferais différemment aujourd'hui.
+
+---
+
+## Le contexte
+
+L'application était un outil Next.js de reporting destiné au suivi de chantiers de travaux publics. Elle embarquait des rapports PowerBI en iframe, des graphiques, des tableaux de données. L'équipe comptait 4 développeurs frontend, 6 backend, 2 Product Owners et un CTO.
+
+Le code avait été rédigé par un prestataire externe, puis repris en interne. Une tentative de refonte avait laissé des traces : des dossiers `v1` et `v2` coexistaient sans logique claire, des composants étaient dupliqués, et personne ne savait vraiment quelle version était utilisée où. Redux gérait un state global devenu tentaculaire. Il n'y avait pas de tests. Pas de Storybook. Chaque modification était un pari.
+
+Les temps de chargement oscillaient entre 4 et 12 secondes selon les pages, avec des pics au-delà de 10 secondes sur les écrans embarquant des rapports PowerBI.
+
+Ma mission : refactorer l'application pendant que l'équipe continuait à livrer des features. J'ai travaillé exclusivement sur le refactoring pendant six mois, en parallèle du développement produit.
+
+---
+
+## Supprimer Redux
+
+La première décision a été radicale : retirer Redux entièrement et le remplacer par React Query.
+
+Redux, dans cette application, servait à tout. Données serveur, état d'UI, état de formulaires — tout passait par un store global. Mais en réalité, il y avait très peu d'état réellement partagé entre les composants et les pages. Redux ajoutait une couche de complexité non souhaitée pour un besoin qui ne la justifiait pas. Je préfère le simple au complexe, toujours. Si un outil n'apporte pas de valeur proportionnelle à sa complexité, il faut le retirer.
+
+React Query a changé la donne. Au lieu de synchroniser manuellement un store avec le serveur, on déclare ce dont on a besoin :
+
+```tsx
+// Avant — Redux : fetch manuel, dispatch, reducer, selector
+useEffect(() => {
+  dispatch(fetchProjects())
+}, [])
+const projects = useSelector((state) => state.projects.data)
+const isLoading = useSelector((state) => state.projects.loading)
+
+// Après — React Query : déclaratif, cache automatique
+const { data: projects, isLoading } = useQuery({
+  queryKey: ['projects'],
+  queryFn: () => getProjects(projectApiAdapter),
+})
+```
+
+Plus de reducers, plus d'actions, plus de synchronisation manuelle. React Query gère le cache, les refetch, les états de chargement et d'erreur. J'ai particulièrement apprécié le refetch automatique quand l'utilisateur quitte puis revient sur la fenêtre — les données sont toujours fraîches sans aucun code supplémentaire. La gestion des erreurs était aussi considérablement simplifiée par rapport à ce qu'on faisait avec Redux.
+
+Le point de friction a été la gestion des invalidations de cache. En 2022, React Query était déjà mature, mais certains patterns d'invalidation demandaient de la réflexion, notamment quand plusieurs vues dépendaient des mêmes données. On a tâtonné, mais au final la simplicité du modèle mental compensait largement.
+
+---
+
+## Traquer les rerenders
+
+Les problèmes de performance ne venaient pas d'une seule cause. C'était une combinaison de mauvaises pratiques accumulées au fil du temps.
+
+### `useMemo` et `useCallback` utilisés à tort
+
+Le code était truffé de `useMemo` et `useCallback` mal utilisés — des tableaux de dépendances incomplets, des mémoïsations qui empêchaient des mises à jour légitimes et causaient des bugs complexes à traquer. Quand un composant ne se met pas à jour alors qu'il devrait, et que la cause est un `useMemo` trois niveaux plus haut avec une dépendance manquante, on peut perdre des heures.
+
+Ma position sur ces hooks est claire : **ne jamais les utiliser sauf pour résoudre un problème de performance avéré et mesuré**. Par défaut, React est performant. Ajouter de la mémoïsation partout ajoute de la complexité, masque les vrais problèmes, et peut même introduire des bugs quand les dépendances ne sont pas correctement référencées. Et avec l'arrivée du [React Compiler](https://react.dev/learn/react-compiler), cette position est plus pertinente que jamais : le compilateur gère la mémoïsation automatiquement, rendant ces hooks manuels obsolètes dans la plupart des cas.
+
+```tsx
+// Ce genre de code était partout — et causait des bugs
+const filteredData = useMemo(
+  () => data.filter((item) => item.status === status),
+  [data], // 'status' manquant → la liste ne se met jamais à jour quand on change le filtre
+)
+
+// Ma préférence : du code simple, sans mémoïsation inutile
+const filteredData = data.filter((item) => item.status === status)
+```
+
+J'ai tout supprimé. Tous les `useMemo`, tous les `useCallback`. Si un problème de performance survenait ensuite, j'aurais réfléchi à les remettre au cas par cas. Ce n'est jamais arrivé.
+
+### `useEffect` pour tout et n'importe quoi
+
+L'autre grande source de rerenders : des `useEffect` utilisés comme des event handlers déguisés, ou pour synchroniser du state dérivé.
+
+```tsx
+// Avant — useEffect pour calculer du state dérivé
+const [total, setTotal] = useState(0)
+useEffect(() => {
+  setTotal(items.reduce((sum, item) => sum + item.price, 0))
+}, [items])
+
+// Après — calcul direct, pas de state supplémentaire
+const total = items.reduce((sum, item) => sum + item.price, 0)
+```
+
+Chaque `useEffect` qui appelait un `setState` provoquait un rendu supplémentaire. Multiplié par des dizaines de composants imbriqués, ça expliquait une bonne partie de la lenteur.
+
+### Props drilling
+
+Les composants étaient profondément imbriqués avec des props transmises sur 4, 5, parfois 6 niveaux. Chaque changement de prop au sommet déclenchait un rendu de toute la cascade. L'introduction de l'architecture hexagonale et de React Query a naturellement résolu ce problème : les données sont récupérées au niveau du composant qui en a besoin, pas transmises depuis le haut.
+
+---
+
+## L'architecture hexagonale
+
+J'ai restructuré le code en séparant le domaine métier de l'infrastructure. Si le sujet vous intéresse en détail, j'ai écrit [un article dédié sur l'architecture hexagonale en frontend](/blog/architecture-hexagonale-retour-d-experience). Ici, je me concentre sur son application concrète dans ce projet.
+
+### La structure
+
+```
+features/
+├── reports/
+│   ├── api/
+│   │   ├── report.port.ts        # Le contrat
+│   │   ├── api.adapter.ts        # Implémentation API réelle
+│   │   └── fake.adapter.ts       # Implémentation mock (tests)
+│   ├── types/
+│   │   └── report.type.ts
+│   └── services/
+│       ├── get-reports.service.ts
+│       └── get-report-by-id.service.ts
+│
+hooks/
+├── use-reports.hook.ts
+│
+components/
+├── organisms/
+│   └── ReportDashboard.tsx
+```
+
+### Le port
+
+```ts
+// features/reports/api/report.port.ts
+export interface ReportRepository {
+  getAll(): Promise<Report[]>
+  getById(id: string): Promise<Report | undefined>
+  getByProject(projectId: string): Promise<Report[]>
+}
+```
+
+### L'adapter réel et le fake adapter
+
+```ts
+// features/reports/api/api.adapter.ts
+export class ReportApiAdapter implements ReportRepository {
+  async getAll(): Promise<Report[]> {
+    const res = await fetch('/api/reports')
+    return res.json()
+  }
+  // ...
+}
+
+// features/reports/api/fake.adapter.ts
+export class ReportFakeAdapter implements ReportRepository {
+  async getAll(): Promise<Report[]> {
+    return [fakeReport1, fakeReport2]
+  }
+  // ...
+}
+```
+
+Un point important sur les fake adapters : **les données mockées provenaient de vrais payloads de l'API**. Je récupérais la réponse réelle d'un appel API, je la copiais dans le fake adapter, et je typais. Si le type TypeScript ne correspondait pas au payload réel, on le voyait immédiatement — avant même que le backend ait fini sa PR. Ça nous a permis de corriger des bugs en amont à plusieurs reprises.
+
+Ces mocks servaient aussi de documentation vivante : n'importe quel développeur pouvait ouvrir un fake adapter et voir exactement à quoi ressemblaient les données manipulées.
+
+### Le switch d'adapter par environnement
+
+Pour pouvoir tester le front indépendamment du backend, j'ai mis en place un système de configuration basé sur une variable d'environnement :
+
+```ts
+// config/adapters.ts
+import { ReportApiAdapter } from '@/features/reports/api/api.adapter'
+import { ReportFakeAdapter } from '@/features/reports/api/fake.adapter'
+
+const adapters = {
+  production: {
+    report: new ReportApiAdapter(),
+  },
+  development: {
+    report: new ReportApiAdapter(),
+  },
+  'test-without-backend': {
+    report: new ReportFakeAdapter(),
+  },
+  'test-with-backend': {
+    report: new ReportApiAdapter(),
+  },
+}
+
+const env = process.env.NEXT_PUBLIC_APP_ENV || 'development'
+export const config = adapters[env as keyof typeof adapters]
+```
+
+```ts
+// hooks/use-reports.hook.ts
+import { config } from '@/config/adapters'
+
+export function useReports(projectId: string) {
+  return useQuery({
+    queryKey: ['reports', projectId],
+    queryFn: () => getReportsByProject(config.report, projectId),
+  })
+}
+```
+
+Quatre modes, un seul fichier de configuration. En test sans backend, le front tournait avec les fake adapters — des cycles de feedback rapides et une vraie confiance dans les déploiements.
+
+---
+
+## La stratégie de tests
+
+Il n'y avait rien quand je suis arrivé. J'ai mis en place trois niveaux.
+
+### Tests unitaires pour la logique métier
+
+Grâce à l'architecture hexagonale, tester la logique métier ne nécessite ni React, ni serveur, ni base de données :
+
+```ts
+// features/reports/services/__tests__/get-overdue-reports.test.ts
+const fakeAdapter: ReportRepository = {
+  getAll: async () => [
+    { id: '1', dueDate: '2022-01-01', status: 'pending' },
+    { id: '2', dueDate: '2099-01-01', status: 'pending' },
+  ],
+  // ...
+}
+
+test('retourne uniquement les rapports en retard', async () => {
+  const overdue = await getOverdueReports(fakeAdapter)
+  expect(overdue).toHaveLength(1)
+  expect(overdue[0].id).toBe('1')
+})
+```
+
+C'est ici que l'injection de dépendances prend tout son sens : le service reçoit son adapter en paramètre, on peut lui passer n'importe quelle implémentation. Le test est rapide, isolé, et documente le comportement attendu.
+
+J'ai aussi profité de cette mission pour introduire le TDD à l'équipe frontend. Personne ne connaissait la pratique. Un des développeurs l'a adopté et l'a intégré dans sa façon de travailler — une vraie satisfaction.
+
+### Storybook pour les composants
+
+Storybook nous a permis de visualiser et documenter les composants de manière isolée. Chaque composant avait ses stories avec différents états : chargement, erreur, données vides, données complètes.
+
+### Tests end-to-end avec Cypress
+
+Les tests E2E utilisaient le même système de configuration que le reste de l'application. En changeant la variable d'environnement, on pouvait :
+
+- Tester le front avec les fake adapters (rapide, pas de dépendance backend)
+- Tester l'intégration complète via un environnement de staging
+
+Ma préférence allait aux tests sans backend : plus rapides, plus fiables, et ils testaient exactement ce qu'on voulait tester — le comportement du frontend.
+
+---
+
+## Code splitting et chargement des iframes PowerBI
+
+Les pages les plus lourdes embarquaient des rapports PowerBI en iframe. Ces iframes étaient chargées au montage de la page, même si l'utilisateur n'avait pas encore scrollé jusqu'à elles.
+
+### Lazy loading des routes
+
+```tsx
+// Avant — tout chargé d'un coup
+import ReportDashboard from '@/components/ReportDashboard'
+import PowerBIReport from '@/components/PowerBIReport'
+
+// Après — chargement à la demande
+const ReportDashboard = React.lazy(() => import('@/components/ReportDashboard'))
+const PowerBIReport = React.lazy(() => import('@/components/PowerBIReport'))
+
+function ReportsPage() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <ReportDashboard />
+      <Suspense fallback={<ReportSkeleton />}>
+        <PowerBIReport reportId={reportId} />
+      </Suspense>
+    </Suspense>
+  )
+}
+```
+
+Le code splitting combiné au lazy loading des composants PowerBI a eu un impact majeur. Les pages ne chargeaient plus que ce qui était nécessaire au premier rendu.
+
+> **Note — ce que je ferais différemment aujourd'hui :** j'utiliserais l'[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) pour ne charger les iframes PowerBI que lorsqu'elles entrent dans le viewport. À l'époque, je ne connaissais pas cette API. Le principe : un observateur détecte quand un élément devient visible à l'écran, et on ne monte l'iframe qu'à ce moment-là. C'est du lazy loading natif, sans librairie, et c'est parfait pour des composants lourds comme des iframes de reporting.
+>
+> ```tsx
+> function LazyPowerBI({ reportId }: { reportId: string }) {
+>   const ref = useRef<HTMLDivElement>(null)
+>   const [isVisible, setIsVisible] = useState(false)
+>
+>   useEffect(() => {
+>     const observer = new IntersectionObserver(
+>       ([entry]) => {
+>         if (entry.isIntersecting) {
+>           setIsVisible(true)
+>           observer.disconnect()
+>         }
+>       },
+>       { rootMargin: '200px' },
+>     )
+>     if (ref.current) observer.observe(ref.current)
+>     return () => observer.disconnect()
+>   }, [])
+>
+>   return (
+>     <div ref={ref}>
+>       {isVisible ? <PowerBIReport reportId={reportId} /> : <ReportSkeleton />}
+>     </div>
+>   )
+> }
+> ```
+
+> **Autre note — `next/dynamic` :** j'utilisais `React.lazy` pour le code splitting. Next.js propose `next/dynamic`, son propre mécanisme de chargement dynamique, qui offre des avantages spécifiques à Next.js comme le support du SSR, une option `ssr: false` pour les composants client-only, et un meilleur contrôle du loading state. Je ne connaissais pas cette API à l'époque. Pour un projet Next.js, c'est probablement le meilleur choix.
+>
+> ```tsx
+> import dynamic from 'next/dynamic'
+>
+> const PowerBIReport = dynamic(() => import('@/components/PowerBIReport'), {
+>   loading: () => <ReportSkeleton />,
+>   ssr: false,
+> })
+> ```
+
+---
+
+## La migration progressive
+
+Impossible de tout réécrire d'un coup. L'équipe devait continuer à livrer des features. J'ai travaillé exclusivement sur le refactoring pendant six mois, en procédant page par page, feature par feature.
+
+Le travail de nettoyage a été conséquent. L'application contenait une quantité considérable de code mort — des composants dupliqués entre les dossiers `v1` et `v2`, des fichiers abandonnés, des utilitaires jamais appelés. J'ai retiré énormément de code. Parfois, la meilleure optimisation, c'est la suppression.
+
+Chaque migration suivait le même processus :
+
+1. Identifier le périmètre (une page, un flux)
+2. Créer les types, ports et adapters pour les données concernées
+3. Écrire les services et les tests unitaires
+4. Migrer le composant vers React Query + architecture hexagonale
+5. Supprimer le code Redux devenu inutile
+6. Mesurer la performance avant/après dans les DevTools
+7. Documenter les gains dans la PR
+
+Les mesures de performance se faisaient avec les DevTools du navigateur — onglet Performance et Network. Les résultats étaient systématiquement inclus dans les PR et les tickets pour objectiver les gains.
+
+---
+
+## Les résultats
+
+Sur les pages les plus critiques — celles embarquant les rapports PowerBI — on est passé de plus de 10 secondes à moins d'une seconde de chargement.
+
+Sur l'ensemble de l'application, les temps de chargement sont passés de 4-12 secondes à 1-3 secondes. Moins spectaculaire qu'un "×10" marketing, mais un gain réel et perceptible pour les utilisateurs au quotidien.
+
+Au-delà des chiffres bruts :
+
+- L'application est devenue fluide. Les transitions entre pages, les chargements de données, les interactions — tout répondait.
+- L'équipe pouvait travailler en parallèle sans se marcher dessus, grâce à la séparation claire entre domaine, infrastructure et interface.
+- Les tests existaient. L'équipe pouvait modifier du code avec confiance.
+- Le TDD avait été adopté par un membre de l'équipe.
+- Le code était documenté — par sa structure, par ses types, et par ses fake adapters.
+
+Mais ce dont je suis le plus fier, c'est l'impact humain. La pression sur les Product Owners était énorme. Les gains de performance, combinés à la productivité largement améliorée de l'équipe, avaient produit d'excellents retours clients, et donc de la Direction. Ça les avait beaucoup soulagés personnellement. Savoir que le travail technique a eu cet effet concret sur des gens que je côtoyais au quotidien, c'est ça qui compte vraiment.
+
+---
+
+## Ce que j'en retiens
+
+Cette mission m'a confirmé que les problèmes de performance en frontend sont rarement des problèmes algorithmiques. Ce sont des problèmes d'architecture, de complexité accidentelle, de code qui a grandi sans structure claire.
+
+Les gains les plus importants n'ont pas été obtenus avec des optimisations subtiles, mais avec des décisions structurelles : supprimer Redux, introduire une architecture claire, retirer le code mort, découper le chargement.
+
+Et la migration progressive, c'est possible. C'est même souvent la seule option réaliste. Ça demande de la discipline — résister à l'envie de tout réécrire — et de la méthode. Mais ça fonctionne.
+
+---
+
+_Votre application React ou Next.js souffre de problèmes de performance ou de maintenabilité ? C'est exactement le type de mission où je peux faire la différence. [Discutons-en](/contact)._
