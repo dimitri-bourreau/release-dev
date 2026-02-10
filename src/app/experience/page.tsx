@@ -4,150 +4,95 @@ import { SectionTitle } from '@/components/page-title.component'
 
 export const metadata: Metadata = { title: 'Expérience' }
 
+const stats = [
+  { value: '6', label: "ans d'expérience" },
+  { value: '40+', label: 'missions freelance' },
+  { value: '5/5', label: 'sur Malt' },
+  { value: '11', label: 'clients' },
+]
+
+type CaseStudy = {
+  slug: string
+  title: string
+}
+
 type Experience = {
-  role: string
   company: string
-  location: string
   period: string
-  bullets: string[]
-  tags: string[]
-  blogSlug?: string
-  blogTitle?: string
+  highlight: string
+  caseStudies?: CaseStudy[]
 }
 
 const experiences: Experience[] = [
   {
-    role: 'Développeur fullstack',
     company: 'VISEO',
-    location: 'Grenoble · Sur site',
-    period: 'janv. 2025 – juil. 2025',
-    bullets: [
-      "Conception d'une architecture hexagonale pour une application React, centralisant le suivi de documents sensibles dans un environnement bancaire complexe.",
-      "Rédaction d'une documentation technique exhaustive, adoptée comme référence interne, facilitant la transition et la collaboration entre équipes.",
-      "Amélioration de la dynamique d'équipe et de la collaboration grâce à une approche technique fédératrice.",
-    ],
-    tags: [
-      'React.js',
-      'TypeScript',
-      'GitLab',
-      'Jest',
-      'Architecture hexagonale',
-    ],
+    period: '2025',
+    highlight:
+      'Architecture hexagonale pour une application React en environnement bancaire. Documentation technique adoptée comme référence interne.',
   },
   {
-    role: 'Développeur front-end freelance',
     company: 'Tudigo',
-    location: 'Bordeaux · Sur site',
-    period: 'oct. 2023 – janv. 2024',
-    bullets: [
-      "Mise en place d'une architecture hexagonale et d'un monorepo NX pour moderniser le site, améliorant la maintenabilité et la performance.",
-      'Partage de connaissances via des sessions de pair programming et des revues de code, renforçant la qualité du code et la collaboration inter-équipes.',
-    ],
-    tags: ['React.js', 'TypeScript', 'NX', 'Jest', 'Architecture hexagonale'],
+    period: '2023-2024',
+    highlight:
+      'Architecture hexagonale et monorepo NX pour moderniser le site. Pair programming et revues de code.',
   },
   {
-    role: 'Développeur front-end freelance, architecte logiciel',
     company: 'Artelia',
-    location: 'Télétravail',
-    period: 'juil. 2022 – sept. 2023',
-    bullets: [
-      "Refactoring complet d'une application React, multipliant les performances par 10 grâce à une architecture hexagonale et des tests unitaires.",
-      "Mentorat d'un développeur junior, facilitant son évolution vers le freelancing, et documentation des processus pour l'équipe.",
-      'Collaboration avec les équipes pour intégrer des améliorations backend après le succès du refactoring front.',
+    period: '2022-2023',
+    highlight:
+      "Refactoring complet d'une application React, performances x10. Mentorat d'un développeur junior vers le freelancing.",
+    caseStudies: [
+      {
+        slug: 'refonte-next-en-6-mois',
+        title: 'Refonte Next.js en 6 mois',
+      },
+      {
+        slug: 'comment-j-ai-divise-par-10-les-temps-de-chargement-d-une-app-next',
+        title: 'Temps de chargement divisés par 10',
+      },
     ],
-    tags: ['React.js', 'TypeScript', 'Storybook', 'Jest', 'React Query'],
-    blogSlug: 'refonte-next-en-6-mois',
-    blogTitle:
-      "Refonte Next.js en 6 mois : archi hexa, React Query, et surtout l'humain !",
   },
   {
-    role: 'Développeur front-end freelance',
     company: 'EXA Market',
-    location: '',
-    period: 'mars 2022 – juil. 2022',
-    bullets: [
-      "Développement d'un POC en React et Tailwind pour un chat décentralisé, validant la faisabilité technique avec le protocole Matrix.",
-      "Collaboration avec la communauté open source pour intégrer un SDK Matrix, renforçant l'innovation dans un environnement startup.",
-    ],
-    tags: [
-      'React.js',
-      'TailwindCSS',
-      'Matrix',
-      'TypeScript',
-      'Architecture hexagonale',
-    ],
+    period: '2022',
+    highlight:
+      'POC en React et Tailwind pour un chat décentralisé avec le protocole Matrix. Collaboration open source.',
   },
   {
-    role: 'Développeur front-end freelance',
     company: 'EU4UA.org',
-    location: '',
-    period: 'mars 2022 – avr. 2022',
-    bullets: [
-      "Contribution bénévole à la conception technique d'une application React pour un projet humanitaire, posant des bases solides pour un développement autonome.",
-      'Leadership technique dans un contexte urgent, structurant le projet pour une application évolutive et maintenable.',
-    ],
-    tags: ['React.js', 'TypeScript', 'HTML5', 'CSS3', 'Figma'],
+    period: '2022',
+    highlight:
+      "Contribution bénévole : conception technique d'une application React pour un projet humanitaire.",
   },
   {
-    role: 'Développeur front-end freelance',
     company: 'Sigilium',
-    location: '',
-    period: 'oct. 2021 – févr. 2022',
-    bullets: [
-      "Développement rapide d'un add-in pour Microsoft Outlook, intégrant des signatures HTML avec authentification SSO pour améliorer la personnalisation des emails.",
-    ],
-    tags: ['TypeScript', 'Node.js', 'Microsoft Azure', 'React.js', 'HTML5'],
+    period: '2021-2022',
+    highlight:
+      'Add-in Microsoft Outlook avec signatures HTML et authentification SSO Azure.',
   },
   {
-    role: 'Développeur back-end freelance',
     company: 'Scality',
-    location: '',
-    period: 'nov. 2021 – janv. 2022',
-    bullets: [
-      'Mise à jour de projets Node.js de la version 10 à 16, remplaçant les méthodes obsolètes pour améliorer les performances des applications.',
-    ],
-    tags: ['Node.js', 'TypeScript', 'TDD', 'JavaScript', 'Refactoring'],
+    period: '2021-2022',
+    highlight:
+      'Migration Node.js 10 → 16, remplacement des méthodes obsolètes pour améliorer les performances.',
   },
   {
-    role: 'Développeur Full Stack freelance',
     company: 'CIDJ',
-    location: '',
-    period: 'déc. 2020 – janv. 2022',
-    bullets: [
-      "Maintenance et amélioration d'une application AngularJS, optimisant l'expérience utilisateur et assurant la stabilité sur un serveur Linux.",
-    ],
-    tags: ['AngularJS', 'TypeScript', 'Node.js', 'HTML5', 'CSS3'],
+    period: '2020-2022',
+    highlight:
+      "Maintenance et amélioration d'une application AngularJS, stabilité serveur Linux.",
   },
   {
-    role: 'Développeur back-end freelance',
     company: 'Algoan',
-    location: '',
-    period: 'nov. 2020 – oct. 2021',
-    bullets: [
-      "Développement de microservices backend et d'un chatbot en Nest.js pour un grand groupe bancaire, respectant des contraintes réglementaires strictes.",
-      'Apprentissage rapide de Nest.js, livrant des solutions fiables et maintenables, ce qui a conduit à une prolongation de mission.',
-    ],
-    tags: ['NestJS', 'Node.js', 'TypeScript', 'API REST', 'Jest'],
+    period: '2020-2021',
+    highlight:
+      'Microservices backend et chatbot en Nest.js pour un grand groupe bancaire. Mission prolongée.',
   },
   {
-    role: 'Développeur front-end freelance',
-    company: 'Sigilium',
-    location: '',
-    period: 'nov. 2020 – déc. 2020',
-    bullets: [
-      "Développement d'un add-in pour Microsoft Outlook, facilitant l'intégration et la synchronisation des signatures HTML via Microsoft Azure.",
-    ],
-    tags: ['TypeScript', 'Node.js', 'Microsoft Azure', 'React.js', 'HTML5'],
-  },
-  {
-    role: 'Développeur front-end freelance',
     company: 'NL Europe',
-    location: '',
-    period: 'oct. 2019 – mai 2020',
-    bullets: [
-      "Refonte complète du design et des interfaces d'un site web d'influence européenne, améliorant l'expérience utilisateur et la fonctionnalité du système.",
-    ],
-    tags: ['React.js', 'TypeScript', 'Adobe XD', 'HTML5', 'CSS3'],
+    period: '2019-2020',
+    highlight:
+      "Refonte complète du design et des interfaces d'un site web d'influence européenne.",
   },
 ]
 
@@ -161,57 +106,67 @@ const skills = {
 export default function ExperiencePage() {
   return (
     <>
-      <section>
+      <section className="border-border border-b">
+        <div className="flex items-center justify-between">
+          <SectionTitle className="border-b-0">Expérience</SectionTitle>
+          <a
+            href="/cv-dimitri-bourreau.pdf"
+            download
+            className="border-border hover:bg-accent hover:text-bg mr-8 border px-4 py-2 text-xs font-medium transition-colors"
+          >
+            Télécharger le CV
+          </a>
+        </div>
+        <div className="border-border border-b" />
+        <div className="flex flex-wrap">
+          {stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className={`border-border w-1/2 p-6 md:w-1/4 md:p-8 ${index === 0 || index === 2 ? 'border-r' : ''} ${index === 1 ? 'md:border-r' : ''}`}
+            >
+              <p className="text-accent text-3xl font-bold md:text-4xl">
+                {stat.value}
+              </p>
+              <p className="text-muted mt-1 text-xs">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-border border-b">
         <SectionTitle>Parcours</SectionTitle>
-        <div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3">
           {experiences.map((exp) => (
             <div
               key={`${exp.company}-${exp.period}`}
-              className="border-border flex flex-col border-b p-8 md:flex-row md:gap-8"
+              className="border-border flex flex-col gap-3 border-r border-b p-6"
             >
-              <div className="flex-1">
-                <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h3 className="text-sm font-bold uppercase">{exp.role}</h3>
-                  <span className="text-muted text-xs">
-                    {exp.company}
-                    {exp.location ? ` · ${exp.location}` : ''}
-                    {' | '}
-                    {exp.period}
-                  </span>
+              <div className="flex items-center gap-4">
+                <span className="text-muted w-20 shrink-0 text-xs">
+                  {exp.period}
+                </span>
+                <div className="flex-1">
+                  <h3 className="text-sm font-bold uppercase">{exp.company}</h3>
+                  <p className="text-muted text-xs">{exp.highlight}</p>
                 </div>
-                <ul className="text-muted mb-4 max-w-prose space-y-1 text-xs leading-relaxed">
-                  {exp.bullets.map((b) => (
-                    <li key={b}>— {b}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-1">
-                  {exp.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="border-border border px-2 py-0.5 text-xs"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                {exp.blogSlug && exp.blogTitle && (
-                  <Link
-                    href={`/blog/${exp.blogSlug}`}
-                    className="border-border hover:bg-accent hover:text-bg mt-4 flex items-center gap-2 border px-4 py-3 text-xs transition-colors md:hidden"
-                  >
-                    <span>[+]</span>
-                    <span>{exp.blogTitle}</span>
-                  </Link>
-                )}
               </div>
-              {exp.blogSlug && exp.blogTitle && (
-                <Link
-                  href={`/blog/${exp.blogSlug}`}
-                  className="border-border hover:bg-accent hover:text-bg hidden shrink-0 items-center gap-2 self-center border px-4 py-3 text-xs transition-colors md:block"
-                >
-                  <span>[+] </span>
-                  <span className="max-w-48">{exp.blogTitle}</span>
-                </Link>
+              {exp.caseStudies && exp.caseStudies.length > 0 && (
+                <div className="border-border mt-2 border-t pt-3">
+                  <p className="text-muted mb-2 text-[10px] font-bold tracking-wider uppercase">
+                    Études de cas
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    {exp.caseStudies.map((caseStudy) => (
+                      <Link
+                        key={caseStudy.slug}
+                        href={`/blog/${caseStudy.slug}`}
+                        className="text-accent text-xs hover:underline"
+                      >
+                        → {caseStudy.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           ))}
