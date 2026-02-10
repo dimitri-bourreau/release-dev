@@ -17,17 +17,19 @@ const legalLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-border flex flex-wrap items-center border-y">
-      {externalLinks.map((link) => (
-        <a
-          key={link.label}
-          href={link.href}
-          className="border-border hover:bg-accent hover:text-bg cursor-pointer border-r px-4 py-3 text-xs tracking-wider uppercase transition-colors"
-        >
-          {link.label}
-        </a>
-      ))}
-      <span className="text-muted ml-auto flex items-center gap-4 px-4 py-3 text-xs">
+    <footer className="border-border flex flex-col border-y md:flex-row md:items-center">
+      <div className="flex flex-col md:flex-row">
+        {externalLinks.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            className="border-border hover:bg-accent hover:text-bg border-b px-4 py-3 text-xs tracking-wider uppercase transition-colors md:border-r md:border-b-0"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+      <div className="text-muted flex flex-wrap items-center justify-center gap-4 px-4 py-3 text-xs md:ml-auto">
         {legalLinks.map((link) => (
           <Link
             key={link.href}
@@ -38,7 +40,7 @@ export function Footer() {
           </Link>
         ))}
         <span>© 2026 Dimitri Bourreau</span>
-      </span>
+      </div>
     </footer>
   )
 }
