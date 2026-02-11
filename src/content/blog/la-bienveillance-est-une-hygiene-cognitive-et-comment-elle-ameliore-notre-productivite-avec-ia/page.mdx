@@ -1,0 +1,65 @@
+Je suis gentil avec l'IA. Je prends le temps de formuler mes prompts avec soin, avec détail, parfois même avec une forme d'empathie. Et je suis convaincu que ça me rend plus productif. Dans cet article, j'explore pourquoi entant que développeur et ancien élève pilote de ligne. Est-ce que le ton qu'on emploie avec l'IA change la qualité de ce qu'elle produit ? Est-ce que ça change la qualité de ce qu'on lui demande ? Et est-ce que suivre son travail pas à pas, comme en pair programming, vaut mieux que la laisser coder toute seule ?
+
+## Ce que l'aviation m'a appris sur la communication
+
+Avant de parler de code et d'IA, parlons de cockpits. J'ai préparé une licence de pilote de ligne, et cette formation m'a profondément marqué. Pas seulement sur le plan technique, mais sur la manière dont on communique sous pression.
+
+Le [Crew Resource Management (CRM)](https://fr.wikipedia.org/wiki/Crew_resource_management) est né d'une catastrophe. En 1977, deux Boeing 747 se percutent sur la piste de Tenerife : 583 morts. À l'époque, il y avait une culture du cockpit autoritaire où les copilotes osaient moins contredire le commandant. En 1979, le psychologue de la NASA John Lauber formalise le concept : un ensemble de formations qui structurent la communication, la prise de décision et le travail d'équipe dans le cockpit. Dans les années 90, le CRM est devenu un standard mondial.
+
+Ce qui m'intéresse ici, ce n'est pas l'aviation en soi : c'est le mécanisme. Le CRM ne rend pas les pilotes plus gentils. Il structure la communication : **on explicite, on confirme, on reformule**.
+
+Et c'est exactement ce que je fais quand je formule un prompt avec soin : expliciter mes intentions, anticiper les incompréhensions, vérifier les hypothèses implicites. Le ton bienveillant n'est qu'un véhicule, la vraie variable, c'est la **structuration explicite de l'échange**.
+
+## Et si le ton changeait aussi l'output ?
+
+Quand on adopte un ton respectueux avec un LLM, il est tentant de se raconter une histoire de réciprocité. Comme si la politesse débloquait une forme de bonne volonté côté machine. Évidemment, un LLM n'a pas de gratitude. Mais ça ne veut pas dire que le ton du prompt n'a aucun effet sur la sortie.
+
+Un LLM génère du texte à partir de patterns appris sur des milliards de textes humains. Et dans ces textes, il y a un potentiel biais : quand un humain reçoit un ordre donné avec respect et clarté, on peut supposer que le travail qui suit tend à être plus qualitatif.
+
+On peut donc émettre une hypothèse, non prouvée à ce jour mais pas absurde, qu'un prompt formulé avec soin et bienveillance biaise statistiquement le modèle vers un registre plus coopératif, plus détaillé, plus méthodique. Pas par gratitude, **le modèle reproduit un pattern, pas une émotion**.
+
+Mais même si cette hypothèse s'avérait fausse, le bénéfice principal reste ailleurs : entièrement côté humain.
+
+## La charge cognitive, le vrai mécanisme
+
+Quand on rédige ses prompts de manière sèche, sans empathie, sans prendre le temps de formuler, on augmente les chances de céder ouvertement à l'agacement. Si un résultat est alors décevant, le prompt qui suit peut devenir « non, pas ça, refais » ou « t'as rien compris ».
+
+On bascule sans s'en rendre compte dans un registre frustré, et cette frustration a un coût réel : notre admirable cerveau, partiellement monopolisé par la régulation émotionnelle, a moins de bande passante pour ce qui compte : formuler précisément, détecter les ambiguïtés, anticiper les malentendus. Prendre l'habitude de la bienveillance dans ses prompts, c'est une forme de garde-fou contre cette spirale.
+
+La [théorie de la charge cognitive](https://fr.wikipedia.org/wiki/Charge_cognitive) de John Sweller donne un cadre à cette intuition. En gros : notre mémoire de travail est limitée (quelques éléments à la fois), et tout ce qui la surcharge, y compris la frustration, réduit ce qu'il reste pour le travail utile. Quand je suis agacé parce que l'IA a cassé mes tests, je formule moins bien mon prochain prompt. Pas par manque de compétence, par manque de bande passante.
+
+La régulation émotionnelle semble consommer des ressources cognitives, et ces ressources sont en compétition directe avec celles nécessaires à la formulation précise, à la détection d'ambiguïtés et à la résolution de problèmes. Maintenir un registre bienveillant avec l'IA, c'est une forme d'hygiène cognitive. Ce n'est pas de la gentillesse gratuite, mais de la **gestion de ressources attentionnelles**.
+
+## L'empathie comme outil cognitif : la théorie de l'esprit
+
+Se mettre « à la place » de l'IA, même si c'est fictif, active une compétence cognitive réelle.
+
+En sciences cognitives, on appelle ça la [théorie de l'esprit](https://fr.wikipedia.org/wiki/Th%C3%A9orie_de_l%27esprit) : la capacité à se représenter ce que l'autre sait, croit, veut.
+
+Appliqué à l'IA, ça donne quelque chose de très concret. Quand je me demande « est-ce que cette instruction est ambiguë pour quelqu'un qui n'a pas mon contexte ? », je fais exactement ce travail d'ajustement. Et ça produit naturellement de meilleurs prompts, plus explicites, moins ambigus, mieux contextualisés.
+
+Un utilisateur sec qui balance une instruction vague ne fait pas cet effort. Ce n'est pas la sécheresse le problème, c'est la négligence communicationnelle qui l'accompagne souvent. Être sec et précis, ça marche. Être sec et vague, c'est la catastrophe.
+
+L'empathie envers l'IA n'est pas du sentimentalisme. C'est un hack cognitif pour se forcer à penser depuis la perspective du récepteur.
+
+## Rester aux commandes : l'autre forme d'attention
+
+Au-delà du ton, il y a une autre pratique que je défends : limiter autant que possible le mode auto-edit quand je travaille avec l'IA. Suivre chaque modification pas à pas, en temps réel.
+
+Ça peut sembler inefficace. C'est l'inverse.
+
+En suivant chaque décision, je maintiens un modèle mental vivant de la codebase. Je peux intervenir immédiatement quand l'IA part dans la mauvaise direction. Et surtout, je peux poser la question qui transforme l'interaction en apprentissage : « Tiens, là tu as fait ça, pourquoi ? Parle-moi de ce pattern. C'est quoi cette API ? »
+
+- Le feedback est immédiat : je vois l'édition en direct.
+- Les tâches sont bien définies : chaque modification est un micro-problème.
+- L'engagement est actif : je ne suis pas spectateur, je suis co-pilote.
+
+L'alternative, laisser l'IA coder puis faire une revue après coup, rompt ce cycle. Soyons honnêtes : cette revue, elle n'est jamais vraiment bien faite. On survole, on valide en bloc, on passe à la suite.
+
+Mon approche : des petits commits, des checkpoints fréquents, un suivi serré. Ce que je perds en vitesse brute, je le récupère en compréhension, en qualité, et en capacité à rollback proprement quand quelque chose déraille. Et à chaque session, j'apprends réellement ma codebase. Ce qui me rend plus rapide sur le long terme.
+
+## Ce qui compte vraiment
+
+La gentillesse avec l'IA n'est ni du sentimentalisme ni de la superstition. C'est **un proxy fiable pour un ensemble de pratiques cognitives qui améliorent réellement la qualité du travail produit** : gestion de la charge cognitive, conservation des ressources d'autorégulation, modélisation de l'interlocuteur, structuration explicite des échanges, et engagement actif dans l'apprentissage.
+
+Le mécanisme est entièrement dans notre tête. Et c'est précisément pour ça que ça marche.
