@@ -1,0 +1,377 @@
+J'ai longtemps cru que `console.log` suffisait. Et honnêtement, dans beaucoup de cas, c'est vrai. Mais après des années à débugger des applications React et TypeScript, j'ai découvert que le _debugger_ apporte parfois une vision que `console.log` ne peut pas offrir.
+
+Dans cet article, je commence par défendre `console.log` — sa simplicité, les cas où il excelle (notamment les _heisenbugs_ et les problèmes de _timing_), et les variantes méconnues de l'API Console comme `console.table` ou `console.time`. Ensuite, j'explique comment fonctionnent concrètement les points d'arrêt dans le navigateur, avant de montrer ce que le _debugger_ apporte de différent : l'inspection complète de l'état du programme, la modification de valeurs à la volée, et l'analyse de la pile d'appels. Je détaille ensuite les outils spécifiques à React — React DevTools, le Profiler, _Why Did You Render_ — et comment débugger les _hooks_ qui partent en boucle infinie. Enfin, je couvre la configuration des _source maps_ pour débugger TypeScript directement dans le code source.
+
+---
+
+## L'éloge du console.log
+
+Le _print debugging_ — ajouter des `console.log` pour comprendre ce qui se passe — est probablement la technique de débogage la plus ancienne et la plus universelle. Et elle a ses raisons d'exister.
+
+### La simplicité avant tout
+
+Quand un bug survient, la première question est toujours la même : « qu'est-ce qui se passe réellement ? ». Un `console.log` bien placé répond à cette question en quelques secondes. Pas de configuration, pas d'outil à ouvrir, pas de point d'arrêt à poser. On écrit, on sauvegarde, on observe. Comme l'explique [Tim Sneath dans son article sur le _print debugging_](https://www.timdbg.com/posts/why-you-should-printf/), cette technique « donne une information permanente qu'on peut analyser à son rythme ».
+
+Prenons un exemple concret tiré de [nuqs](https://github.com/47ng/nuqs), une librairie de gestion des query strings en React. Dans le fichier [`safe-parse.ts`](https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/lib/safe-parse.ts), on trouve cette fonction :
+
+```ts
+// https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/lib/safe-parse.ts
+export function safeParse<I, R>(
+  parser: (arg: I) => R,
+  value: I,
+  key?: string,
+): R | null {
+  try {
+    return parser(value)
+  } catch (error) {
+    warn(
+      '[nuqs] Error while parsing value `%s`: %O' +
+        (key ? ' (for key `%s`)' : ''),
+      value,
+      error,
+      key,
+    )
+    return null
+  }
+}
+```
+
+C'est du _print debugging_ intégré directement dans le code de production. Quand le parsing échoue, on log l'erreur avec la valeur et la clé concernées. C'est immédiat, lisible, et ça fonctionne dans n'importe quel environnement.
+
+### Les cas où console.log excelle
+
+Le _print debugging_ brille dans certaines situations que le _debugger_ gère mal. Les bugs liés au _timing_ en sont l'exemple parfait.
+
+#### Le cas des _heisenbugs_
+
+Un [_heisenbug_](https://en.wikipedia.org/wiki/Heisenbug) — du nom du physicien Werner Heisenberg et son principe d'incertitude — est un bug qui disparaît ou change de comportement quand on essaie de l'observer. Le terme fait référence à l'effet de l'observateur : l'acte d'observer un système peut modifier son état.
+
+Concrètement, quand on pose un _breakpoint_ sur un code asynchrone, on modifie le _timing_ d'exécution. Les threads se synchronisent différemment, les timeouts s'écoulent pendant qu'on inspecte les variables, et le bug peut simplement ne plus se manifester. C'est particulièrement vicieux avec les _race conditions_.
+
+Imaginons ce scénario dans une application React :
+
+```tsx
+function useUserData(userId: string) {
+  const [user, setUser] = useState<User | null>(null)
+  const [orders, setOrders] = useState<Order[]>([])
+
+  useEffect(() => {
+    // Ces deux appels partent en parallèle
+    fetchUser(userId).then(setUser)
+    fetchOrders(userId).then(setOrders)
+  }, [userId])
+
+  // Bug : parfois orders arrive avant user
+  // et on affiche "Commandes de undefined"
+  return { user, orders }
+}
+```
+
+Si on pose un _breakpoint_ dans le `.then(setUser)`, on ralentit cette branche. Le bug où `orders` arrive avant `user` peut ne plus se produire — le _debugger_ a changé le _timing_. Avec `console.log`, le code s'exécute à vitesse normale :
+
+```tsx
+useEffect(() => {
+  console.log(`[${Date.now()}] Début fetch user`)
+  fetchUser(userId).then((data) => {
+    console.log(`[${Date.now()}] User reçu:`, data)
+    setUser(data)
+  })
+
+  console.log(`[${Date.now()}] Début fetch orders`)
+  fetchOrders(userId).then((data) => {
+    console.log(`[${Date.now()}] Orders reçus:`, data.length)
+    setOrders(data)
+  })
+}, [userId])
+```
+
+Les _timestamps_ révèlent l'ordre réel d'exécution. Si les _orders_ arrivent avant le _user_, on le voit immédiatement dans la console.
+
+### Les variantes méconnues de console
+
+La plupart des développeurs n'utilisent que `console.log`, mais l'API Console offre bien plus. [Chrome DevTools](https://developer.chrome.com/docs/devtools/console/api) et [Firefox Developer Tools](https://firefox-source-docs.mozilla.org/devtools-user/web_console/) documentent ces fonctionnalités.
+
+```tsx
+// Grouper des logs liés
+console.group('Rendu du composant UserProfile')
+console.log('Props:', props)
+console.log('State:', state)
+console.groupEnd()
+
+// Afficher des objets en tableau
+console.table(users) // Affiche un tableau formaté avec colonnes
+
+// Mesurer le temps d'exécution
+console.time('fetchData')
+await fetchAllData()
+console.timeEnd('fetchData') // Affiche "fetchData: 234.5ms"
+
+// Assertions conditionnelles
+console.assert(user.id !== undefined, 'User ID manquant!', user)
+
+// Tracer la pile d'appels
+console.trace('Comment est-on arrivé ici ?')
+```
+
+`console.table` est particulièrement utile pour débugger des tableaux d'objets — au lieu d'un JSON difficile à lire, on obtient un tableau propre avec des colonnes. `console.time` et `console.timeEnd` permettent de mesurer les performances sans sortir du code.
+
+---
+
+## Comment fonctionnent les points d'arrêt
+
+Avant de voir pourquoi le _debugger_ est utile, il faut comprendre ce qui se passe concrètement quand on pose un _breakpoint_.
+
+### Le mécanisme sous le capot
+
+Quand vous posez un point d'arrêt, le moteur JavaScript (V8 dans Chrome, SpiderMonkey dans Firefox) insère une instruction spéciale dans le code compilé. Quand l'exécution atteint cette instruction, le moteur :
+
+1. **Suspend l'exécution** du thread JavaScript principal
+2. **Capture l'état complet** : variables locales, _closures_, pile d'appels
+3. **Notifie le _debugger_** qui peut alors afficher ces informations
+4. **Attend une commande** : continuer, avancer d'une ligne, entrer dans une fonction...
+
+C'est pour ça que le _debugger_ modifie le _timing_ — l'exécution est littéralement en pause pendant qu'on inspecte.
+
+### Les différents types de _breakpoints_
+
+Les navigateurs modernes proposent plusieurs types de points d'arrêt, chacun utile dans des situations différentes.
+
+**Le _breakpoint_ classique** : clic sur le numéro de ligne dans l'onglet Sources (Chrome) ou Debugger (Firefox). L'exécution s'arrête à chaque passage sur cette ligne.
+
+**Le _breakpoint_ conditionnel** : clic droit sur le numéro de ligne, puis « Add conditional breakpoint ». On entre une expression JavaScript — le _breakpoint_ ne s'active que si l'expression retourne `true`. Par exemple, `userId === 'user-problematique'` ne s'arrêtera que pour cet utilisateur.
+
+**Le _logpoint_** : clic droit, puis « Add logpoint » (Chrome) ou « Add log action » (Firefox). C'est un `console.log` sans modifier le code source. On entre le message à afficher, et il apparaît dans la console à chaque passage — sans pause. [La documentation Firefox](https://firefox-source-docs.mozilla.org/devtools-user/debugger/set_a_logpoint/index.html) détaille cette fonctionnalité.
+
+**Le statement `debugger`** : une instruction JavaScript native. Quand le navigateur rencontre `debugger;` avec les DevTools ouverts, il s'arrête immédiatement :
+
+```tsx
+function processOrder(order: Order) {
+  if (order.items.length === 0) {
+    debugger // S'arrête ici pour inspecter pourquoi le panier est vide
+  }
+  // ...
+}
+```
+
+Attention : cette instruction peut être commitée par erreur. Je recommande d'ajouter cette règle dans votre configuration ESLint :
+
+```json
+{
+  "rules": {
+    "no-debugger": "error"
+  }
+}
+```
+
+Avec cette règle, ESLint bloquera tout commit contenant un `debugger` oublié.
+
+---
+
+## Ce que le _debugger_ apporte de différent
+
+Malgré tous ses avantages, `console.log` a une limite fondamentale : on ne peut logger que ce qu'on anticipe. Si le bug vient d'une variable qu'on n'a pas pensé à afficher, il faut modifier le code, recharger, et recommencer. Le _debugger_ élimine ce problème.
+
+### Voir l'état complet du programme
+
+Quand l'exécution s'arrête sur un point d'arrêt, on a accès à toutes les variables : locales, _closures_, portée globale, pile d'appels complète. On peut explorer librement sans avoir anticipé quoi regarder. Comme l'explique [l'article de HackerNoon sur le _debugger_](https://hackernoon.com/why-javascript-developers-should-use-the-debugger-instead-of-consolelog), « avec le _debugger_, on peut examiner la pile d'appels, évaluer des variables dans leur portée, et observer les mutations du DOM ».
+
+Pour accéder à ces informations dans Chrome DevTools :
+
+1. Ouvrez les DevTools (F12 ou Cmd+Option+I)
+2. Allez dans l'onglet **Sources**
+3. Posez un _breakpoint_ et déclenchez son exécution
+4. Le panneau de droite affiche plusieurs sections :
+   - **Scope** : toutes les variables accessibles (Local, Closure, Global)
+   - **Call Stack** : la pile d'appels qui a mené jusqu'ici
+   - **Watch** : des expressions personnalisées à surveiller
+
+Dans Firefox, c'est l'onglet **Debugger** avec une organisation similaire. [La documentation Firefox](https://firefox-source-docs.mozilla.org/devtools-user/debugger/ui_tour/index.html) détaille l'interface.
+
+### Modifier les valeurs à la volée
+
+Dans le panneau Scope, on peut directement changer la valeur d'une variable et continuer l'exécution avec cette nouvelle valeur. Imaginez : vous suspectez qu'un bug survient quand `items` est un tableau vide. Au lieu de modifier le code pour tester ce cas, vous posez un _breakpoint_, vous double-cliquez sur la valeur de `items` dans le panneau Scope, vous la changez en `[]`, et vous continuez. Le _feedback_ est instantané.
+
+### La pile d'appels pour comprendre les re-renders React
+
+La pile d'appels (_Call Stack_) est particulièrement précieuse pour débugger React. Elle montre exactement comment on est arrivé à ce point du code — quelle chaîne de fonctions a mené ici.
+
+Prenons un exemple concret. Dans [nuqs](https://github.com/47ng/nuqs), le fichier [`patch-history.ts`](https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/adapters/lib/patch-history.ts) montre un pattern de _monkey-patching_ de l'History API :
+
+```ts
+// https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/adapters/lib/patch-history.ts#L104-L115
+history.pushState = function nuqs_pushState(state, marker, url) {
+  originalPushState.call(history, state, '', url)
+  if (url && marker !== historyUpdateMarker) {
+    sync(url)
+  }
+}
+```
+
+Si vous posez un _breakpoint_ sur la ligne `sync(url)` et que vous regardez la pile d'appels, vous verrez exactement qui a appelé `history.pushState` : était-ce votre code ? Un autre composant ? La librairie de routing ? Cette information est quasiment impossible à obtenir avec des `console.log` — il faudrait instrumenter chaque appelant potentiel.
+
+Pour un _re-render_ React inattendu, la même technique s'applique. Posez un _breakpoint_ dans votre composant, et la pile d'appels montrera la chaîne : `workLoopSync` → `performUnitOfWork` → `beginWork` → ... → votre composant. En remontant, vous pouvez identifier quel changement de _state_ ou de _props_ a déclenché ce rendu.
+
+---
+
+## Débugger React : les outils dédiés
+
+React ajoute une couche d'abstraction qui rend le débogage plus complexe. Le DOM virtuel, les _hooks_, les _re-renders_ — tout ça crée des comportements parfois difficiles à comprendre avec les outils standard. Heureusement, l'écosystème propose des outils dédiés.
+
+### React Developer Tools
+
+L'extension [React Developer Tools](https://react.dev/learn/react-developer-tools) est très utile pour comprendre l'état de votre application. Elle ajoute deux onglets aux DevTools : « Components » et « Profiler ».
+
+L'onglet **Components** affiche l'arbre des composants React — pas le DOM HTML, mais la hiérarchie réelle des composants. En sélectionnant un composant, on voit ses _props_ actuelles, son _state_, et les _hooks_ qu'il utilise. [DigitalOcean propose un tutoriel détaillé](https://www.digitalocean.com/community/tutorials/how-to-debug-react-components-using-react-developer-tools) sur l'utilisation de cet onglet.
+
+Ce qui est particulièrement pratique, c'est la possibilité de modifier le _state_ et les _props_ directement dans les DevTools. On peut changer `isEditing` de `false` à `true` et voir immédiatement le composant re-render avec le nouveau _state_.
+
+### Traquer les _re-renders_ inutiles
+
+Les _re-renders_ excessifs sont une source fréquente de problèmes de performance en React. L'onglet **Profiler** de React DevTools permet de les visualiser. On démarre un enregistrement, on interagit avec l'application, on arrête — et on voit exactement quels composants ont _re-render_, combien de fois, et combien de temps chaque rendu a pris.
+
+Pour aller plus loin, il y a l'option « Highlight updates when components render » dans les paramètres des React DevTools. Chaque _re-render_ est visuellement mis en évidence par un flash coloré autour du composant.
+
+La librairie [Why Did You Render](https://github.com/welldone-software/why-did-you-render) de Welldone Software pousse ce concept encore plus loin. Elle _monkey-patche_ React pour afficher dans la console pourquoi un composant a _re-render_.
+
+Un _monkey-patch_, c'est une technique qui consiste à modifier le comportement d'un objet ou d'une fonction existante au _runtime_, sans toucher au code source original. Dans le cas de _Why Did You Render_, la librairie remplace certaines fonctions internes de React par des versions instrumentées qui loggent des informations supplémentaires. C'est exactement ce que fait nuqs avec l'History API dans l'exemple précédent — `history.pushState` est remplacé par une version qui appelle l'originale puis exécute du code supplémentaire.
+
+```tsx
+// Configuration dans un fichier séparé (ex: wdyr.ts)
+import React from 'react'
+
+if (process.env.NODE_ENV === 'development') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render')
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
+  })
+}
+
+// Puis sur un composant spécifique
+function ExpensiveList({ items }: { items: Item[] }) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+ExpensiveList.whyDidYouRender = true
+```
+
+Attention : cette librairie ne doit jamais être utilisée en production. Elle ralentit significativement React et peut causer des comportements inattendus.
+
+### Débugger les _hooks_
+
+Les _hooks_ React peuvent être particulièrement difficiles à débugger. Les `useEffect` qui s'exécutent en boucle infinie sont un classique. [LogRocket a documenté les patterns courants](https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/) qui causent ces boucles.
+
+Le pattern le plus vicieux : un `setState` directement dans le corps du `useEffect`, sans condition de sortie.
+
+Un autre cas classique : un objet dans les dépendances avec une API qui retourne des données différentes à chaque appel (pagination, timestamps, etc.).
+
+```tsx
+function usePaginatedData() {
+  const [items, setItems] = useState<Item[]>([])
+
+  // Nouvelle référence à chaque render
+  const params = { page: 1, timestamp: Date.now() }
+
+  useEffect(() => {
+    // Boucle : params change → fetch → setItems → re-render → params change...
+    fetchItems(params).then((newItems) => setItems([...items, ...newItems]))
+  }, [params])
+
+  return items
+}
+```
+
+La solution : déclarer les objets constants en dehors du composant, ou utiliser `useMemo` avec des dépendances primitives. Dans [nuqs](https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/useQueryStates.ts), ce pattern est résolu avec `useMemo` et une dépendance sur `JSON.stringify` :
+
+```ts
+// https://github.com/47ng/nuqs/blob/next/packages/nuqs/src/useQueryStates.ts#L93-L99
+const resolvedUrlKeys = useMemo(
+  () =>
+    Object.fromEntries(
+      Object.keys(keyMap).map((key) => [key, urlKeys[key] ?? key]),
+    ),
+  [stateKeys, JSON.stringify(urlKeys)],
+)
+```
+
+Pour débugger ces situations, un `console.log` dans le `useEffect` avec un compteur peut révéler le problème :
+
+```tsx
+const renderCount = useRef(0)
+
+useEffect(() => {
+  renderCount.current++
+  console.log(`Effect exécuté ${renderCount.current} fois`)
+  // Si ce nombre explose, vous avez une boucle infinie
+}, [dependency])
+```
+
+---
+
+## Débugger TypeScript : _source maps_ et configuration
+
+TypeScript compile en JavaScript. Sans configuration appropriée, le _debugger_ montre le JavaScript généré, pas le TypeScript original. Les _source maps_ résolvent ce problème.
+
+### Configurer les _source maps_
+
+Dans `tsconfig.json`, l'option `sourceMap: true` indique au compilateur de générer des fichiers `.map` qui établissent la correspondance entre le code TypeScript et le JavaScript généré. [La documentation VSCode](https://code.visualstudio.com/docs/typescript/typescript-debugging) détaille cette configuration.
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "outDir": "out",
+    "sourceMap": true
+  }
+}
+```
+
+Avec cette configuration, quand on pose un _breakpoint_ dans un fichier `.ts`, le _debugger_ sait exactement quelle ligne du JavaScript correspond. On débugge dans le code qu'on a écrit, pas dans le code généré.
+
+### Les erreurs TypeScript au _runtime_
+
+TypeScript vérifie les types à la compilation, pas à l'exécution. Une fois compilé, le JavaScript n'a plus aucune information de type. Ça signifie qu'une donnée mal typée venant d'une API externe peut passer inaperçue jusqu'à ce qu'elle cause un bug.
+
+```tsx
+interface User {
+  id: string
+  name: string
+  email: string
+}
+
+async function getUser(id: string): Promise<User> {
+  const response = await fetch(`/api/users/${id}`)
+  return response.json() // TypeScript fait confiance, mais l'API pourrait renvoyer autre chose
+}
+
+// Si l'API renvoie { id: 123, name: null }, TypeScript ne le détectera pas
+const user = await getUser('123')
+console.log(user.name.toUpperCase()) // Crash: Cannot read property 'toUpperCase' of null
+```
+
+C'est exactement pour ça que nuqs utilise la fonction `safeParse` vue plus haut — elle wrappe le parsing dans un try/catch et log l'erreur proprement au lieu de crasher silencieusement.
+
+---
+
+## Ma pratique au quotidien
+
+Après des années de pratique, voici comment j'aborde le débogage.
+
+Pour les bugs simples et isolés — une variable qui n'a pas la valeur attendue, une condition qui ne se comporte pas comme prévu — `console.log` reste mon premier réflexe. C'est rapide, ça fonctionne partout, et ça laisse une trace que je peux analyser.
+
+Pour les bugs complexes qui impliquent plusieurs fonctions, de l'état partagé, ou des comportements difficiles à reproduire, je passe au _debugger_. La capacité à naviguer dans la pile d'appels et à inspecter l'état complet du programme est irremplaçable dans ces situations.
+
+Pour les problèmes de performance React, React DevTools et son Profiler sont très utiles. Combiner ça avec _Why Did You Render_ en développement permet d'identifier rapidement les _re-renders_ inutiles — même si ce n'est pas systématiquement nécessaire.
+
+Et surtout : je nettoie mes `console.log` avant de _commit_. Une règle ESLint `no-console` en mode _warning_ me rappelle de le faire. Les _logpoints_ du navigateur sont devenus mon alternative préférée — ils offrent la même information sans polluer le code.
+
+Le débogage n'est pas une compétence binaire qu'on maîtrise ou non. C'est un ensemble d'outils et de techniques qu'on apprend à combiner selon le contexte. `console.log` et le _debugger_ ne sont pas en compétition — ils sont complémentaires.
+
+---
+
+_Vous galérez avec un bug React ou TypeScript particulièrement vicieux ? [Discutons-en](/contact) — le débogage, c'est ce que j'adore._
