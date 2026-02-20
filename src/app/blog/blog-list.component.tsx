@@ -8,6 +8,18 @@ type BlogListProps = {
   posts: BlogPost[]
 }
 
+const groupPostsByYear = (posts: BlogPost[]) => {
+  const grouped: Record<string, BlogPost[]> = {}
+  for (const post of posts) {
+    const year = post.date.slice(0, 4)
+    if (!grouped[year]) grouped[year] = []
+    grouped[year].push(post)
+  }
+  return Object.entries(grouped).sort(([a], [b]) => b.localeCompare(a))
+}
+
+const formatShortDate = (date: string) => date.slice(5)
+
 export const BlogList = ({ posts }: BlogListProps) => {
   const [selectedTags, setSelectedTags] = useQueryState(
     'tags',
@@ -22,6 +34,8 @@ export const BlogList = ({ posts }: BlogListProps) => {
       : posts.filter((post) =>
           selectedTags.some((tag) => post.tags.includes(tag)),
         )
+
+  const postsByYear = groupPostsByYear(filteredPosts)
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -48,31 +62,39 @@ export const BlogList = ({ posts }: BlogListProps) => {
           </button>
         ))}
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3">
-        {filteredPosts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="border-border hover:bg-accent hover:text-bg group block border-r border-b p-8 transition-colors"
-          >
-            <time className="text-muted group-hover:text-bg mb-2 block text-xs">
-              {post.date}
-            </time>
-            <h2 className="mb-3 text-sm font-bold uppercase">{post.title}</h2>
-            <p className="text-muted group-hover:text-bg mb-3 text-xs leading-relaxed">
-              {post.excerpt}
-            </p>
-            <div className="flex flex-wrap gap-1">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-muted/20 text-muted group-hover:bg-bg/20 group-hover:text-bg px-2 py-0.5 text-[10px]"
-                >
-                  {tag}
-                </span>
+      <div className="mx-auto w-full max-w-2xl px-8 py-10">
+        {postsByYear.map(([year, yearPosts]) => (
+          <section key={year} className="mb-10">
+            <h2 className="border-l-accent text-accent border-border mb-4 border-l-4 py-2 pl-4 text-sm font-bold tracking-widest">
+              {year}
+            </h2>
+            <ul className="space-y-4">
+              {yearPosts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group block pl-4"
+                  >
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3 className="text-fg group-hover:text-accent text-sm transition-colors">
+                        {post.title}
+                      </h3>
+                      <time className="text-muted shrink-0 text-xs">
+                        {formatShortDate(post.date)}
+                      </time>
+                    </div>
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {post.tags.map((tag) => (
+                        <span key={tag} className="text-muted text-[10px]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                </li>
               ))}
-            </div>
-          </Link>
+            </ul>
+          </section>
         ))}
       </div>
     </>
