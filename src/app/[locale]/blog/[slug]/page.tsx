@@ -1,21 +1,22 @@
 import fs from 'fs'
 import path from 'path'
 import { type Metadata } from 'next'
-import { getLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Link } from '@/i18n/navigation'
 import { getBlogPosts } from '@/data/blog'
+import { routing } from '@/i18n/routing'
 
-type Props = { params: Promise<{ slug: string }> }
+type Props = { params: Promise<{ locale: string; slug: string }> }
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts()
-  return posts.map((p) => ({ slug: p.slug }))
+  return routing.locales.flatMap((locale) =>
+    posts.map((p) => ({ locale, slug: p.slug })),
+  )
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const locale = await getLocale()
+  const { locale, slug } = await params
   const posts = await getBlogPosts(locale)
   const post = posts.find((p) => p.slug === slug)
   if (!post) return {}
@@ -23,8 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params
-  const locale = await getLocale()
+  const { locale, slug } = await params
   const posts = await getBlogPosts(locale)
   const post = posts.find((p) => p.slug === slug)
   if (!post) notFound()

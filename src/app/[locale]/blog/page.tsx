@@ -1,13 +1,14 @@
 import { type Metadata } from 'next'
 import { Suspense } from 'react'
-import { getLocale } from 'next-intl/server'
 import { getBlogPosts } from '@/data/blog'
 import { BlogList } from './blog-list.component'
 
+type Props = { params: Promise<{ locale: string }> }
+
 export const metadata: Metadata = { title: 'Blog' }
 
-export default async function BlogPage() {
-  const locale = await getLocale()
+export default async function BlogPage({ params }: Props) {
+  const { locale } = await params
   const posts = await getBlogPosts(locale)
 
   return (
