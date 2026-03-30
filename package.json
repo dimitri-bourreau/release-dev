@@ -18,7 +18,7 @@
     "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/typography": "^0.5.18",
     "@types/node": "^25.5.0",
-    "@types/react": "19.2.2",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.2",
     "@types/webpack-env": "^1.18.8",
     "cheerio": "^1.2.0",
@@ -29,7 +29,7 @@
     "next-intl": "^4.8.3",
     "next-themes": "^0.4.6",
     "nuqs": "^2.8.9",
-    "react": "19.2.0",
+    "react": "19.2.4",
     "react-dom": "19.2.0",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
@@ -52,7 +52,7 @@
     "sharp": "0.34.5"
   },
   "overrides": {
-    "@types/react": "19.2.2",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.2"
   },
   "lint-staged": {
