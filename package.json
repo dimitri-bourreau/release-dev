@@ -42,7 +42,7 @@
     "@next/eslint-plugin-next": "^16.2.4",
     "baseline-browser-mapping": "^2.10.18",
     "eslint": "^9.39.4",
-    "eslint-config-next": "16.2.3",
+    "eslint-config-next": "16.2.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.1.7",
